@@ -60,12 +60,12 @@ window.SITE_DATA = {
       eyebrow: "galeri",
       heading: "beberapa momen kita",
       photos: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "Muka rusuh tapi tetep gemas ✌️" },
-        { src: "assets/gallery/Pic2.jpeg", caption: "[ganti caption foto 2]" },
-        { src: "assets/gallery/Pic3.jpeg", caption: "[ganti caption foto 3]" },
-        { src: "assets/gallery/Pic4.jpeg", caption: "[ganti caption foto 4]" },
-        { src: "assets/gallery/Pic5.jpeg", caption: "[ganti caption foto 5]" },
-        { src: "assets/gallery/Pic6.jpeg", caption: "[ganti caption foto 6]" }
+        { src: "assets/gallery/Pic1.jpeg", caption: "Awal dari banyak cerita manis" },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Senyum Paling Favorit" },
+        { src: "assets/gallery/Pic3.png", caption: "Salah 1 Momenttt Favorit" },
+        { src: "assets/gallery/Pic4.jpeg", caption: "Pusing tapi cakeppppp" },
+        { src: "assets/gallery/Pic5.jpeg", caption: "Tempat biasa, Kenangan Luar biasa" },
+        { src: "assets/gallery/Pic6.jpeg", caption: "Batak Pride🤟" }
       ]
     },
 

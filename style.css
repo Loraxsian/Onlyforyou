@@ -643,8 +643,8 @@ body.main-active .butterfly { opacity: 1; }
   top: 20px;
   right: 20px;
   z-index: 50;
-  background: var(--term-surface);
-  border: 1px solid rgba(224, 162, 126, 0.4);
+  background: transparent;
+  border: 1px solid transparent;
   color: var(--term-text);
   font-family: var(--font-mono);
   font-size: 13px;
@@ -654,12 +654,10 @@ body.main-active .butterfly { opacity: 1; }
 }
 
 body.main-active #mute-btn {
-  background: rgba(255, 249, 242, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-color: rgba(232, 130, 159, 0.35);
+  background: transparent;
+  border-color: transparent;
   color: var(--main-accent-deep);
-  box-shadow: 0 6px 18px rgba(58, 42, 53, 0.1);
+  box-shadow: none;
 }
 
 @media (max-width: 480px) {
