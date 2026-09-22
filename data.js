@@ -63,7 +63,9 @@ window.SITE_DATA = {
         { src: "assets/gallery/Pic1.jpeg", caption: "[ganti caption foto 1]" },
         { src: "assets/gallery/Pic2.jpeg", caption: "[ganti caption foto 2]" },
         { src: "assets/gallery/Pic3.jpeg", caption: "[ganti caption foto 3]" },
-        { src: "assets/gallery/Pic4.jpeg", caption: "[ganti caption foto 4]" }
+        { src: "assets/gallery/Pic4.jpeg", caption: "[ganti caption foto 4]" },
+        { src: "assets/gallery/Pic5.jpeg", caption: "[ganti caption foto 5]" },
+        { src: "assets/gallery/Pic6.jpeg", caption: "[ganti caption foto 6]" }
       ]
     },
 
