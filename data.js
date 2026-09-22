@@ -50,7 +50,7 @@ window.SITE_DATA = {
   main: {
     heroEyebrow: "untuk Jessica",
     heroTitle: "Happy Birthday, Jessica",
-    heroSubtitle: "Selamat Ulang tahun yang ke-19 Jessica, Semoga panjang umur dan sehat selalu ya❤️",
+    heroSubtitle: "Selamat Ulang tahun yang ke-19 And Jessica Nova Lya Mendrofa, Semoga panjang umur dan sehat selalu ya❤️",
 
     // Format: YYYY-MM-DDTHH:mm:ss (waktu lokal)
     nextBirthday: "2027-10-18T00:00:00",
@@ -74,12 +74,12 @@ window.SITE_DATA = {
       envelopeLabel: "untuk Jessica",
       hint: "klik amplopnya",
       paragraphs: [
-        "[ganti dengan paragraf pertama ucapan]",
-        "[ganti dengan paragraf kedua ucapan]",
-        "[ganti dengan paragraf ketiga, kalau perlu]"
+        "Haii Jessica, senang berkenalan denganmu. Tepat tanggal 18 Oktober ini, kita sudah kenal selama 5 mingguuu. Meskipun kita nggak pernah berbicara, pertemuan kita dimulai dari ketidaksengajaan saat menginjak kaki. Rasanya cukup lucu dan menarik, hahaha.",
+        "Ya, isi surat ini tidak banyak. Kuharap, di umurmu yang bertambah ini, impianmu satu per satu akan terwujud.",
+        "Semoga sehat selalu dan diberikan kelimpahan. Sekian dari saya."
       ],
       closingLine: "Sampai ulang tahunmu berikutnya.",
-      signature: "— Still"
+      signature: "~Andrian"
     }
   },
 

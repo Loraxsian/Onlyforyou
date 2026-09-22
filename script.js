@@ -292,6 +292,21 @@
   const letterPaper = document.getElementById('letter-paper');
 
   function buildLetter() {
+    const closeButton = document.createElement('button');
+    closeButton.className = 'letter-close';
+    closeButton.type = 'button';
+    closeButton.textContent = 'tutup surat';
+    closeButton.setAttribute('aria-label', 'Tutup surat');
+    closeButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      letterPaper.classList.remove('visible');
+      setTimeout(() => {
+        envelopeWrap.classList.remove('open');
+        letterPaper.scrollTop = 0;
+      }, 300);
+    });
+    letterPaper.appendChild(closeButton);
+
     DATA.main.letter.paragraphs.forEach((p) => {
       const el = document.createElement('p');
       el.textContent = p;
