@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>untuk Jessica</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button id="mute-btn">mute</button>
+<audio id="bgm" preload="none"></audio>
+<canvas id="fireworks-canvas"></canvas>
+
+<!-- SCENE 1: TERMINAL LOGIN -->
+<section id="scene-terminal" class="scene active">
+  <div class="terminal-box">
+    <div id="terminal-output"></div>
+    <div class="terminal-guide" id="terminal-guide"></div>
+    <div class="terminal-input-row">
+      <span class="terminal-prompt" id="terminal-prompt-label"></span>
+      <input id="terminal-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ketik di sini...">
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 2: MAIN — background photo, overlay, decorative layers (cloned from reference) -->
+<div id="main-bg"></div>
+<div id="main-overlay"></div>
+<div class="glow-orb orb-1"></div>
+<div class="glow-orb orb-2"></div>
+<div class="glow-orb orb-3"></div>
+<div id="flower-fall-container"></div>
+<div class="butterfly b1">🦋</div>
+<div class="butterfly b2">🦋</div>
+<div class="butterfly b3">🦋</div>
+
+<section id="scene-main" class="scene">
+
+  <div class="main-section" id="hero-section">
+    <div class="bloom-flower f1">🌸</div>
+    <div class="bloom-flower f2">🌺</div>
+    <div class="hero-eyebrow" id="hero-eyebrow"></div>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-subtitle" id="hero-subtitle"></p>
+
+    <div id="birthday-timer">
+      <div class="countdown-caption" id="countdown-caption"></div>
+      <div class="countdown-numbers">
+        <div class="countdown-unit"><span class="countdown-value" id="cd-days">0</span><span class="countdown-unit-label">hari</span></div>
+        <div class="countdown-unit"><span class="countdown-value" id="cd-hours">00</span><span class="countdown-unit-label">jam</span></div>
+        <div class="countdown-unit"><span class="countdown-value" id="cd-minutes">00</span><span class="countdown-unit-label">menit</span></div>
+        <div class="countdown-unit"><span class="countdown-value" id="cd-seconds">00</span><span class="countdown-unit-label">detik</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-section" id="gallery-section">
+    <span class="section-eyebrow" id="gallery-eyebrow"></span>
+    <h2 class="section-heading" id="gallery-heading"></h2>
+    <div id="gallery-grid" class="gallery-grid"></div>
+  </div>
+
+  <div class="main-section" id="letter-section">
+    <span class="section-eyebrow" id="letter-eyebrow"></span>
+    <div class="envelope-wrap" id="envelope-wrap">
+      <div class="envelope-label" id="envelope-label"></div>
+      <div class="envelope">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-front"></div>
+        <div class="envelope-seal">✦</div>
+      </div>
+      <div class="letter-hint" id="letter-hint"></div>
+      <div id="letter-paper" class="letter-paper glass-card"></div>
+    </div>
+  </div>
+
+</section>
+
+<div id="lightbox" class="lightbox-overlay">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- persistent mini terminal, main scene only -->
+<div id="mini-terminal">
+  <span class="mini-terminal-prompt" id="mini-terminal-prompt"></span>
+  <input id="mini-terminal-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <span class="mini-terminal-guide" id="mini-terminal-guide"></span>
+  <span class="mini-terminal-hint" id="mini-terminal-hint"></span>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
