@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap');
 
 :root {
-  --term-bg: #0d0a14;
-  --term-surface: #1a1330;
-  --term-accent: #9c7edb;
-  --term-text: #d9d0f5;
-  --term-glow: #b794f6;
+  --term-bg: #2b2524;
+  --term-surface: #403331;
+  --term-accent: #b9785e;
+  --term-text: #f3e5d6;
+  --term-glow: #e0a27e;
 
   --main-bg: #faf3ea;
   --main-surface: #fff9f2;
@@ -30,9 +30,9 @@ html, body {
 body {
   background-color: var(--term-bg);
   background-image:
-    linear-gradient(rgba(156, 126, 219, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(156, 126, 219, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 50% 45%, rgba(83, 58, 127, 0.3), transparent 58%);
+    linear-gradient(rgba(224, 162, 126, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(224, 162, 126, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 45%, rgba(121, 78, 62, 0.34), transparent 58%);
   background-size: 32px 32px, 32px 32px, auto;
   color: var(--term-text);
   transition: background-color 0.9s ease, color 0.9s ease;
@@ -59,20 +59,20 @@ body.main-active {
 .terminal-box {
   width: 100%;
   max-width: 640px;
-  background: linear-gradient(145deg, rgba(35, 26, 61, 0.96), rgba(18, 14, 31, 0.96));
-  border: 1px solid rgba(183, 148, 246, 0.3);
+  background: linear-gradient(145deg, rgba(75, 57, 51, 0.97), rgba(40, 34, 33, 0.97));
+  border: 1px solid rgba(224, 162, 126, 0.34);
   border-radius: 12px;
   padding: clamp(16px, 4vw, 32px);
   min-height: 300px;
-  box-shadow: 0 20px 70px rgba(6, 4, 14, 0.42), 0 0 40px rgba(156, 126, 219, 0.14);
+  box-shadow: 0 20px 70px rgba(28, 19, 16, 0.42), 0 0 40px rgba(185, 120, 94, 0.14);
 }
 
 .terminal-guide {
   margin-top: 20px;
   padding: 10px 12px;
   border-left: 2px solid var(--term-glow);
-  background: rgba(183, 148, 246, 0.08);
-  color: rgba(217, 208, 245, 0.78);
+  background: rgba(224, 162, 126, 0.1);
+  color: rgba(243, 229, 214, 0.8);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -85,7 +85,7 @@ body.main-active {
   word-break: break-word;
 }
 
-.terminal-line.dim { color: rgba(217, 208, 245, 0.55); }
+.terminal-line.dim { color: rgba(243, 229, 214, 0.58); }
 .terminal-line.accent { color: var(--term-glow); }
 
 .terminal-input-row {
@@ -645,7 +645,7 @@ body.main-active .butterfly { opacity: 1; }
   right: 20px;
   z-index: 50;
   background: var(--term-surface);
-  border: 1px solid rgba(156, 126, 219, 0.4);
+  border: 1px solid rgba(224, 162, 126, 0.4);
   color: var(--term-text);
   font-family: var(--font-mono);
   font-size: 13px;
