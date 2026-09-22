@@ -40,8 +40,8 @@ window.SITE_DATA = {
       },
       {
         type: "transition",
-        command: "lanjut",
-        guide: "Guide 3: ketik lanjut untuk membuka kejutan"
+        command: "ls -a",
+        guide: "Guide 3: ketik ls -a untuk membuka kejutan"
       }
     ]
   },
@@ -60,7 +60,7 @@ window.SITE_DATA = {
       eyebrow: "galeri",
       heading: "beberapa momen kita",
       photos: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "[ganti caption foto 1]" },
+        { src: "assets/gallery/Pic1.jpeg", caption: "Muka rusuh tapi tetep gemas ✌️" },
         { src: "assets/gallery/Pic2.jpeg", caption: "[ganti caption foto 2]" },
         { src: "assets/gallery/Pic3.jpeg", caption: "[ganti caption foto 3]" },
         { src: "assets/gallery/Pic4.jpeg", caption: "[ganti caption foto 4]" },
@@ -80,13 +80,6 @@ window.SITE_DATA = {
       ],
       closingLine: "Sampai ulang tahunmu berikutnya.",
       signature: "— Still"
-    },
-
-    miniTerminal: {
-      promptLabel: "guest@heart:~$",
-      hint: "ketik: back",
-      guide: "untuk kembali, ketik back lalu Enter",
-      backCommand: "back"
     }
   },
 

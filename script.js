@@ -10,11 +10,6 @@
     sceneMain.classList.add('active');
     body.classList.add('main-active');
   }
-  function showTerminal() {
-    sceneMain.classList.remove('active');
-    sceneTerminal.classList.add('active');
-    body.classList.remove('main-active');
-  }
 
   // ---------------- audio ----------------
   const audio = document.getElementById('bgm');
@@ -27,10 +22,6 @@
       /* autoplay blocked — visitor can unmute/retry from the mute button */
     });
   }
-  function pauseAudio() {
-    audio.pause();
-  }
-
   const muteBtn = document.getElementById('mute-btn');
   muteBtn.addEventListener('click', () => {
     audio.muted = !audio.muted;
@@ -320,25 +311,6 @@
     if (envelopeWrap.classList.contains('open')) return;
     envelopeWrap.classList.add('open');
     setTimeout(() => letterPaper.classList.add('visible'), 350);
-  });
-
-  // ---- mini terminal (back navigation) ----
-  const miniInput = document.getElementById('mini-terminal-input');
-  document.getElementById('mini-terminal-prompt').textContent = DATA.main.miniTerminal.promptLabel;
-  document.getElementById('mini-terminal-guide').textContent = DATA.main.miniTerminal.guide;
-  document.getElementById('mini-terminal-hint').textContent = DATA.main.miniTerminal.hint;
-
-  miniInput.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
-    const typed = miniInput.value.trim().toLowerCase();
-    miniInput.value = '';
-    if (typed === DATA.main.miniTerminal.backCommand.toLowerCase()) {
-      pauseAudio();
-      if (countdownTimer) clearInterval(countdownTimer);
-      lightbox.classList.remove('visible');
-      showTerminal();
-      resetTerminal();
-    }
   });
 
   // ---------------- init ----------------

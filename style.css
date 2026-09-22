@@ -116,7 +116,6 @@ body.main-active {
 /* ================= SCENE 2: MAIN ================= */
 #scene-main.active {
   display: block;
-  padding-bottom: 84px; /* space for fixed mini terminal */
   position: relative;
   overflow: hidden;
 }
@@ -663,61 +662,7 @@ body.main-active #mute-btn {
   box-shadow: 0 6px 18px rgba(58, 42, 53, 0.1);
 }
 
-/* ---------------- mini terminal (main scene only) ---------------- */
-#mini-terminal {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 40;
-  background: rgba(255, 249, 242, 0.34);
-  border-top: 1px solid rgba(255, 249, 242, 0.58);
-  box-shadow: 0 -8px 24px rgba(58, 42, 53, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 10px clamp(12px, 4vw, 24px);
-  display: none;
-  align-items: center;
-  gap: 8px;
-}
-
-body.main-active #mini-terminal { display: flex; }
-
-.mini-terminal-prompt {
-  color: var(--main-accent-deep);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-#mini-terminal-input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--main-text);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  caret-color: var(--main-accent-deep);
-}
-
-.mini-terminal-hint {
-  color: rgba(58, 42, 53, 0.52);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.mini-terminal-guide {
-  color: rgba(58, 42, 53, 0.68);
-  font-size: 12px;
-  white-space: nowrap;
-  margin-left: auto;
-}
-
 @media (max-width: 480px) {
   .main-section { padding: 8vh 5vw 3vh; }
-  .mini-terminal-guide { display: none; }
   .polaroid img { height: 130px; }
-  .mini-terminal-hint { display: none; }
 }
