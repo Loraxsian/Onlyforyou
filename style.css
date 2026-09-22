@@ -670,8 +670,11 @@ body.main-active #mute-btn {
   right: 0;
   bottom: 0;
   z-index: 40;
-  background: var(--term-surface);
-  border-top: 1px solid rgba(156, 126, 219, 0.3);
+  background: rgba(255, 249, 242, 0.34);
+  border-top: 1px solid rgba(255, 249, 242, 0.58);
+  box-shadow: 0 -8px 24px rgba(58, 42, 53, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 10px clamp(12px, 4vw, 24px);
   display: none;
   align-items: center;
@@ -681,7 +684,7 @@ body.main-active #mute-btn {
 body.main-active #mini-terminal { display: flex; }
 
 .mini-terminal-prompt {
-  color: var(--term-glow);
+  color: var(--main-accent-deep);
   font-family: var(--font-mono);
   font-size: 13px;
   white-space: nowrap;
@@ -693,20 +696,20 @@ body.main-active #mini-terminal { display: flex; }
   background: transparent;
   border: none;
   outline: none;
-  color: var(--term-text);
+  color: var(--main-text);
   font-family: var(--font-mono);
   font-size: 13px;
-  caret-color: var(--term-glow);
+  caret-color: var(--main-accent-deep);
 }
 
 .mini-terminal-hint {
-  color: rgba(217, 208, 245, 0.45);
+  color: rgba(58, 42, 53, 0.52);
   font-size: 12px;
   white-space: nowrap;
 }
 
 .mini-terminal-guide {
-  color: rgba(217, 208, 245, 0.62);
+  color: rgba(58, 42, 53, 0.68);
   font-size: 12px;
   white-space: nowrap;
   margin-left: auto;
