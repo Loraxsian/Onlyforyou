@@ -33,8 +33,10 @@
   const terminalInput = document.getElementById('terminal-input');
   const terminalPromptLabel = document.getElementById('terminal-prompt-label');
   const terminalGuide = document.getElementById('terminal-guide');
+  const skipOpening = document.getElementById('skip-opening');
   let stepIndex = 0;
   let awaitingLogin = false;
+  let openingAttempts = 0;
 
   function printLine(text, cls) {
     const line = document.createElement('div');
@@ -47,6 +49,7 @@
   function resetTerminal() {
     stepIndex = 0;
     awaitingLogin = false;
+    openingAttempts = 0;
     terminalOutput.innerHTML = '';
     terminalInput.disabled = false;
     terminalInput.value = '';
@@ -65,6 +68,11 @@
     if (e.key !== 'Enter' || awaitingLogin) return;
     const typed = terminalInput.value.trim();
     terminalInput.value = '';
+    openingAttempts += 1;
+    if (openingAttempts > 10) {
+      resetTerminal();
+      return;
+    }
     const step = currentStep();
     if (!step) return;
 
@@ -112,6 +120,12 @@
     }
   });
 
+  skipOpening.addEventListener('click', () => {
+    playAudio();
+    showMain();
+    triggerMainSceneEnter();
+  });
+
   // ================= SCENE 2: MAIN =================
   let mainInitialized = false;
 
@@ -126,10 +140,13 @@
       document.getElementById('countdown-caption').textContent = DATA.main.countdownLabel;
       document.getElementById('gallery-eyebrow').textContent = DATA.main.gallery.eyebrow;
       document.getElementById('gallery-heading').textContent = DATA.main.gallery.heading;
+      document.getElementById('roadmap-eyebrow').textContent = DATA.main.roadmap.eyebrow;
+      document.getElementById('roadmap-heading').textContent = DATA.main.roadmap.heading;
       document.getElementById('letter-eyebrow').textContent = DATA.main.letter.eyebrow;
       document.getElementById('envelope-label').textContent = DATA.main.letter.envelopeLabel;
       document.getElementById('letter-hint').textContent = DATA.main.letter.hint;
       buildGallery();
+      buildRoadmap();
       buildLetter();
       spawnFallingFlowers();
     }
@@ -286,6 +303,63 @@
     });
   }
   lightbox.addEventListener('click', () => lightbox.classList.remove('visible'));
+
+  // ---- roadmap ----
+  const roadmapItems = document.getElementById('roadmap-items');
+  const roadmapSection = document.getElementById('roadmap-section');
+
+  function buildRoadmap() {
+    DATA.main.roadmap.items.forEach((item, index) => {
+      const entry = document.createElement('article');
+      entry.className = 'roadmap-item' + (item.src ? ' roadmap-item-photo' : ' roadmap-item-ending');
+      entry.style.setProperty('--item-index', index);
+
+      const marker = document.createElement('span');
+      marker.className = 'roadmap-marker';
+      marker.setAttribute('aria-hidden', 'true');
+      entry.appendChild(marker);
+
+      const content = document.createElement('div');
+      content.className = 'roadmap-card';
+      if (item.src) {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.caption;
+        img.loading = 'lazy';
+        content.appendChild(img);
+      }
+      const caption = document.createElement('p');
+      caption.textContent = item.caption;
+      content.appendChild(caption);
+      entry.appendChild(content);
+      roadmapItems.appendChild(entry);
+    });
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+
+    roadmapItems.querySelectorAll('.roadmap-item').forEach((item) => revealObserver.observe(item));
+
+    let ticking = false;
+    function updateRoadmapProgress() {
+      const rect = roadmapSection.getBoundingClientRect();
+      const viewportPoint = window.innerHeight * 0.58;
+      const progress = (viewportPoint - rect.top) / rect.height;
+      roadmapSection.style.setProperty('--roadmap-progress', Math.max(0, Math.min(1, progress)));
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateRoadmapProgress);
+    }, { passive: true });
+    updateRoadmapProgress();
+  }
 
   // ---- letter ----
   const envelopeWrap = document.getElementById('envelope-wrap');

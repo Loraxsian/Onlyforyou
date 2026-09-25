@@ -69,14 +69,26 @@ window.SITE_DATA = {
       ]
     },
 
+    roadmap: {
+      eyebrow: "roadmap journey",
+      heading: "perjalanan yang masih panjang",
+      items: [
+        { src: "assets/gallery/Pic1.jpeg", caption: "Satu pertemuan kecil yang membuka banyak kemungkinan." },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Menyimpan senyum-senyum yang ingin kita ingat lagi." },
+        { src: "assets/gallery/Pic3.png", caption: "Menemukan cerita baru di antara hari-hari biasa." },
+        { src: "assets/gallery/Pic4.jpeg", caption: "Melangkah bersama, pelan-pelan, menuju lebih banyak momen." },
+        { caption: "Di masa depan, akan ada banyak kenangan indah lainnya yang akan kita kumpulkan di sini..." }
+      ]
+    },
+
     letter: {
       eyebrow: "sepucuk surat",
       envelopeLabel: "untuk Jessica",
       hint: "klik amplopnya",
       paragraphs: [
-        "Haii Jessica, senang berkenalan denganmu. Tepat tanggal 18 Oktober ini, kita sudah kenal selama 5 mingguuu. Meskipun kita nggak pernah berbicara, pertemuan kita dimulai dari ketidaksengajaan saat menginjak kaki. Rasanya cukup lucu dan menarik, hahaha.",
-        "Ya, isi surat ini tidak banyak. Kuharap, di umurmu yang bertambah ini, impianmu satu per satu akan terwujud.",
-        "Semoga sehat selalu dan diberikan kelimpahan. Sekian dari saya."
+        "Hai Jessica, senang berkenalan denganmu. Tepat hari ini, tanggal 18 Oktober, kita sudah saling mengenal selama 5 minggu. Walaupun kita baru mulai berbicara sejak PKKMB, pertemuan pertama kita sebenarnya dimulai dari kejadian yang tidak sengaja saat aku menginjak kakimu. Hehe, maaf ya. Kalau diingat-ingat, rasanya lucu dan menarik, wkwkwk.",
+        "Ya, isi surat ini memang tidak banyak, tetapi aku ingin menyampaikan sedikit doa dan harapan untukmu. Semoga di usia barumu ini, impianmu satu per satu dapat terwujud.",
+        "Semoga kamu selalu sehat, bahagia, dan diberi kelancaran serta kelimpahan dalam setiap langkahmu. Sekian dulu surat singkat dariku."
       ],
       closingLine: "Sampai ulang tahunmu berikutnya.",
       signature: "~Andrian"
