@@ -1,96 +1,73 @@
 // ============================================================
-// SEMUA KONTEN TEKS ADA DI SINI.
-// Edit file ini kapan aja tanpa perlu sentuh script.js / style.css
+// Konten untuk main scene ada di sini.
+// Tampilan opening diatur melalui index.html dan style.css.
 // ============================================================
 
 window.SITE_DATA = {
 
   recipient: "Jessica",
 
-  // ---------------- SCENE 1: TERMINAL LOGIN ----------------
-  terminal: {
-    promptLabel: "guest@heart:~$",
-    bootLines: [
-      "sistem kenangan v1.0",
-      "ketik perintah di bawah untuk mulai."
-    ],
-    guide: "Guide 1: SSH ke heart (ssh username@heart)",
-    steps: [
-      {
-        type: "login",
-        command: "ssh jessica@heart",
-        loadingLines: [
-          "[ssh] menghubungkan ke heart...",
-          "[ssh] memeriksa jalur akses...",
-          "[ssh] mengenkripsi koneksi...",
-          "[ssh] akses diterima."
-        ],
-        loadingDurationMs: 1800,
-        promptLabelAfter: "jessica@heart:~$",
-        successText: "Berhasil !!"
-      },
-      {
-        type: "output",
-        command: "ls",
-        guide: "Guide 2: cek isi folder (ketik ls)",
-        output: [
-          "surat_rahasia/  kenangan/  kejutan.txt",
-          "Ada cukup banyak kenangan di sini."
-        ]
-      },
-      {
-        type: "transition",
-        command: "ls -a",
-        guide: "Guide 3: ketik ls -a untuk membuka kejutan"
-      }
-    ]
-  },
-
   // ---------------- SCENE 2: MAIN SCENE ----------------
   main: {
-    heroEyebrow: "untuk Jessica",
-    heroTitle: "Happy Birthday, Jessica",
-    heroSubtitle: "Selamat Ulang tahun yang ke-19 And Jessica Nova Lya Mendrofa, Semoga panjang umur dan sehat selalu ya❤️",
+    heroEyebrow: "18 Oktober · hari tentang kamu",
+    heroTitle: "Selamat ulang tahun, Jessica",
+    heroSubtitle: "Selamat ulang tahun ke-19, Jessica. Semoga hari-harimu dipenuhi hal baik—dan selalu ada alasan untuk tersenyum. ❤️",
 
     // Format: YYYY-MM-DDTHH:mm:ss (waktu lokal)
     nextBirthday: "2027-10-18T00:00:00",
-    countdownLabel: "menuju ulang tahunmu berikutnya",
+    countdownLabel: "menghitung hari menuju hari istimewamu",
 
     gallery: {
-      eyebrow: "galeri",
-      heading: "beberapa momen kita",
+      eyebrow: "beberapa momen favoritku",
+      heading: "Hal kecil yang selalu membuatku tersenyum",
       photos: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "Awal dari banyak cerita manis" },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Senyum Paling Favorit" },
-        { src: "assets/gallery/Pic3.png", caption: "Salah 1 Momenttt Favorit" },
-        { src: "assets/gallery/Pic4.jpeg", caption: "Pusing tapi cakeppppp" },
-        { src: "assets/gallery/Pic5.jpeg", caption: "Tempat biasa, Kenangan Luar biasa" },
-        { src: "assets/gallery/Pic6.jpeg", caption: "Batak Pride🤟" }
+        { src: "assets/gallery/Pic1.jpeg", caption: "Pertemuan tak sengaja yang selalu kuingat" },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Senyum yang bikin suasana lebih cerah" },
+        { src: "assets/gallery/Pic3.png", caption: "Salah satu momen yang kusimpan baik-baik" },
+        { src: "assets/gallery/Pic4.jpeg", caption: "Tetap bisa tertawa, bahkan saat pusing" },
+        { src: "assets/gallery/Pic5.jpeg", caption: "Tempat sederhana, cerita yang istimewa" },
+        { src: "assets/gallery/Pic6.jpeg", caption: "Gaya khasmu yang selalu bikin senyum" },
+        { src: "assets/gallery/Pic7.jpeg", caption: "" },
+        { src: "assets/gallery/Pic8.jpeg", caption: "" },
+        { src: "assets/gallery/Pic9.jpeg", caption: "" },
+        { src: "assets/gallery/Pic10.jpeg", caption: "" },
+        { src: "assets/gallery/Pic11.jpeg", caption: "" },
+        { src: "assets/gallery/Pic12.jpeg", caption: "" },
+        { src: "assets/gallery/Pic13.jpeg", caption: "" },
+        { src: "assets/gallery/Pic14.jpeg", caption: "" },
+        { src: "assets/gallery/Pic15.jpeg", caption: "" },
+        { src: "assets/gallery/Pic16.jpeg", caption: "" },
+        { src: "assets/gallery/Pic17.jpeg", caption: "" },
+        { src: "assets/gallery/Pic18.jpeg", caption: "" },
+        { src: "assets/gallery/Pic19.jpeg", caption: "" },
+        { src: "assets/gallery/Pic20.jpeg", caption: "" },
+        { src: "assets/gallery/Pic21.jpeg", caption: "" },
+        { src: "assets/gallery/Pic22.jpeg", caption: "" }
       ]
     },
 
     roadmap: {
-      eyebrow: "roadmap journey",
-      heading: "perjalanan yang masih panjang",
+      eyebrow: "catatan kecil",
+      heading: "Momen sederhana, arti yang tinggal",
       items: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "Satu pertemuan kecil yang membuka banyak kemungkinan." },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Menyimpan senyum-senyum yang ingin kita ingat lagi." },
-        { src: "assets/gallery/Pic3.png", caption: "Menemukan cerita baru di antara hari-hari biasa." },
-        { src: "assets/gallery/Pic4.jpeg", caption: "Melangkah bersama, pelan-pelan, menuju lebih banyak momen." },
-        { caption: "Di masa depan, akan ada banyak kenangan indah lainnya yang akan kita kumpulkan di sini..." }
+        { src: "assets/gallery/Pic1.jpeg", caption: "Pertemuan tak sengaja yang jadi awal cerita kecil ini." },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Senyummu punya cara sendiri membuat hari terasa lebih ringan." },
+        { src: "assets/gallery/Pic3.png", caption: "Di antara hari biasa, ada momen yang ingin kusimpan lama." },
+        { src: "assets/gallery/Pic4.jpeg", caption: "Belum lama saling mengenal, tapi tiap cerita kecil terasa berarti." },
+        { caption: "Semoga masih banyak hari baik yang bisa kita rayakan bersama." }
       ]
     },
 
     letter: {
-      eyebrow: "sepucuk surat",
+      eyebrow: "dari Andrian, untukmu",
       envelopeLabel: "untuk Jessica",
       hint: "klik amplopnya",
       paragraphs: [
-        "Hai Jessica, senang berkenalan denganmu. Tepat hari ini, tanggal 18 Oktober, kita sudah saling mengenal selama 5 minggu. Walaupun kita baru mulai berbicara sejak PKKMB, pertemuan pertama kita sebenarnya dimulai dari kejadian yang tidak sengaja saat aku menginjak kakimu. Hehe, maaf ya. Kalau diingat-ingat, rasanya lucu dan menarik, wkwkwk.",
-        "Ya, isi surat ini memang tidak banyak, tetapi aku ingin menyampaikan sedikit doa dan harapan untukmu. Semoga di usia barumu ini, impianmu satu per satu dapat terwujud.",
-        "Semoga kamu selalu sehat, bahagia, dan diberi kelancaran serta kelimpahan dalam setiap langkahmu. Sekian dulu surat singkat dariku."
+        "Hai Jessica, senang sekali bisa kenal kamu. Tepat hari ini, 18 Oktober, genap lima minggu sejak kita mulai saling mengenal. Walaupun kita baru mulai ngobrol sejak PKKMB, pertemuan pertama kita sebenarnya terjadi tanpa sengaja—waktu aku menginjak kakimu. Hehe, maaf ya. Kalau diingat lagi, lucu juga.",
+        "Surat ini memang sederhana, tapi ada doa yang ingin kusampaikan. Semoga di usia barumu ini, satu per satu impianmu bisa terwujud.",
+        "Semoga kamu selalu sehat dan bahagia, dan semoga setiap langkahmu dimudahkan. Aku berharap tahun ini membawa banyak hal baik untukmu."
       ],
-      closingLine: "Sampai ulang tahunmu berikutnya.",
+      closingLine: "Semoga hari ini terasa sehangat dirimu.",
       signature: "~Andrian"
     }
   },
