@@ -202,12 +202,11 @@
         </button>
       </header>
 
-      <section class="hero-section content-width" id="hero-section">
+      <section class="story-scene hero-section content-width is-active" id="hero-section" data-scene="hero" aria-label="Ucapan ulang tahun">
+        <div class="hero-petal-rain" id="hero-petal-rain" aria-hidden="true"></div>
         <p class="section-kicker" id="hero-eyebrow"></p>
         <h1 class="hero-title" id="hero-title"></h1>
         <p class="hero-subtitle" id="hero-subtitle"></p>
-        <a class="text-link" href="#gallery-section">lihat momen yang kusimpan <span aria-hidden="true">↓</span></a>
-
         <div class="countdown" id="birthday-timer" aria-label="Hitung mundur ulang tahun">
           <p class="countdown-caption" id="countdown-caption"></p>
           <div class="countdown-values">
@@ -217,30 +216,69 @@
             <span><strong id="cd-seconds">00</strong><small>detik</small></span>
           </div>
         </div>
+        <button class="cake-gate" id="cake-gate" type="button" aria-label="Gores kue menuju api lilin untuk membuka galeri" aria-describedby="cake-hint" aria-pressed="false">
+          <svg class="cake-art" id="cake-art" viewBox="0 0 360 220" aria-hidden="true">
+            <ellipse cx="180" cy="190" rx="145" ry="15" fill="#d8b7a5" opacity=".32" />
+            <ellipse cx="180" cy="181" rx="143" ry="17" fill="#f4e5d9" stroke="#d9b8a7" stroke-width="2" />
+            <rect x="56" y="99" width="248" height="82" rx="20" fill="#efc8bd" stroke="#d7a69b" stroke-width="2" />
+            <path d="M57 111 Q75 95 94 108 T132 106 T170 108 T208 106 T246 108 T284 106 T303 111 L303 126 Q294 136 284 126 Q274 116 264 128 Q253 140 242 128 Q232 117 222 129 Q211 141 200 128 Q190 117 180 129 Q169 141 158 128 Q148 117 138 129 Q127 141 116 128 Q106 117 96 129 Q85 141 74 128 Q65 119 57 126 Z" fill="#fff4df" stroke="#e0b5a7" stroke-width="2" />
+            <path d="M75 151 H285" stroke="#d99c91" stroke-width="3" stroke-linecap="round" opacity=".48" />
+            <circle cx="91" cy="157" r="4" fill="#d98d88" /><circle cx="270" cy="157" r="4" fill="#d98d88" />
+            <g class="cake-candles" stroke-linecap="round">
+              <rect x="116" y="59" width="13" height="43" rx="4" fill="#dba7be" />
+              <path d="M117 71 H128 M117 87 H128" stroke="#fff5e6" stroke-width="4" />
+              <path d="M122 58 C105 46 121 33 123 25 C137 40 138 49 122 58Z" class="cake-flame" />
+              <rect x="174" y="50" width="13" height="52" rx="4" fill="#dfb365" />
+              <path d="M175 64 H186 M175 82 H186" stroke="#fff5e6" stroke-width="4" />
+              <path d="M180 49 C163 36 179 23 181 15 C195 30 196 40 180 49Z" class="cake-flame" />
+              <rect x="232" y="59" width="13" height="43" rx="4" fill="#9eb8a2" />
+              <path d="M233 71 H244 M233 87 H244" stroke="#fff5e6" stroke-width="4" />
+              <path d="M238 58 C221 46 237 33 239 25 C253 40 254 49 238 58Z" class="cake-flame" />
+            </g>
+            <path id="cake-scratch-trail" class="cake-scratch-trail" d="" />
+          </svg>
+          <span class="cake-hint" id="cake-hint" aria-live="polite">Goreskan jari dari permukaan kue menuju api lilin</span>
+        </button>
       </section>
 
-      <section class="content-section content-width" id="gallery-section">
+      <section class="story-scene content-section content-width" id="gallery-section" data-scene="gallery" aria-label="Galeri kenangan" hidden inert>
         <header class="section-intro">
           <p class="section-kicker" id="gallery-eyebrow"></p>
           <h2 class="section-title" id="gallery-heading"></h2>
           <p class="section-description">Geser perlahan—ada hal sederhana yang sayang kalau dilupakan.</p>
         </header>
         <div class="gallery-stage" id="gallery-stage" aria-label="Galeri kenangan">
-          <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
-          <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+          <div class="gallery-grid" id="gallery-grid" role="group" tabindex="0" aria-label="Foto kenangan, geser untuk berpindah" aria-live="polite"></div>
+          <div class="gallery-controls" aria-label="Posisi foto">
+            <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+          </div>
         </div>
+        <button class="flower-next" id="gallery-flower-next" type="button" aria-label="Lanjut ke cerita">
+          <svg class="flower-next-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <g fill="#d88996"><ellipse cx="32" cy="17" rx="8" ry="13" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(72 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(144 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(216 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(288 32 32)" /></g>
+            <circle cx="32" cy="32" r="7" fill="#f4d78d" />
+          </svg>
+          <span class="flower-next-caption" aria-hidden="true">lanjut ke cerita</span>
+        </button>
       </section>
 
-      <section class="content-section journey-section content-width" id="roadmap-section">
+      <section class="story-scene content-section journey-section content-width" id="roadmap-section" data-scene="roadmap" aria-label="Cerita kecil" hidden inert>
         <header class="section-intro">
           <p class="section-kicker" id="roadmap-eyebrow"></p>
           <h2 class="section-title" id="roadmap-heading"></h2>
           <p class="section-description">Beberapa hal mungkin terlihat biasa, tapi selalu punya tempat tersendiri.</p>
         </header>
+        <div class="lantern-entry">
+          <button class="lantern-pull" id="lantern-pull" type="button" aria-label="Tarik kabel lentera untuk membuka surat" aria-controls="letter-section">
+            <span class="lantern" aria-hidden="true"><span class="lantern-glass"></span><span class="lantern-cap"></span></span>
+            <span class="lantern-cord" aria-hidden="true"><span class="lantern-tassel"></span></span>
+            <span class="lantern-hint">tarik talinya untuk membuka surat</span>
+          </button>
+        </div>
         <ol class="journey-list" id="roadmap-items"></ol>
       </section>
 
-      <section class="letter-section content-width" id="letter-section">
+      <section class="story-scene letter-section content-width" id="letter-section" data-scene="letter" aria-label="Surat untuk Jessica" hidden inert>
         <div class="letter-card">
           <p class="section-kicker" id="letter-eyebrow"></p>
           <h2 class="section-title letter-title">Ada surat kecil untukmu</h2>
@@ -262,12 +300,12 @@
             </div>
           </div>
         </div>
+        <button class="scene-back" type="button" data-previous-scene="roadmap">← Kembali ke cerita</button>
+        <footer class="site-footer">
+          <span aria-hidden="true">♡</span>
+          <p>disiapkan sepenuh hati, untuk <span id="footer-recipient"></span></p>
+        </footer>
       </section>
-
-      <footer class="site-footer">
-        <span aria-hidden="true">♡</span>
-        <p>disiapkan sepenuh hati, untuk <span id="footer-recipient"></span></p>
-      </footer>
     </section>
   </main>
 
