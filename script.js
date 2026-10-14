@@ -641,6 +641,10 @@
       card.classList.add(position);
       card.setAttribute('aria-hidden', String(distance !== 0));
       const button = card.querySelector('.photo-button');
+      const image = button.querySelector('img');
+      const shouldKeepLoaded = distance <= 2 || distance === length - 1;
+      if (shouldKeepLoaded && !image.hasAttribute('src')) image.src = image.dataset.src;
+      else if (!shouldKeepLoaded && image.hasAttribute('src')) image.removeAttribute('src');
       button.tabIndex = distance === 0 ? 0 : -1;
     });
   }
@@ -660,9 +664,10 @@
     button.tabIndex = -1;
 
     const image = document.createElement('img');
-    image.src = photo.src;
+    image.dataset.src = photo.src;
     image.alt = photoDescription;
-    image.loading = index < 3 ? 'eager' : 'lazy';
+    image.loading = 'lazy';
+    image.decoding = 'async';
     image.draggable = false;
     button.appendChild(image);
 
@@ -737,7 +742,8 @@
       image.className = 'journey-photo';
       image.src = item.src;
       image.alt = '';
-      image.loading = 'eager';
+      image.loading = 'lazy';
+      image.decoding = 'async';
       entry.appendChild(image);
     }
 
