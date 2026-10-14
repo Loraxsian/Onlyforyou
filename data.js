@@ -50,7 +50,7 @@ window.SITE_DATA = {
       eyebrow: "catatan kecil",
       heading: "Momen sederhana, arti yang tinggal",
       items: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "Pertemuan tak sengaja yang jadi awal cerita kecil ini." },
+        { src: "assets/gallery/Student Lobby.jpg", caption: "Student Lobby, tempat kita pertama kali bertemu—saat aku tidak sengaja menginjak kakimu." },
         { src: "assets/gallery/Pic2.jpeg", caption: "Senyummu punya cara sendiri membuat hari terasa lebih ringan." },
         { src: "assets/gallery/Pic3.png", caption: "Di antara hari biasa, ada momen yang ingin kusimpan lama." },
         { src: "assets/gallery/Pic4.jpeg", caption: "Belum lama saling mengenal, tapi tiap cerita kecil terasa berarti." },
