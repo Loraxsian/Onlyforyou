@@ -166,13 +166,15 @@
   let flowerTransitionRunning = false;
   let queuedFlowerTransition = null;
 
-  function playFlowerTransition(onComplete, originElement = null) {
+  function playFlowerTransition(onComplete, originElement = null, fallFromOrigin = false) {
     if (flowerTransitionRunning) {
-      if (onComplete) queuedFlowerTransition = { onComplete, originElement };
+      if (onComplete) queuedFlowerTransition = { onComplete, originElement, fallFromOrigin };
       return;
     }
     flowerTransitionRunning = true;
     const overlay = flowerTransition;
+    overlay.hidden = false;
+    overlay.classList.remove('is-fading');
     const seed = document.getElementById('flower-transition-seed');
     const glow = document.getElementById('flower-transition-glow');
     const trails = document.getElementById('flower-transition-trails');
@@ -184,12 +186,14 @@
     const originY = originBounds ? originBounds.top + originBounds.height / 2 : null;
     const startX = originX ?? width * 0.88;
     const startY = originY ?? height * 0.1;
-    const landX = originX ?? width * 0.14;
-    const landY = originY ?? height * 0.88;
+    const landX = fallFromOrigin ? width * 0.78 : (originX ?? width * 0.14);
+    const landY = fallFromOrigin ? height * 0.78 : (originY ?? height * 0.88);
     const controlX = startX + (landX - startX) * 0.62;
     const controlY = startY + (landY - startY) * 0.16;
-    // The opening flower falls into frame; a clicked flower blooms in place.
-    const fallDuration = originElement ? 1 : (reducedMotion ? 180 : 1050);
+    // The opening flower falls into frame, gallery button blooms in place,
+    // and navbar selection carries a bloom down from the top-right control.
+    const fallDuration = fallFromOrigin ? (reducedMotion ? 180 : 1050)
+      : (originElement ? 1 : (reducedMotion ? 180 : 1050));
 
     seed.innerHTML = flowerSvg(2);
     seed.style.left = `${startX}px`;
@@ -230,6 +234,12 @@
           seed.style.opacity = '0';
           const lastEnd = createFlowerWave(landX, landY);
           window.setTimeout(() => {
+            // Change the scene while the flower overlay still covers the page.
+            // Otherwise its long fade-out reveals the old scene underneath.
+            if (onComplete) {
+              onComplete();
+              onComplete = null;
+            }
             overlay.classList.add('is-fading');
             window.setTimeout(() => {
               overlay.hidden = true;
@@ -244,9 +254,7 @@
               queuedFlowerTransition = null;
               if (nextTransition) {
                 overlay.hidden = false;
-                playFlowerTransition(nextTransition.onComplete, nextTransition.originElement);
-              } else if (onComplete) {
-                onComplete();
+                playFlowerTransition(nextTransition.onComplete, nextTransition.originElement, nextTransition.fallFromOrigin);
               }
             }, reducedMotion ? 240 : 1050);
           }, lastEnd + (reducedMotion ? 80 : 380));
@@ -368,7 +376,7 @@
     if (name === 'gallery' && !cakeGate.classList.contains('is-lit')) {
       if (activeScene !== 'hero') goToScene('hero');
       setNavOpen(false);
-      document.getElementById('cake-hint').textContent = 'Goreskan dari permukaan kue sampai ke api lilin dulu';
+      document.getElementById('cake-hint').textContent = 'Sentuh kuenya untuk menyalakan lilin';
       cakeGate.focus({ preventScroll: true });
       return;
     }
@@ -388,7 +396,6 @@
       else link.removeAttribute('aria-current');
     });
     setNavOpen(false);
-    if (name === 'gallery') window.requestAnimationFrame(fitGalleryPhotos);
     const heading = nextScene.querySelector('h1, h2');
     if (heading) {
       heading.tabIndex = -1;
@@ -421,45 +428,8 @@
   });
 
   const cakeGate = document.getElementById('cake-gate');
-  const cakeArt = document.getElementById('cake-art');
-  const cakeTrail = document.getElementById('cake-scratch-trail');
   const cakeHint = document.getElementById('cake-hint');
-  const candleTargets = [{ x: 122, y: 42 }, { x: 180, y: 32 }, { x: 238, y: 42 }];
-  let scratchStart = null;
-  let scratchPoints = [];
   let cakeOpening = false;
-
-  function cakePoint(event) {
-    const bounds = cakeArt.getBoundingClientRect();
-    return {
-      x: ((event.clientX - bounds.left) / bounds.width) * 360,
-      y: ((event.clientY - bounds.top) / bounds.height) * 220
-    };
-  }
-
-  function setScratchPath() {
-    if (!scratchPoints.length) {
-      cakeTrail.setAttribute('d', '');
-      return;
-    }
-
-    const number = (value) => value.toFixed(1);
-    let path = `M ${number(scratchPoints[0].x)} ${number(scratchPoints[0].y)}`;
-    if (scratchPoints.length === 2) {
-      path += ` Q ${number(scratchPoints[0].x)} ${number(scratchPoints[0].y)} ${number(scratchPoints[1].x)} ${number(scratchPoints[1].y)}`;
-    } else {
-      for (let index = 0; index < scratchPoints.length - 1; index += 1) {
-        const previous = scratchPoints[Math.max(0, index - 1)];
-        const start = scratchPoints[index];
-        const end = scratchPoints[index + 1];
-        const next = scratchPoints[Math.min(scratchPoints.length - 1, index + 2)];
-        const control1 = { x: start.x + (end.x - previous.x) / 6, y: start.y + (end.y - previous.y) / 6 };
-        const control2 = { x: end.x - (next.x - start.x) / 6, y: end.y - (next.y - start.y) / 6 };
-        path += ` C ${number(control1.x)} ${number(control1.y)} ${number(control2.x)} ${number(control2.y)} ${number(end.x)} ${number(end.y)}`;
-      }
-    }
-    cakeTrail.setAttribute('d', path);
-  }
 
   function lightCake() {
     if (cakeOpening) return;
@@ -469,47 +439,7 @@
     cakeHint.textContent = 'Lilin sudah menyala! Membuka galeri…';
     window.setTimeout(() => goToScene('gallery'), reducedMotion ? 50 : 900);
   }
-
-  cakeGate.addEventListener('pointerdown', (event) => {
-    event.preventDefault();
-    const point = cakePoint(event);
-    scratchStart = point.x >= 58 && point.x <= 302 && point.y >= 116 && point.y <= 205 ? point : null;
-    scratchPoints = scratchStart ? [scratchStart] : [];
-    cakeTrail.setAttribute('d', '');
-    if (scratchStart) {
-      try { cakeGate.setPointerCapture(event.pointerId); } catch { /* synthetic and older pointer events cannot be captured */ }
-    }
-  });
-  cakeGate.addEventListener('pointermove', (event) => {
-    if (!scratchStart) return;
-    scratchPoints.push(cakePoint(event));
-    setScratchPath();
-  });
-  cakeGate.addEventListener('pointerup', (event) => {
-    if (!scratchStart) return;
-    const end = cakePoint(event);
-    const traveled = scratchPoints.reduce((distance, point, index) => index === 0 ? distance : distance + Math.hypot(point.x - scratchPoints[index - 1].x, point.y - scratchPoints[index - 1].y), 0);
-    const reachedCandle = candleTargets.some((target) => Math.hypot(end.x - target.x, end.y - target.y) <= 42);
-    scratchStart = null;
-    if (traveled >= 60 && reachedCandle) {
-      scratchPoints.push(end);
-      setScratchPath();
-      lightCake();
-      return;
-    }
-    cakeHint.textContent = 'Mulai dari permukaan kue, lalu gores sampai ke api lilin';
-    window.setTimeout(() => cakeTrail.setAttribute('d', ''), 700);
-  });
-  cakeGate.addEventListener('pointercancel', () => {
-    scratchStart = null;
-    scratchPoints = [];
-    cakeTrail.setAttribute('d', '');
-  });
-  cakeGate.addEventListener('keydown', (event) => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    event.preventDefault();
-    lightCake();
-  });
+  cakeGate.addEventListener('click', lightCake);
 
   const galleryFlowerNext = document.getElementById('gallery-flower-next');
   const galleryFlowerIcon = galleryFlowerNext.querySelector('.flower-next-icon');
@@ -532,7 +462,9 @@
     const target = link && storyScenes.find((scene) => `#${scene.id}` === link.hash);
     if (target) {
       event.preventDefault();
-      goToScene(target.dataset.scene);
+      setNavOpen(false);
+      const transitionOrigin = navToggle.getClientRects().length ? navToggle : link;
+      playFlowerTransition(() => goToScene(target.dataset.scene), transitionOrigin, true);
     }
   });
   document.querySelector('.site-mark').addEventListener('click', (event) => {
@@ -653,27 +585,6 @@
     });
   }
 
-  function fitGalleryPhotos() {
-    const gridHeight = galleryGrid.clientHeight;
-    if (gridHeight < 220) return;
-    const maxHeight = Math.max(160, Math.min(gridHeight - 76, window.innerHeight * 0.66, 520));
-    galleryGrid.querySelectorAll('.gallery-card').forEach((card) => {
-      const button = card.querySelector('.photo-button');
-      const image = button.querySelector('img');
-      if (!image.naturalWidth || !image.naturalHeight) return;
-      const styles = getComputedStyle(card);
-      const availableWidth = card.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
-      const scale = Math.min(availableWidth / image.naturalWidth, maxHeight / image.naturalHeight);
-      const width = Math.round(image.naturalWidth * scale);
-      const height = Math.round(image.naturalHeight * scale);
-      button.style.width = `${width}px`;
-      button.style.height = `${height}px`;
-    });
-  }
-
-  galleryGrid.addEventListener('load', fitGalleryPhotos, true);
-  window.addEventListener('resize', fitGalleryPhotos, { passive: true });
-
   galleryPhotos.forEach((photo, index) => {
     const card = document.createElement('figure');
     card.className = 'memory-photo gallery-card is-hidden';
@@ -691,7 +602,7 @@
     const image = document.createElement('img');
     image.dataset.src = photo.src;
     image.alt = photoDescription;
-    image.loading = 'lazy';
+    image.loading = 'eager';
     image.decoding = 'async';
     image.draggable = false;
     button.appendChild(image);
