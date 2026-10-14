@@ -643,8 +643,13 @@
       const button = card.querySelector('.photo-button');
       const image = button.querySelector('img');
       const shouldKeepLoaded = distance <= 2 || distance === length - 1;
-      if (shouldKeepLoaded && !image.hasAttribute('src')) image.src = image.dataset.src;
-      else if (!shouldKeepLoaded && image.hasAttribute('src')) image.removeAttribute('src');
+      if (shouldKeepLoaded) {
+        if (!image.hasAttribute('src')) image.src = image.dataset.src;
+        button.style.setProperty('--photo-backdrop', button.dataset.photoBackdrop);
+      } else {
+        if (image.hasAttribute('src')) image.removeAttribute('src');
+        button.style.removeProperty('--photo-backdrop');
+      }
       button.tabIndex = distance === 0 ? 0 : -1;
     });
   }
@@ -659,6 +664,7 @@
     const button = document.createElement('button');
     button.className = 'photo-button';
     button.type = 'button';
+    button.dataset.photoBackdrop = `url("${photo.src}")`;
     const photoDescription = photo.caption || `Foto kenangan ke-${index + 1}`;
     button.setAttribute('aria-label', `Lihat ${photoDescription}`);
     button.tabIndex = -1;
