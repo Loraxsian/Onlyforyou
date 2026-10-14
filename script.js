@@ -626,6 +626,7 @@
     const image = document.createElement('img');
     image.dataset.src = photo.src;
     image.alt = photoDescription;
+    image.style.objectPosition = photo.objectPosition || 'center';
     image.loading = 'eager';
     image.decoding = 'async';
     image.draggable = false;

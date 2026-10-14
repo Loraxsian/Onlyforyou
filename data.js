@@ -22,10 +22,10 @@ window.SITE_DATA = {
       heading: "Hal kecil yang selalu membuatku tersenyum",
       photos: [
         { src: "assets/gallery/Pic1.jpeg", caption: "Satu selfie malam yang menyimpan banyak tawa." },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Tiga senyum dan pose kompak dalam satu frame." },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Tiga senyum dan pose kompak dalam satu frame.", objectPosition: "60% center" },
         { src: "assets/gallery/Pic3.png", caption: "Pose berdua di bawah cahaya lampu malam." },
         { src: "assets/gallery/Pic4.jpeg", caption: "Momen random saat jalan-jalan yang bikin senyum." },
-        { src: "assets/gallery/Pic5.jpeg", caption: "Makan bareng sederhana, ceritanya jadi istimewa." },
+        { src: "assets/gallery/Pic5.jpeg", caption: "Makan bareng sederhana, ceritanya jadi istimewa.", objectPosition: "44% center" },
         { src: "assets/gallery/Pic6.jpeg", caption: "Selfie dari ujung meja, semua ikut masuk frame." },
         { src: "assets/gallery/Pic7.jpeg", caption: "Senyum santai yang diam-diam jadi favorit." },
         { src: "assets/gallery/Pic8.jpeg", caption: "Pose miring dengan senyum manis di rumah." },
