@@ -388,6 +388,7 @@
       else link.removeAttribute('aria-current');
     });
     setNavOpen(false);
+    if (name === 'gallery') window.requestAnimationFrame(fitGalleryPhotos);
     const heading = nextScene.querySelector('h1, h2');
     if (heading) {
       heading.tabIndex = -1;
@@ -645,14 +646,33 @@
       const shouldKeepLoaded = distance <= 2 || distance === length - 1;
       if (shouldKeepLoaded) {
         if (!image.hasAttribute('src')) image.src = image.dataset.src;
-        button.style.setProperty('--photo-backdrop', button.dataset.photoBackdrop);
       } else {
         if (image.hasAttribute('src')) image.removeAttribute('src');
-        button.style.removeProperty('--photo-backdrop');
       }
       button.tabIndex = distance === 0 ? 0 : -1;
     });
   }
+
+  function fitGalleryPhotos() {
+    const gridHeight = galleryGrid.clientHeight;
+    if (gridHeight < 220) return;
+    const maxHeight = Math.max(160, Math.min(gridHeight - 76, window.innerHeight * 0.66, 520));
+    galleryGrid.querySelectorAll('.gallery-card').forEach((card) => {
+      const button = card.querySelector('.photo-button');
+      const image = button.querySelector('img');
+      if (!image.naturalWidth || !image.naturalHeight) return;
+      const styles = getComputedStyle(card);
+      const availableWidth = card.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
+      const scale = Math.min(availableWidth / image.naturalWidth, maxHeight / image.naturalHeight);
+      const width = Math.round(image.naturalWidth * scale);
+      const height = Math.round(image.naturalHeight * scale);
+      button.style.width = `${width}px`;
+      button.style.height = `${height}px`;
+    });
+  }
+
+  galleryGrid.addEventListener('load', fitGalleryPhotos, true);
+  window.addEventListener('resize', fitGalleryPhotos, { passive: true });
 
   galleryPhotos.forEach((photo, index) => {
     const card = document.createElement('figure');
@@ -664,7 +684,6 @@
     const button = document.createElement('button');
     button.className = 'photo-button';
     button.type = 'button';
-    button.dataset.photoBackdrop = `url("${photo.src}")`;
     const photoDescription = photo.caption || `Foto kenangan ke-${index + 1}`;
     button.setAttribute('aria-label', `Lihat ${photoDescription}`);
     button.tabIndex = -1;
