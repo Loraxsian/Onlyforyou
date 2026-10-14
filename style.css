@@ -72,6 +72,40 @@ a { color: inherit; }
 
 .flower-transition.is-fading { opacity: 0; transform: scale(1.045); }
 
+.cake-burn-transition {
+  position: fixed;
+  z-index: 31;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+  background: radial-gradient(circle at var(--burn-x, 50%) var(--burn-y, 60%), #fff9eb 0 4%, #f6dfbd 12%, #edc8b8 32%, #e8c2c3 62%, #f8efe5 100%);
+  clip-path: circle(0 at var(--burn-x, 50%) var(--burn-y, 60%));
+  transition: clip-path 900ms cubic-bezier(.2, .72, .25, 1), opacity 520ms ease;
+}
+
+.cake-burn-transition::before {
+  position: absolute;
+  inset: -15%;
+  background-image:
+    radial-gradient(circle, rgba(255, 250, 231, .78) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle, rgba(229, 164, 129, .52) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(246, 218, 180, .62) 0 1px, transparent 2px);
+  background-position: 8% 24%, 44% 71%, 82% 38%;
+  background-size: 73px 89px, 109px 127px, 151px 113px;
+  content: "";
+  opacity: .48;
+  animation: ember-rise 850ms ease-in-out infinite alternate;
+}
+
+.cake-burn-transition.is-burning { clip-path: circle(150vmax at var(--burn-x, 50%) var(--burn-y, 60%)); }
+.cake-burn-transition.is-fading { opacity: 0; }
+
+@keyframes ember-rise {
+  from { transform: translate3d(0, 12px, 0); }
+  to { transform: translate3d(-8px, -24px, 0); }
+}
+
 .flower-transition-art {
   display: none;
 }
@@ -627,6 +661,7 @@ body.site-open { overflow: hidden; }
 .cake-art { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 12px 18px rgba(100, 72, 60, .12)); }
 .cake-flame { fill: #efac55; opacity: .16; transform-box: fill-box; transform-origin: center; transition: opacity 250ms ease; }
 .cake-gate.is-lit .cake-flame { opacity: 1; animation: cake-flame-flicker 720ms ease-in-out infinite alternate; }
+.cake-gate.is-lit .cake-art { filter: drop-shadow(0 0 20px rgba(239, 185, 128, .32)) drop-shadow(0 12px 18px rgba(100, 72, 60, .12)); }
 .cake-hint { margin-top: 1px; color: #9a8076; font-family: var(--serif); font-size: 12px; font-style: italic; }
 @keyframes cake-flame-flicker { from { transform: scale(.9, 1); filter: brightness(1); } to { transform: scale(1.08, 1.12); filter: brightness(1.18); } }
 
@@ -1593,6 +1628,9 @@ body.site-open { overflow: hidden; }
   .flower-transition {
     transition-duration: 200ms !important;
   }
+
+  .cake-burn-transition { transition-duration: 120ms; }
+  .cake-burn-transition::before { animation: none; }
 
   .flower-piece { animation-duration: 250ms !important; }
 }

@@ -429,6 +429,7 @@
 
   const cakeGate = document.getElementById('cake-gate');
   const cakeHint = document.getElementById('cake-hint');
+  const cakeBurnTransition = document.getElementById('cake-burn-transition');
   let cakeOpening = false;
 
   function lightCake() {
@@ -437,7 +438,30 @@
     cakeGate.classList.add('is-lit');
     cakeGate.setAttribute('aria-pressed', 'true');
     cakeHint.textContent = 'Lilin sudah menyala! Membuka galeri…';
-    window.setTimeout(() => goToScene('gallery'), reducedMotion ? 50 : 900);
+    if (reducedMotion) {
+      window.setTimeout(() => goToScene('gallery'), 180);
+      return;
+    }
+
+    const bounds = cakeGate.getBoundingClientRect();
+    cakeBurnTransition.style.setProperty('--burn-x', `${((bounds.left + bounds.width / 2) / window.innerWidth) * 100}%`);
+    cakeBurnTransition.style.setProperty('--burn-y', `${((bounds.top + bounds.height / 2) / window.innerHeight) * 100}%`);
+    window.setTimeout(() => {
+      cakeBurnTransition.hidden = false;
+      cakeBurnTransition.classList.remove('is-burning', 'is-fading');
+      void cakeBurnTransition.offsetWidth;
+      cakeBurnTransition.classList.add('is-burning');
+      window.setTimeout(() => {
+        goToScene('gallery');
+        cakeBurnTransition.classList.add('is-fading');
+        window.setTimeout(() => {
+          cakeBurnTransition.hidden = true;
+          cakeBurnTransition.classList.remove('is-burning', 'is-fading');
+          cakeBurnTransition.style.removeProperty('--burn-x');
+          cakeBurnTransition.style.removeProperty('--burn-y');
+        }, 540);
+      }, 920);
+    }, 300);
   }
   cakeGate.addEventListener('click', lightCake);
 
