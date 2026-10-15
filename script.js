@@ -722,17 +722,74 @@
   });
 
   const letterCard = document.querySelector('.letter-card');
+  const letterStage = document.querySelector('.letter-stage');
   const letterToggle = document.getElementById('letter-toggle');
   const letterPaper = document.getElementById('letter-paper');
   const letterToggleLabel = document.getElementById('letter-toggle-label');
+  let letterMotionTimer = 0;
+  let letterLayoutTimer = 0;
+  let letterStageReleaseTimer = 0;
+  let letterClosedStageHeight = 0;
+
+  function openLetter() {
+    window.clearTimeout(letterMotionTimer);
+    window.clearTimeout(letterLayoutTimer);
+    window.clearTimeout(letterStageReleaseTimer);
+    letterClosedStageHeight ||= letterStage.getBoundingClientRect().height;
+    letterStage.style.transition = 'none';
+    letterStage.style.height = '';
+    letterCard.classList.remove('is-open', 'is-closing');
+    letterCard.classList.add('is-opening');
+    letterToggle.setAttribute('aria-expanded', 'true');
+    letterToggle.setAttribute('aria-label', 'Surat sedang dibuka');
+    letterPaper.setAttribute('aria-hidden', 'true');
+    letterPaper.inert = true;
+    letterToggleLabel.textContent = 'membuka amplop…';
+
+    letterMotionTimer = window.setTimeout(() => {
+      letterCard.classList.remove('is-opening');
+      letterCard.classList.add('is-open');
+      letterToggle.setAttribute('aria-label', 'Tutup surat');
+      letterPaper.setAttribute('aria-hidden', 'false');
+      letterPaper.inert = false;
+      letterToggleLabel.textContent = 'sentuh surat untuk melipat dan menutup';
+    }, 560);
+  }
+
+  function closeLetter() {
+    window.clearTimeout(letterMotionTimer);
+    window.clearTimeout(letterLayoutTimer);
+    window.clearTimeout(letterStageReleaseTimer);
+    letterStage.style.transition = 'none';
+    letterStage.style.height = `${letterStage.getBoundingClientRect().height}px`;
+    letterStage.offsetHeight;
+    letterStage.style.transition = '';
+    letterCard.classList.remove('is-open', 'is-opening');
+    letterCard.classList.add('is-closing');
+    letterToggle.setAttribute('aria-expanded', 'false');
+    letterToggle.setAttribute('aria-label', 'Surat sedang ditutup');
+    letterPaper.setAttribute('aria-hidden', 'true');
+    letterPaper.inert = true;
+    letterToggleLabel.textContent = 'melipat surat dan menutup amplop…';
+
+    letterLayoutTimer = window.setTimeout(() => {
+      letterStage.style.height = `${letterClosedStageHeight}px`;
+    }, 920);
+
+    letterMotionTimer = window.setTimeout(() => {
+      letterCard.classList.remove('is-closing');
+      letterToggle.setAttribute('aria-label', 'Buka surat');
+      letterToggleLabel.textContent = 'sentuh amplop untuk membuka';
+    }, 920);
+
+    letterStageReleaseTimer = window.setTimeout(() => {
+      letterStage.style.height = '';
+    }, 1260);
+  }
+
   letterToggle.addEventListener('click', () => {
-    const isOpen = letterToggle.getAttribute('aria-expanded') !== 'true';
-    letterToggle.setAttribute('aria-expanded', String(isOpen));
-    letterToggle.setAttribute('aria-label', isOpen ? 'Tutup surat' : 'Buka surat');
-    letterPaper.setAttribute('aria-hidden', String(!isOpen));
-    letterPaper.inert = !isOpen;
-    letterCard.classList.toggle('is-open', isOpen);
-    letterToggleLabel.textContent = isOpen ? 'sentuh amplop untuk menutup' : 'sentuh amplop untuk membuka';
+    if (letterToggle.getAttribute('aria-expanded') === 'true') closeLetter();
+    else openLetter();
   });
 
   function updateCountdown() {

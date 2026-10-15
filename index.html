@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=burn-letter-20261015-8">
 </head>
 <body>
   <audio id="bgm" preload="none"></audio>
@@ -283,21 +283,23 @@
         <div class="letter-card">
           <p class="section-kicker" id="letter-eyebrow"></p>
           <h2 class="section-title letter-title">Ada surat kecil untukmu</h2>
-          <button class="envelope-toggle" id="letter-toggle" type="button" aria-label="Buka surat" aria-expanded="false" aria-controls="letter-paper">
-            <span class="envelope" aria-hidden="true">
-              <span class="envelope-body"></span>
-              <span class="envelope-sheet"></span>
-              <span class="envelope-flap"></span>
-              <span class="envelope-front"></span>
-              <span class="envelope-seal">♡</span>
-            </span>
-            <span class="envelope-hint" id="letter-toggle-label">sentuh amplop untuk membuka</span>
-          </button>
-          <div class="letter-paper" id="letter-paper" aria-hidden="true" inert>
-            <div class="letter-paper-inner">
-              <div class="letter-body" id="letter-body"></div>
-              <p class="letter-closing" id="letter-closing"></p>
-              <p class="letter-signature" id="letter-signature"></p>
+          <div class="letter-stage">
+            <button class="envelope-toggle" id="letter-toggle" type="button" aria-label="Buka surat" aria-expanded="false" aria-controls="letter-paper">
+              <span class="envelope" aria-hidden="true">
+                <span class="envelope-body"></span>
+                <span class="envelope-sheet"></span>
+                <span class="envelope-flap"></span>
+                <span class="envelope-front"></span>
+                <span class="envelope-seal">♡</span>
+              </span>
+              <span class="envelope-hint" id="letter-toggle-label">sentuh amplop untuk membuka</span>
+            </button>
+            <div class="letter-paper" id="letter-paper" aria-hidden="true" inert>
+              <div class="letter-paper-inner">
+                <div class="letter-body" id="letter-body"></div>
+                <p class="letter-closing" id="letter-closing"></p>
+                <p class="letter-signature" id="letter-signature"></p>
+              </div>
             </div>
           </div>
         </div>
