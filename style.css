@@ -902,6 +902,7 @@ body.site-open { overflow: hidden; }
 }
 
 .photo-button {
+  position: relative;
   display: grid;
   flex: 1 1 auto;
   width: 100%;
@@ -916,6 +917,8 @@ body.site-open { overflow: hidden; }
 }
 
 .photo-button img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
