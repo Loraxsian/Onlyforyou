@@ -700,7 +700,7 @@
 
     if (item.src) {
       const image = document.createElement('img');
-      image.className = 'journey-photo';
+      image.className = `journey-photo journey-photo--${item.photoSize || 'auto'}`;
       image.src = item.src;
       image.alt = '';
       image.loading = 'lazy';

@@ -43,7 +43,7 @@ window.SITE_DATA = {
         { src: "assets/gallery/Pic20.jpeg", caption: "Hari cerah di pesisir dengan senyum yang ikut menyala." },
         { src: "assets/gallery/Pic21.jpeg", caption: "Potret dekat dengan senyum yang menenangkan." },
         { src: "assets/gallery/Pic22.jpeg", caption: "Tawa kecil dan gaya rambut yang ikut bergerak." },
-        { src: "assets/gallery/Pic23.jpeg", caption: "Senyum manis dalam balutan merah." }
+        { src: "assets/gallery/Pic23.jpeg", caption: "Dangerous Woman" }
       ]
     },
 
@@ -51,11 +51,11 @@ window.SITE_DATA = {
       eyebrow: "catatan kecil",
       heading: "Momen sederhana, arti yang tinggal",
       items: [
-        { src: "assets/gallery/Student Lobby.jpg", caption: "Student Lobby, tempat kita pertama kali bertemu—saat aku tidak sengaja menginjak kakimu." },
-        { src: "assets/gallery/Pic6.jpeg", caption: "First Nongkrong bersama (Batak Pride)" },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Momen kecil yang ingin kusimpan lebih lama." },
-        { src: "assets/gallery/pic24.jpeg", caption: "Belum lama saling mengenal, tapi tiap cerita kecil terasa berarti." },
-        { caption: "Semoga masih banyak hari baik yang bisa kita rayakan bersama." }
+        { src: "assets/gallery/Student Lobby.jpg", caption: "Student Lobby, tempat kita pertama kali bertemu—saat aku tidak sengaja menginjak kakimu.", photoSize: "landscape" },
+        { src: "assets/gallery/Pic6.jpeg", caption: "First Nongkrong bersama (Batak Pride)", photoSize: "portrait" },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Momen kecil yang ingin kusimpan lebih lama.", photoSize: "wide" },
+        { src: "assets/gallery/pic24.jpeg", caption: "Bandrek with Sate", photoSize: "tall" },
+        { caption: "Semoga masih banyak hari baik yang bisa kita rayakan bersama, dan semoga cerita kita terus bertambah di sini." }
       ]
     },
 
