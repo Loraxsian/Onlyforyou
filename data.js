@@ -21,28 +21,29 @@ window.SITE_DATA = {
       eyebrow: "beberapa momen favoritku",
       heading: "Hal kecil yang selalu membuatku tersenyum",
       photos: [
-        { src: "assets/gallery/Pic1.jpeg", caption: "Satu selfie malam yang menyimpan banyak tawa." },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Tiga senyum dan pose kompak dalam satu frame.", objectPosition: "60% center" },
-        { src: "assets/gallery/Pic3.png", caption: "Pose berdua di bawah cahaya lampu malam." },
-        { src: "assets/gallery/Pic4.jpeg", caption: "Momen random saat jalan-jalan yang bikin senyum." },
-        { src: "assets/gallery/Pic5.jpeg", caption: "Makan bareng sederhana, ceritanya jadi istimewa.", objectPosition: "44% center" },
-        { src: "assets/gallery/Pic6.jpeg", caption: "Selfie dari ujung meja, semua ikut masuk frame." },
+        { src: "assets/gallery/Pic1.jpeg", caption: "Malam Ceria, Semuanya Peaceful" },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Gak pakai wacana, Sung ketawa", objectPosition: "60% center" },
+        { src: "assets/gallery/Pic3.png", caption: "Dibawah cahaya lampu malam, yang satu kaku, yang satu manyun" },
+        { src: "assets/gallery/Pic4.jpeg", caption: "Ketangkep" },
+        { src: "assets/gallery/Pic5.jpeg", caption: "Makan bareng bersama Batak Pride", objectPosition: "44% center" },
+        { src: "assets/gallery/Pic6.jpeg", caption: "First Nongki Batak Pride after PKKMB" },
         { src: "assets/gallery/Pic7.jpeg", caption: "Senyum santai yang diam-diam jadi favorit." },
-        { src: "assets/gallery/Pic8.jpeg", caption: "Pose miring dengan senyum manis di rumah." },
+        { src: "assets/gallery/Pic8.jpeg", caption: "Senyum Manis, ini boleh diklaim gak sih?" },
         { src: "assets/gallery/Pic9.jpeg", caption: "Gaya beda, senyum yang tetap khas." },
         { src: "assets/gallery/Pic10.jpeg", caption: "Senyum kecil yang bikin foto ini terasa hangat.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic11.jpeg", caption: "Peace sign dan ekspresi jahil yang susah dilupakan." },
-        { src: "assets/gallery/Pic12.jpeg", caption: "Kacamata favorit dan senyum yang menular.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic13.jpeg", caption: "Satu pose manyun untuk melengkapi seri foto hari itu.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic14.jpeg", caption: "Gaya peace di bawah lampu malam.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic11.jpeg", caption: "Peace sign dan ekspresi jahil" },
+        { src: "assets/gallery/Pic12.jpeg", caption: "Jelas, Yang kek gini gak boleh hilang", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic13.jpeg", caption: "Manyun banget ini mah.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic14.jpeg", caption: "Peace di bawah lampu malam.", objectPosition: "center 40%" },
         { src: "assets/gallery/Pic15.jpeg", caption: "Pose manis sambil menikmati suasana malam.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic16.jpeg", caption: "Senyum lepas di sela obrolan malam.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic16.jpeg", caption: "Senyum Anteng yah kek gini, kalem", objectPosition: "center 40%" },
         { src: "assets/gallery/Pic17.jpeg", caption: "Tampil anggun dengan kemeja putih." },
         { src: "assets/gallery/Pic18.jpeg", caption: "Langit biru dan langkah santai di tepi pantai." },
         { src: "assets/gallery/Pic19.jpeg", caption: "Angin pantai membuat pose sederhana terasa hidup." },
         { src: "assets/gallery/Pic20.jpeg", caption: "Hari cerah di pesisir dengan senyum yang ikut menyala." },
         { src: "assets/gallery/Pic21.jpeg", caption: "Potret dekat dengan senyum yang menenangkan." },
-        { src: "assets/gallery/Pic22.jpeg", caption: "Tawa kecil dan gaya rambut yang ikut bergerak." }
+        { src: "assets/gallery/Pic22.jpeg", caption: "Tawa kecil dan gaya rambut yang ikut bergerak." },
+        { src: "assets/gallery/Pic23.jpeg", caption: "Senyum manis dalam balutan merah." }
       ]
     },
 
@@ -52,8 +53,8 @@ window.SITE_DATA = {
       items: [
         { src: "assets/gallery/Student Lobby.jpg", caption: "Student Lobby, tempat kita pertama kali bertemu—saat aku tidak sengaja menginjak kakimu." },
         { src: "assets/gallery/Pic6.jpeg", caption: "First Nongkrong bersama (Batak Pride)" },
-        { src: "assets/gallery/Pic2.jpeg", caption: "Tawa dan pose kompak yang selalu mengingatkanku pada momen seru bersama." },
-        { src: "assets/gallery/Pic4.jpeg", caption: "Belum lama saling mengenal, tapi tiap cerita kecil terasa berarti." },
+        { src: "assets/gallery/Pic2.jpeg", caption: "Momen kecil yang ingin kusimpan lebih lama." },
+        { src: "assets/gallery/pic24.jpeg", caption: "Belum lama saling mengenal, tapi tiap cerita kecil terasa berarti." },
         { caption: "Semoga masih banyak hari baik yang bisa kita rayakan bersama." }
       ]
     },
