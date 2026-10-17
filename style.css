@@ -1343,6 +1343,25 @@ body.site-open { overflow: hidden; }
   text-align: right;
 }
 
+.letter-close {
+  display: block;
+  margin: 28px auto 0;
+  padding: 9px 17px;
+  border: 1px solid rgba(200, 117, 131, .38);
+  border-radius: 999px;
+  background: rgba(255, 250, 244, .72);
+  color: #9a6870;
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.letter-close span { display: inline-block; margin-right: 4px; transform: rotate(180deg); }
+.letter-close:hover { border-color: rgba(200, 117, 131, .68); background: rgba(255, 241, 235, .95); transform: translateY(-1px); }
+.letter-close:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
 .site-footer {
   padding: 23px 16px 28px;
   border-top: 1px solid rgba(111, 83, 73, 0.09);

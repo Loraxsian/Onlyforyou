@@ -726,6 +726,7 @@
   const letterToggle = document.getElementById('letter-toggle');
   const letterPaper = document.getElementById('letter-paper');
   const letterToggleLabel = document.getElementById('letter-toggle-label');
+  const letterClose = document.getElementById('letter-close');
   let letterMotionTimer = 0;
   let letterLayoutTimer = 0;
   let letterStageReleaseTimer = 0;
@@ -752,7 +753,7 @@
       letterToggle.setAttribute('aria-label', 'Tutup surat');
       letterPaper.setAttribute('aria-hidden', 'false');
       letterPaper.inert = false;
-      letterToggleLabel.textContent = 'sentuh surat untuk melipat dan menutup';
+      letterToggleLabel.textContent = 'surat terbuka · tekan “Tutup surat” untuk melipatnya';
     }, 560);
   }
 
@@ -791,6 +792,7 @@
     if (letterToggle.getAttribute('aria-expanded') === 'true') closeLetter();
     else openLetter();
   });
+  letterClose.addEventListener('click', closeLetter);
 
   function updateCountdown() {
     const nextBirthday = new Date(DATA.main.nextBirthday);
