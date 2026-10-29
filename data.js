@@ -7,6 +7,12 @@ window.SITE_DATA = {
 
   recipient: "Jessica",
 
+  // ---------------- BACKEND NOTIFIKASI & WEB PUSH ----------------
+  api: {
+    endpoint: "https://api.onlyforjessica.my.id",
+    vapidPublicKey: "BNjNxN5eSBXcTLFZxC55Oy9U-44P38TWLHu3jGGWvgS4jU6FUKPurLAGxDhj0JOazPXl854WYxk5N76TPZW52Oc"
+  },
+
   // ---------------- SCENE 2: MAIN SCENE ----------------
   main: {
     heroEyebrow: "18 Oktober · hari tentang kamu",

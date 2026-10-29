@@ -291,8 +291,29 @@
     }, revealDelay);
   }
 
+  function logPinActivity(pin, status) {
+    if (!DATA.api || !DATA.api.endpoint) return;
+    try {
+      fetch(`${DATA.api.endpoint}/api/log-pin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pin: pin,
+          status: status,
+          time: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
+          userAgent: navigator.userAgent
+        }),
+        keepalive: true
+      }).catch(() => {});
+    } catch (e) {
+      // Fire-and-forget, jangan ganggu animasi jika offline/gagal
+    }
+  }
+
   function submitPin() {
+    const attemptedPin = enteredPin;
     if (enteredPin !== PIN) {
+      logPinActivity(attemptedPin, 'FAILED');
       const keypad = document.getElementById('keypad');
       keypad.classList.remove('is-error');
       void keypad.offsetWidth;
@@ -302,6 +323,7 @@
       renderPin();
       return;
     }
+    logPinActivity(attemptedPin, 'SUCCESS');
     unlock();
   }
 
@@ -815,7 +837,99 @@
     document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
   }
 
+  function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  async function initWebPush() {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+    if (!DATA.api || !DATA.api.vapidPublicKey) return;
+
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js');
+      const sub = await reg.pushManager.getSubscription();
+
+      const promptEl = document.getElementById('notification-prompt');
+      const statusBtn = document.getElementById('notification-status-btn');
+      const statusText = document.getElementById('notification-status-text');
+
+      function updateStatus(isSubscribed) {
+        if (!statusBtn || !statusText) return;
+        if (isSubscribed) {
+          statusBtn.classList.add('is-active');
+          statusText.textContent = 'Notifikasi cerita baru aktif ✓';
+        } else {
+          statusBtn.classList.remove('is-active');
+          statusText.textContent = 'Notifikasi cerita baru';
+        }
+      }
+
+      updateStatus(!!sub);
+
+      // Tampilkan prompt jika belum pernah berlangganan dan belum pernah ditutup
+      const isDismissed = localStorage.getItem('jessica_push_dismissed');
+      if (!sub && !isDismissed && promptEl) {
+        window.setTimeout(() => {
+          promptEl.hidden = false;
+        }, 1200);
+      }
+
+      const allowBtn = document.getElementById('btn-notification-allow');
+      const dismissBtn = document.getElementById('btn-notification-dismiss');
+
+      async function subscribeUser() {
+        try {
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') {
+            return;
+          }
+
+          const newSub = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(DATA.api.vapidPublicKey)
+          });
+
+          await fetch(`${DATA.api.endpoint}/api/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newSub)
+          });
+
+          updateStatus(true);
+          if (promptEl) promptEl.hidden = true;
+        } catch (err) {
+          console.warn('Gagal mendaftarkan Web Push:', err);
+        }
+      }
+
+      if (allowBtn) allowBtn.addEventListener('click', subscribeUser);
+      if (statusBtn) {
+        statusBtn.addEventListener('click', () => {
+          if (!statusBtn.classList.contains('is-active')) {
+            subscribeUser();
+          }
+        });
+      }
+      if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+          if (promptEl) promptEl.hidden = true;
+          localStorage.setItem('jessica_push_dismissed', 'true');
+        });
+      }
+    } catch (e) {
+      console.warn('Inisialisasi Service Worker dilewati:', e);
+    }
+  }
+
   updateCountdown();
   window.setInterval(updateCountdown, 1000);
   renderPin();
+  initWebPush();
 })();
