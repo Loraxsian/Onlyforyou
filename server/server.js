@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const { exec } = require('child_process');
 const webpush = require('web-push');
 require('dotenv').config();
 
@@ -221,7 +222,16 @@ app.post('/api/github-webhook', async (req, res) => {
 
       console.log(`[GitHub Webhook] Push terdeteksi dari ${pusherName}: "${commitMsg}"`);
 
-      // Kirim Web Push ke semua pengunjung yang subscribe
+      // 1. Auto Git Pull di VM agar file di VM selalu sinkron otomatis tanpa SSH manual
+      exec('git pull', { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
+        if (error) {
+          console.error('[Auto Git Pull Error]', error.message);
+        } else {
+          console.log('[Auto Git Pull Success]', stdout.trim());
+        }
+      });
+
+      // 2. Kirim Web Push ke semua pengunjung yang subscribe
       const pushResult = await sendPushToAll(
         'Ada Cerita Baru untukmu! ✨',
         'Website baru saja diperbarui. Yuk lihat apa yang baru!',

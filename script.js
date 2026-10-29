@@ -12,6 +12,7 @@
   const revealDelay = reducedMotion ? 100 : 450;
   let enteredPin = '';
   let unlocked = false;
+  let audioPrimed = false;
 
   audio.src = DATA.audio.src;
   audio.loop = true;
@@ -332,6 +333,11 @@
 
   function addDigit(digit) {
     if (unlocked || enteredPin.length >= 4) return;
+    // Pemanasan audio saat sentuhan pertama agar autoplay di mobile (iOS/Android) tidak terblokir
+    if (!audioPrimed) {
+      audio.load();
+      audioPrimed = true;
+    }
     enteredPin += digit;
     renderPin();
     if (enteredPin.length === 4) window.setTimeout(submitPin, 180);
@@ -340,7 +346,9 @@
   document.getElementById('keypad').addEventListener('click', (event) => {
     const button = event.target.closest('[data-digit]');
     if (button) {
-      pinMessage.textContent = 'masukkan tanggal untuk melihat kejutanmu';
+      if (pinMessage.textContent && pinMessage.textContent !== 'nah, kejutan kecil ini untukmu') {
+        pinMessage.textContent = '';
+      }
       addDigit(button.dataset.digit);
     }
   });
@@ -348,7 +356,9 @@
   document.getElementById('pin-delete').addEventListener('click', () => {
     if (unlocked) return;
     enteredPin = enteredPin.slice(0, -1);
-    pinMessage.textContent = 'masukkan tanggal untuk melihat kejutanmu';
+    if (pinMessage.textContent && pinMessage.textContent !== 'nah, kejutan kecil ini untukmu') {
+      pinMessage.textContent = '';
+    }
     renderPin();
   });
 
@@ -822,6 +832,19 @@
   function updateCountdown() {
     const nextBirthday = new Date(DATA.main.nextBirthday);
     const now = new Date();
+    const captionEl = document.getElementById('countdown-caption');
+
+    const isToday = now.getMonth() === nextBirthday.getMonth() && now.getDate() === nextBirthday.getDate();
+    if (isToday) {
+      if (captionEl) captionEl.textContent = 'Hari ini adalah hari istimewamu! 🎉';
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-minutes').textContent = '00';
+      document.getElementById('cd-seconds').textContent = '00';
+      return;
+    }
+
+    if (captionEl) captionEl.textContent = DATA.main.countdownLabel;
     let target = new Date(now.getFullYear(), nextBirthday.getMonth(), nextBirthday.getDate());
     if (target <= now) {
       target = new Date(now.getFullYear() + 1, nextBirthday.getMonth(), nextBirthday.getDate());
