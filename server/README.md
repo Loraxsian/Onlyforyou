@@ -52,9 +52,21 @@ Jika muncul: `{"status":"online", ...}`, artinya backend sudah sukses terhubung 
 
 ## 📢 Cara Kirim Notifikasi Update ke Jessica
 
-Kapan pun kamu selesai update website dan ingin memberi tahu Jessica di layar HP/Laptopnya:
+### Opsi 1: Otomatis Setiap Kali `git push` (GitHub Webhook) ⭐
+1. Buka repositori GitHub kamu di browser.
+2. Masuk ke **Settings** -> **Webhooks** -> **Add webhook**.
+3. Isi kolom:
+   * **Payload URL:** `https://api.onlyforjessica.my.id/api/github-webhook`
+   * **Content type:** pilih `application/json`
+   * **Which events would you like to trigger this webhook?** pilih `Just the push event`
+4. Klik **Add webhook**.
 
-Cukup jalankan script ini di terminal VM:
+*Sekarang, setiap kali kamu melakukan `git push` di komputermu, notifikasi Web Push akan otomatis terkirim ke perangkat pelihat!*
+
+---
+
+### Opsi 2: Manual dari Terminal VM
+Kapan pun kamu ingin mengirim notifikasi kustom ke Jessica di layar HP/Laptopnya:
 ```bash
 node broadcast.js "Judul Pesan" "Isi pesan yang mau kamu sampaikan"
 ```
