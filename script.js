@@ -288,6 +288,9 @@
       document.getElementById('hero-title').focus({ preventScroll: true });
       startPetalRain();
       playMusic();
+      if (typeof window.triggerNotificationPrompt === 'function') {
+        window.triggerNotificationPrompt();
+      }
     }, revealDelay);
   }
 
@@ -873,13 +876,15 @@
 
       updateStatus(!!sub);
 
-      // Tampilkan prompt jika belum pernah berlangganan dan belum pernah ditutup
-      const isDismissed = localStorage.getItem('jessica_push_dismissed');
-      if (!sub && !isDismissed && promptEl) {
-        window.setTimeout(() => {
-          promptEl.hidden = false;
-        }, 1200);
-      }
+      // Tampilkan toast notifikasi setelah beberapa detik user menjelajahi website
+      window.triggerNotificationPrompt = function () {
+        const isDismissed = localStorage.getItem('jessica_push_dismissed');
+        if (!sub && !isDismissed && promptEl) {
+          window.setTimeout(() => {
+            promptEl.hidden = false;
+          }, 6500);
+        }
+      };
 
       const allowBtn = document.getElementById('btn-notification-allow');
       const dismissBtn = document.getElementById('btn-notification-dismiss');
@@ -888,6 +893,7 @@
         try {
           const permission = await Notification.requestPermission();
           if (permission !== 'granted') {
+            if (promptEl) promptEl.hidden = true;
             return;
           }
 

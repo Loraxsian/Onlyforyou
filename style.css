@@ -1701,124 +1701,131 @@ body.site-open { overflow: hidden; }
 }
 
 /* ============================================================
-   Web Push Notification Prompt & Status
+   Web Push Notification: Floating Toast & Footer Link
    ============================================================ */
-.notification-prompt {
-  margin: 32px auto 20px;
-  max-width: 480px;
-  animation: promptFadeIn 480ms ease-out;
+.notification-toast {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 252, 248, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 117, 131, 0.28);
+  box-shadow: 0 10px 32px rgba(80, 52, 44, 0.12);
+  border-radius: 999px;
+  padding: 8px 10px 8px 18px;
+  animation: toastSlideUp 380ms cubic-bezier(.2, .9, .25, 1);
 }
 
-@keyframes promptFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+@keyframes toastSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.notification-prompt-card {
-  background: var(--paper-light);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 22px 24px;
-  box-shadow: 0 10px 28px rgba(111, 83, 73, 0.08);
-  text-align: left;
-}
-
-.notification-prompt-header {
+.notification-toast-content {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 8px;
 }
 
-.notification-prompt-icon {
-  font-size: 20px;
+.notification-toast-icon {
+  font-size: 15px;
 }
 
-.notification-prompt-title {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
+.notification-toast-text {
   margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
 }
 
-.notification-prompt-desc {
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 0 0 18px;
-}
-
-.notification-prompt-actions {
+.notification-toast-actions {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 6px;
 }
 
-.btn-notification-allow {
+.btn-toast-allow {
   background: var(--rose);
   color: #fff;
   border: none;
   border-radius: 999px;
-  padding: 10px 20px;
-  font-size: 13.5px;
-  font-weight: 500;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   transition: background 200ms ease, transform 150ms ease;
 }
 
-.btn-notification-allow:hover {
+.btn-toast-allow:hover {
   background: #b56271;
   transform: translateY(-1px);
 }
 
-.btn-notification-dismiss {
+.btn-toast-dismiss {
   background: transparent;
   color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 9px 18px;
-  font-size: 13.5px;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
   cursor: pointer;
-  transition: background 200ms ease, color 200ms ease;
+  transition: color 150ms ease, background 150ms ease;
 }
 
-.btn-notification-dismiss:hover {
-  background: rgba(111, 83, 73, 0.06);
+.btn-toast-dismiss:hover {
+  background: rgba(111, 83, 73, 0.08);
   color: var(--ink);
 }
 
-.notification-status-btn {
+/* Footer Link / Button */
+.notification-footer-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 14px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--line);
+  margin-top: 10px;
+  background: transparent;
+  border: 1px dashed var(--line);
   border-radius: 999px;
-  padding: 7px 15px;
-  font-size: 12px;
+  padding: 5px 13px;
+  font-size: 11.5px;
   color: var(--muted);
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 180ms ease;
 }
 
-.notification-status-btn:hover {
-  background: #fff;
-  color: var(--ink);
+.notification-footer-btn:hover {
   border-color: var(--rose);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.5);
 }
 
-.notification-status-btn.is-active {
-  background: var(--rose-soft);
-  color: #8b3c4c;
-  border-color: #e4abb5;
+.notification-footer-btn.is-active {
+  border-style: solid;
+  border-color: rgba(200, 117, 131, 0.28);
+  background: rgba(200, 117, 131, 0.08);
+  color: var(--rose);
 }
 
-@media (max-width: 480px) {
-  .notification-prompt-card { padding: 18px; }
-  .notification-prompt-actions { flex-direction: column; width: 100%; }
-  .btn-notification-allow, .btn-notification-dismiss { width: 100%; text-align: center; }
+@media (max-width: 600px) {
+  .notification-toast {
+    right: 16px;
+    left: 16px;
+    justify-content: space-between;
+    padding: 9px 12px 9px 16px;
+  }
+  .notification-toast-text {
+    font-size: 12px;
+    white-space: normal;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

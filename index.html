@@ -309,31 +309,28 @@
         </div>
         <button class="scene-back" type="button" data-previous-scene="roadmap">← Kembali ke cerita</button>
 
-        <div class="notification-prompt" id="notification-prompt" hidden>
-          <div class="notification-prompt-card">
-            <div class="notification-prompt-header">
-              <span class="notification-prompt-icon" aria-hidden="true">🔔</span>
-              <p class="notification-prompt-title">Ingin tahu jika ada cerita baru?</p>
-            </div>
-            <p class="notification-prompt-desc">Nyalakan notifikasi agar kamu bisa langsung tahu di layar HP-mu setiap kali ada kenangan baru yang ditambahkan di sini.</p>
-            <div class="notification-prompt-actions">
-              <button class="btn-notification-allow" id="btn-notification-allow" type="button">Nyalakan Notifikasi</button>
-              <button class="btn-notification-dismiss" id="btn-notification-dismiss" type="button">Nanti Saja</button>
-            </div>
-          </div>
-        </div>
-
         <footer class="site-footer">
           <span aria-hidden="true">♡</span>
           <p>disiapkan sepenuh hati, untuk <span id="footer-recipient"></span></p>
-          <button class="notification-status-btn" id="notification-status-btn" type="button" aria-label="Notifikasi pembaruan">
-            <span class="notification-status-icon" aria-hidden="true">🔔</span>
-            <span class="notification-status-text" id="notification-status-text">Notifikasi cerita baru</span>
+          <button class="notification-footer-btn" id="notification-status-btn" type="button" aria-label="Notifikasi pembaruan">
+            <span aria-hidden="true">🔔</span>
+            <span id="notification-status-text">Kirim kabar jika ada update</span>
           </button>
         </footer>
       </section>
     </section>
   </main>
+
+  <aside class="notification-toast" id="notification-prompt" hidden aria-label="Pemberitahuan cerita baru">
+    <div class="notification-toast-content">
+      <span class="notification-toast-icon" aria-hidden="true">🔔</span>
+      <span class="notification-toast-text">Ingin dikabari jika ada kenangan baru?</span>
+    </div>
+    <div class="notification-toast-actions">
+      <button class="btn-toast-allow" id="btn-notification-allow" type="button">Mau</button>
+      <button class="btn-toast-dismiss" id="btn-notification-dismiss" type="button" aria-label="Tutup pemberitahuan">✕</button>
+    </div>
+  </aside>
 
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto kenangan">
     <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Tutup foto">×</button>
