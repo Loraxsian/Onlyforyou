@@ -1258,6 +1258,7 @@ body.site-open { overflow: hidden; }
   grid-template-rows: 1fr;
   opacity: 1;
   transform: translateY(18px);
+  pointer-events: auto;
 }
 
 .letter-card.is-closing .letter-paper {
