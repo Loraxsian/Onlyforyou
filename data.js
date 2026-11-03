@@ -70,11 +70,12 @@ window.SITE_DATA = {
       envelopeLabel: "untuk Jessica",
       hint: "klik amplopnya",
       paragraphs: [
-        "Hai Jessica, selamat merayakan hari Natal.",
-        "Menjelang penutupan tahun ini, aku ingin menyampaikan rasa syukur karena tahun ini ada kamu di dalamnya. Dari awal pertemuan kita yang tanpa sengaja di Student Lobby, sampai semua obrolan dan waktu santai yang kita lewati—semuanya jadi kenangan yang sangat berharga.",
-        "Semoga di musim Natal ini kamu selalu diliputi kesehatan, damai sejahtera, dan kebahagiaan yang tulus. Semoga tahun yang baru nanti membawa kelancaran untuk setiap impian dan langkahmu."
+        "Halo Jessica, selamat Hari Natal ya. Semoga Natal tahun ini bawa banyak rasa tenang, sukacita, dan waktu yang hangat buat kamu bareng keluarga maupun orang-orang terdekatmu.",
+        "Terima kasih juga karena di tahun ini kita sempat kenal dan lewatin beberapa momen bareng. Buat aku, kenal sama kamu itu salah satu hal baik yang patut disyukuri di tahun ini.",
+        "Di hari yang baik ini, aku mau doain semoga kamu sehat terus, urusan kuliah dan semua kegiatanmu dilancarkan, dan apa pun yang lagi kamu usahakan pelan-pelan bisa tercapai. Semoga hal-hal yang sempat bikin capek di tahun ini bisa diganti sama banyak kabar baik di tahun yang baru nanti.",
+        "Semoga senyum dan hal-hal baik selalu nemenin langkahmu ke depannya."
       ],
-      closingLine: "Semoga suasana Natal ini membawa damai dan kehangatan untukmu.",
+      closingLine: "Selamat Natal dan selamat menyambut tahun baru, Jessica. Tuhan memberkati.",
       signature: "~Andrian"
     }
   },

@@ -410,14 +410,6 @@
   const storyScenes = [...document.querySelectorAll('[data-scene]')];
   let activeScene = 'hero';
   function goToScene(name) {
-    const cakeGate = document.getElementById('cake-gate');
-    if (name === 'gallery' && !cakeGate.classList.contains('is-lit')) {
-      if (activeScene !== 'hero') goToScene('hero');
-      setNavOpen(false);
-      document.getElementById('cake-hint').textContent = 'Sentuh kuenya untuk menyalakan lilin';
-      cakeGate.focus({ preventScroll: true });
-      return;
-    }
     const nextScene = storyScenes.find((scene) => scene.dataset.scene === name);
     if (!nextScene || name === activeScene) return;
     activeScene = name;
@@ -636,6 +628,7 @@
     if (target) {
       event.preventDefault();
       setNavOpen(false);
+      if (target.dataset.scene === activeScene) return;
       const transitionOrigin = navToggle.getClientRects().length ? navToggle : link;
       playFlowerTransition(() => goToScene(target.dataset.scene), transitionOrigin, true);
     }
