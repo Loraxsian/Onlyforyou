@@ -641,16 +641,75 @@
   const lanternPull = document.getElementById('lantern-pull');
   let lanternPointerY = null;
   let lanternOpening = false;
+
+  function goldenStarSvg() {
+    return `<svg viewBox="0 0 36 36" aria-hidden="true">
+      <polygon points="18,4 21,15 32,18 21,21 18,32 15,21 4,18 15,15" fill="#ffd966" opacity="0.7" transform="rotate(45 18 18)"/>
+      <polygon points="18,1 21.5,14.5 35,18 21.5,21.5 18,35 14.5,21.5 1,18 14.5,14.5" fill="#fff3b0" stroke="#ffffff" stroke-width="0.9"/>
+      <circle cx="18" cy="18" r="3" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  function spawnFallingStarShower() {
+    if (reducedMotion || !cakeBurnTransition) return;
+    const stage = cakeBurnTransition;
+    stage.replaceChildren();
+    stage.classList.remove('is-flooding', 'is-fading');
+    stage.hidden = false;
+
+    const lampRect = lanternPull.getBoundingClientRect();
+    const lampCenterX = (lampRect.left + lampRect.width / 2) / window.innerWidth * 100;
+    const lampTopY = Math.max(4, (lampRect.top / window.innerHeight) * 100);
+    const totalStars = window.innerWidth < 600 ? 22 : 34;
+
+    for (let i = 0; i < totalStars; i += 1) {
+      const star = document.createElement('span');
+      star.className = 'starfall-burst-particle';
+      const fromLamp = i < 12;
+      const startX = fromLamp
+        ? lampCenterX + (Math.random() - 0.5) * 26
+        : 6 + Math.random() * 88;
+      const startY = fromLamp
+        ? lampTopY + (Math.random() - 0.3) * 8
+        : -4 + Math.random() * 18;
+      const dx = (Math.random() - 0.5) * 140;
+      const dy = (52 + Math.random() * 42) + 'vh';
+      const size = 13 + Math.random() * 17;
+      const dur = 820 + Math.random() * 520;
+      const delay = i * 24 + Math.random() * 160;
+      const tilt = (-dx * 0.16).toFixed(1);
+      const rot = (Math.random() > 0.5 ? 1 : -1) * (140 + Math.random() * 160);
+
+      star.style.setProperty('--sb-x', `${startX.toFixed(1)}%`);
+      star.style.setProperty('--sb-y', `${startY.toFixed(1)}%`);
+      star.style.setProperty('--sb-dx', `${dx.toFixed(1)}px`);
+      star.style.setProperty('--sb-dy', dy);
+      star.style.setProperty('--sb-size', `${size.toFixed(1)}px`);
+      star.style.setProperty('--sb-dur', `${dur.toFixed(0)}ms`);
+      star.style.setProperty('--sb-delay', `${delay.toFixed(0)}ms`);
+      star.style.setProperty('--sb-tilt', `${tilt}deg`);
+      star.style.setProperty('--sb-rot', `${rot.toFixed(0)}deg`);
+      star.innerHTML = goldenStarSvg();
+      stage.appendChild(star);
+    }
+
+    window.setTimeout(() => {
+      stage.hidden = true;
+      stage.replaceChildren();
+    }, 1550);
+  }
+
   function lightLantern() {
     if (lanternOpening) return;
     lanternOpening = true;
     lanternPull.classList.add('is-lit', 'is-pulled');
+    spawnFallingStarShower();
     window.setTimeout(() => {
       goToScene('letter');
       lanternOpening = false;
       lanternPull.classList.remove('is-lit', 'is-pulled');
       lanternPull.style.removeProperty('--pull-distance');
-    }, reducedMotion ? 40 : 700);
+    }, reducedMotion ? 40 : 880);
   }
   lanternPull.addEventListener('pointerdown', (event) => {
     lanternPointerY = event.clientY;
