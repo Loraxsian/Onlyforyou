@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8efe5">
-  <title>Hari Istimewa Jessica — Kenangan Kecil</title>
+  <meta name="theme-color" content="#1a2e26">
+  <title>Malam Natal Jessica — Kenangan Hangat</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=burn-letter-20261015-8">
+  <link rel="stylesheet" href="style.css?v=christmas-20261103">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -141,26 +141,207 @@
 
   <div class="cake-burn-transition" id="cake-burn-transition" hidden aria-hidden="true"></div>
 
+  <!-- Panoramic Moonlit Alpine Christmas Backdrop (Inspired by Dribbble Reference) -->
+  <div class="alpine-backdrop" aria-hidden="true">
+    <!-- Starfield Layer -->
+    <div class="alpine-stars"></div>
+
+    <!-- Volumetric Night Clouds (Top-Right & Mid-Left by the Moon) -->
+    <div class="alpine-cloud alpine-cloud--topright"></div>
+    <div class="alpine-cloud alpine-cloud--midleft"></div>
+
+    <!-- Distant Flying Santa & Reindeer Silhouettes in the High Night Sky -->
+    <div class="sky-santa-flight">
+      <svg class="santa-defs-svg" width="0" height="0" aria-hidden="true">
+        <defs>
+          <radialGradient id="rudolph-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff5a67" stop-opacity="0.95"/>
+            <stop offset="50%" stop-color="#ff2a3c" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ff2a3c" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Exact Vector Silhouette Traced Directly from Reference Photo: Sleigh & 3 Leaping Stag Reindeer -->
+          <path id="reindeer-stag-exact" fill="#050b12" fill-rule="evenodd" d="M396.6,18.1 L401.0,17.5 L405.1,18.4 L407.5,21.0 L410.5,23.0 L413.2,25.3 L412.4,28.9 L409.3,30.8 L408.0,34.0 L408.8,37.7 L411.3,40.2 L414.3,42.2 L414.6,45.2 L412.0,47.5 L408.3,48.8 L405.5,51.0 L403.1,53.6 L402.0,57.5 L402.0,61.5 L403.9,64.6 L406.9,66.6 L408.8,69.7 L412.0,71.5 L415.5,73.0 L418.2,71.7 L418.2,67.3 L415.3,65.2 L412.8,62.7 L412.6,58.1 L414.1,54.6 L416.5,52.0 L418.3,48.8 L420.5,46.0 L420.4,43.1 L417.8,40.7 L418.5,37.0 L421.8,35.3 L424.6,33.1 L426.6,30.1 L430.4,30.1 L432.3,33.2 L434.8,35.7 L438.4,37.1 L441.2,39.3 L443.0,42.5 L442.3,45.8 L439.0,47.5 L434.0,47.5 L429.3,47.8 L426.4,49.9 L424.5,53.0 L422.0,55.5 L420.5,59.0 L420.8,63.7 L423.7,65.8 L426.0,68.5 L428.4,71.1 L430.9,73.6 L433.3,76.2 L436.9,75.4 L438.8,72.3 L441.7,70.2 L443.7,67.2 L447.0,65.5 L451.1,66.4 L455.0,65.5 L457.5,63.0 L460.0,60.5 L464.0,59.5 L467.3,61.2 L469.1,64.4 L471.2,67.3 L470.0,70.5 L467.0,72.5 L466.1,75.4 L468.3,78.2 L468.9,81.4 L465.9,83.4 L461.3,83.8 L457.6,85.1 L457.1,88.4 L459.5,91.0 L462.2,93.3 L465.8,94.7 L468.9,96.6 L468.7,100.2 L465.1,101.6 L461.0,102.5 L457.5,104.0 L455.0,106.5 L451.5,108.0 L449.5,111.0 L449.5,116.0 L449.5,121.0 L450.4,125.1 L451.3,129.0 L450.3,132.8 L448.9,136.4 L445.9,138.4 L443.8,141.3 L442.7,145.2 L440.8,148.3 L438.3,150.8 L437.8,154.7 L439.1,158.4 L442.1,160.4 L446.1,161.4 L450.5,161.0 L455.0,160.5 L459.1,161.4 L464.0,161.5 L468.2,162.3 L471.0,164.5 L474.0,166.5 L478.0,167.5 L482.7,167.8 L485.2,170.3 L484.0,173.5 L482.8,176.7 L484.9,179.6 L485.2,183.7 L482.1,185.4 L479.1,183.4 L476.7,180.8 L472.9,179.6 L469.0,178.5 L466.9,175.6 L463.8,173.7 L461.0,171.5 L458.4,169.1 L454.0,168.5 L449.9,169.4 L447.4,171.9 L443.9,173.4 L439.0,173.5 L434.0,173.5 L429.0,173.5 L424.0,173.5 L419.0,173.5 L414.1,173.6 L410.3,174.8 L407.5,177.0 L404.7,179.2 L400.0,179.5 L395.0,179.5 L390.0,179.5 L385.0,179.5 L380.0,179.5 L375.0,179.5 L370.0,179.5 L365.0,179.5 L360.0,179.5 L355.0,179.5 L350.0,179.5 L345.3,179.8 L342.4,181.9 L340.4,184.9 L337.3,186.8 L335.3,189.8 L332.0,191.5 L327.9,192.4 L323.0,192.5 L318.1,192.4 L314.0,191.5 L309.0,191.5 L304.0,191.5 L299.0,191.5 L294.0,191.5 L289.9,192.4 L287.7,195.2 L285.0,197.5 L282.0,199.5 L279.4,201.9 L275.9,203.4 L271.9,204.4 L269.5,207.0 L266.7,209.2 L262.0,209.5 L257.0,209.5 L252.6,208.9 L251.0,205.5 L249.6,201.9 L251.0,198.5 L255.0,197.5 L259.5,197.0 L262.5,195.0 L264.6,192.1 L269.0,191.5 L273.2,190.7 L275.9,188.4 L278.5,186.0 L281.8,184.3 L285.0,182.5 L287.6,180.1 L292.0,179.5 L297.0,179.5 L301.5,179.0 L304.5,177.0 L306.6,174.1 L309.7,172.2 L311.4,168.9 L311.5,164.0 L311.5,159.0 L311.5,154.0 L311.5,149.0 L311.5,144.0 L311.0,139.5 L309.5,136.0 L307.3,133.2 L305.7,129.8 L304.0,126.5 L301.1,124.4 L301.1,120.6 L305.0,119.5 L309.7,119.8 L312.0,122.5 L314.5,125.0 L317.2,127.3 L318.9,130.6 L321.0,133.5 L323.3,136.2 L325.6,138.9 L328.8,140.7 L333.0,141.5 L338.0,141.5 L343.0,141.5 L348.0,141.5 L352.5,142.0 L356.5,142.0 L360.5,141.0 L363.8,139.3 L367.3,137.8 L371.7,137.2 L375.9,136.4 L379.8,135.3 L383.7,134.2 L387.5,133.0 L391.1,131.6 L395.0,130.5 L398.4,128.9 L401.0,126.5 L405.0,125.5 L409.7,125.2 L412.6,123.1 L414.6,120.1 L417.7,118.2 L419.4,114.9 L419.5,110.0 L420.7,106.2 L422.9,103.4 L424.7,100.2 L425.8,96.3 L427.0,92.5 L428.4,88.9 L427.1,85.4 L423.5,84.0 L419.5,83.0 L416.5,81.0 L413.7,78.8 L409.7,77.8 L406.0,76.5 L403.5,74.0 L401.1,71.4 L399.0,68.5 L396.5,66.0 L395.0,62.5 L395.2,58.8 L393.9,55.6 L391.2,53.3 L389.0,50.5 L386.2,48.3 L382.0,47.5 L377.0,47.5 L372.6,46.9 L371.8,43.3 L374.5,41.0 L377.2,38.7 L378.4,34.9 L380.9,32.6 L383.0,35.5 L384.5,39.0 L387.4,41.1 L389.5,44.0 L392.0,46.5 L396.0,47.5 L399.8,46.3 L401.5,43.0 L401.5,38.0 L401.0,33.5 L400.0,29.5 L398.0,26.5 L395.8,23.7 L395.8,19.3 Z"/>
+          <g id="santa-squadron">
+            <!-- Continuous Harness Reins Connecting Sleigh to All 3 Reindeer -->
+            <path class="santa-reins" d="M165,134 L425,129 L675,129 L925,129" fill="none" stroke="#050b12" stroke-width="3.2" stroke-linecap="round"/>
+            <path class="santa-reins" d="M162,146 L422,142 L672,142 L920,142" fill="none" stroke="#050b12" stroke-width="2.1" stroke-linecap="round" opacity="0.85"/>
+
+            <!-- Exact Sleigh + Santa + Curled Scroll Runners -->
+            <g class="santa-sleigh-unit">
+              <path fill="#050b12" fill-rule="evenodd" d="M67.6,114.1 L72.0,113.5 L77.0,113.5 L82.0,113.5 L86.9,113.6 L89.7,115.8 L91.5,119.0 L94.0,121.5 L95.7,124.8 L96.8,128.7 L98.0,132.5 L99.9,135.6 L101.9,138.6 L104.0,141.5 L107.7,142.8 L111.7,143.8 L113.9,146.6 L116.5,149.0 L120.5,149.0 L124.0,147.5 L126.1,144.6 L130.0,143.5 L134.9,143.4 L139.0,142.5 L144.0,142.5 L149.0,142.5 L153.3,143.2 L158.0,143.5 L163.0,143.5 L168.0,143.5 L172.7,143.8 L175.9,145.6 L174.8,148.3 L171.0,149.5 L166.0,149.5 L161.0,149.5 L156.0,149.5 L151.7,150.2 L147.0,150.5 L142.0,150.5 L137.1,150.6 L133.6,152.1 L131.1,154.6 L127.0,155.5 L122.8,156.3 L120.0,158.5 L119.6,162.9 L121.3,166.2 L125.0,167.5 L129.4,168.1 L131.7,170.8 L134.9,172.4 L137.5,170.0 L138.8,166.3 L141.0,163.5 L144.3,161.8 L149.0,161.5 L153.7,161.8 L155.4,164.9 L153.2,167.7 L149.6,169.1 L148.6,172.9 L150.0,176.5 L152.5,179.0 L157.0,179.5 L162.0,179.5 L167.0,179.5 L171.0,178.5 L173.5,176.0 L176.0,173.5 L179.9,172.6 L183.9,173.6 L186.7,175.8 L189.5,178.0 L193.2,179.3 L196.3,181.2 L197.5,185.0 L198.1,189.4 L201.2,191.3 L203.4,194.1 L203.5,199.0 L203.8,203.7 L204.4,207.9 L203.4,211.9 L201.4,214.9 L198.7,217.2 L196.9,220.4 L193.8,222.3 L191.5,225.0 L189.2,227.7 L185.3,228.8 L182.0,230.5 L179.4,232.9 L175.0,233.5 L170.5,234.0 L167.7,236.2 L165.4,238.9 L161.0,239.5 L156.0,239.5 L151.6,238.9 L149.7,236.0 L151.8,233.3 L156.0,232.5 L159.8,231.3 L163.0,229.5 L165.9,227.4 L166.4,223.1 L163.6,220.9 L161.5,218.0 L158.7,215.8 L154.0,215.5 L150.2,216.7 L147.0,218.5 L144.5,221.0 L142.3,223.8 L142.5,227.0 L144.9,229.6 L143.0,231.5 L139.6,229.9 L139.2,225.3 L137.0,222.5 L134.0,220.7 L130.0,221.5 L125.0,221.5 L121.3,222.8 L119.3,225.8 L117.4,228.9 L113.5,229.0 L109.1,228.4 L105.0,227.5 L100.0,227.5 L95.0,227.5 L90.0,227.5 L85.8,228.3 L82.7,230.2 L80.2,232.7 L77.5,235.0 L74.8,237.3 L71.5,239.0 L67.9,240.4 L66.8,243.7 L69.5,246.0 L73.9,246.6 L77.5,248.0 L80.8,249.2 L84.2,247.7 L88.0,246.5 L92.7,246.2 L96.7,245.2 L101.0,244.5 L105.9,244.6 L110.0,245.5 L114.3,244.8 L118.2,243.7 L120.1,240.6 L123.7,239.2 L127.7,238.2 L130.5,236.0 L133.3,233.8 L137.2,234.3 L138.7,237.8 L141.5,240.0 L143.9,242.4 L142.4,244.9 L138.0,245.5 L133.0,245.5 L128.7,246.2 L124.8,247.3 L122.0,249.5 L118.9,251.4 L114.9,252.4 L110.0,252.5 L105.0,252.5 L100.0,252.5 L95.0,252.5 L91.0,253.5 L88.2,255.7 L84.7,257.2 L80.0,257.5 L75.0,257.5 L70.0,257.5 L65.0,257.5 L60.0,257.5 L55.5,258.0 L51.0,258.5 L46.0,258.5 L41.3,258.2 L37.0,257.5 L32.3,257.2 L29.5,255.0 L26.6,252.9 L24.1,250.4 L22.8,246.7 L22.5,242.0 L23.0,237.5 L22.8,233.7 L23.0,229.5 L25.2,226.7 L29.0,225.5 L33.7,225.2 L37.2,223.8 L40.8,224.7 L43.6,226.9 L46.3,229.2 L48.1,232.4 L50.2,235.3 L49.4,238.9 L46.4,240.9 L42.3,241.2 L40.5,238.0 L37.9,235.6 L34.2,236.7 L31.1,238.6 L30.6,242.9 L32.5,246.0 L35.0,248.5 L38.1,250.4 L42.1,251.4 L47.0,251.5 L51.0,250.5 L53.3,247.8 L54.5,244.0 L56.5,241.0 L58.7,238.2 L60.0,234.5 L61.9,231.4 L61.1,228.4 L59.3,225.2 L57.4,222.1 L53.0,221.5 L48.5,221.0 L45.9,218.6 L43.5,216.0 L41.8,212.7 L41.4,208.1 L40.4,204.1 L38.7,200.8 L37.0,197.5 L36.0,193.5 L35.4,189.1 L33.5,186.0 L30.2,184.3 L26.8,182.7 L24.3,180.2 L23.5,176.0 L23.5,171.0 L23.5,166.0 L23.5,161.0 L23.5,156.0 L23.8,151.3 L26.5,149.0 L30.4,147.9 L33.5,146.0 L36.8,144.3 L41.0,143.5 L46.0,143.5 L51.0,143.5 L56.0,143.5 L61.0,143.5 L65.0,142.5 L68.0,140.5 L70.3,137.8 L71.0,134.5 L69.0,131.5 L66.3,129.2 L63.8,126.7 L60.6,124.9 L59.8,121.3 L62.5,119.0 L65.1,116.6 Z M175.3,180.8 L173.2,183.7 L170.5,186.0 L167.9,188.4 L165.4,190.9 L162.8,193.3 L163.9,196.6 L166.9,198.6 L168.4,202.1 L172.0,203.5 L176.2,204.2 L180.1,203.6 L184.0,204.5 L184.9,207.4 L181.9,209.4 L177.5,209.0 L173.9,209.4 L169.6,208.9 L167.7,205.8 L165.2,203.8 L161.8,205.3 L161.0,208.5 L161.8,212.7 L164.0,215.5 L166.9,217.6 L168.9,220.6 L172.4,222.1 L174.4,225.1 L177.7,226.2 L180.0,223.5 L182.8,221.3 L186.9,220.4 L189.9,218.4 L192.0,215.5 L194.7,213.2 L196.4,209.9 L197.2,205.7 L197.5,201.0 L197.5,196.0 L196.7,191.8 L193.6,189.9 L191.0,187.5 L187.8,185.7 L185.3,183.2 L182.9,180.6 L178.0,180.5 Z"/>
+              <path d="M36,254 L144,248 Q186,238 201,196 Q204,175 184,174 Q168,175 172,190" fill="none" stroke="#050b12" stroke-width="5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Reindeer 3 (Rear Stag) -->
+            <g class="reindeer-unit reindeer-3">
+              <use href="#reindeer-stag-exact" x="0" y="0"/>
+            </g>
+            <!-- Reindeer 2 (Middle Stag) -->
+            <g class="reindeer-unit reindeer-2">
+              <use href="#reindeer-stag-exact" x="246" y="0"/>
+            </g>
+            <!-- Reindeer 1 (Front Lead Stag) -->
+            <g class="reindeer-unit reindeer-1">
+              <use href="#reindeer-stag-exact" x="492" y="0"/>
+            </g>
+          </g>
+        </defs>
+      </svg>
+
+      <!-- Distant High-Sky Sleigh (Right to Left) -->
+      <svg class="santa-sleigh-svg santa-flight-distant" viewBox="15 10 970 256">
+        <use href="#santa-squadron"/>
+      </svg>
+
+      <!-- Upper-Left to Mid-Sky Sleigh -->
+      <svg class="santa-sleigh-svg santa-flight-mid" viewBox="15 10 970 256">
+        <use href="#santa-squadron"/>
+      </svg>
+    </div>
+
+    <!-- Snow-Capped Jagged Alpine Mountain Range -->
+    <svg class="alpine-mountains-svg" viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="mtn-snow-lit" x1="0%" y1="0%" x2="20%" y2="100%">
+          <stop offset="0%" stop-color="#f2f7fc"/>
+          <stop offset="45%" stop-color="#bdd2e6"/>
+          <stop offset="100%" stop-color="#4c6b8a"/>
+        </linearGradient>
+        <linearGradient id="mtn-shadow-side" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2b4561"/>
+          <stop offset="60%" stop-color="#16293d"/>
+          <stop offset="100%" stop-color="#09131e"/>
+        </linearGradient>
+        <linearGradient id="mtn-distant" x1="50%" y1="0%" x2="50%" y2="100%">
+          <stop offset="0%" stop-color="#6d8ba8"/>
+          <stop offset="100%" stop-color="#1b3147"/>
+        </linearGradient>
+        <linearGradient id="valley-mist" x1="50%" y1="0%" x2="50%" y2="100%">
+          <stop offset="0%" stop-color="#7fa1bf" stop-opacity="0"/>
+          <stop offset="55%" stop-color="#8eb0ce" stop-opacity="0.32"/>
+          <stop offset="100%" stop-color="#060e17" stop-opacity="0.9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Distant Back Peaks -->
+      <polygon points="0,240 110,145 230,210 370,118 520,215 670,152 820,220 960,112 1120,195 1290,95 1440,185 1440,360 0,360" fill="url(#mtn-distant)" opacity="0.65"/>
+
+      <!-- Main Alpine Peaks (Base Shadow Body) -->
+      <polygon points="0,230 85,165 180,215 295,135 430,220 515,105 645,225 760,155 880,225 995,98 1135,210 1245,76 1375,180 1440,145 1440,360 0,360" fill="url(#mtn-shadow-side)"/>
+
+      <!-- Moonlit Snowy Ridges & Left Faces on Each Peak -->
+      <!-- Peak 1 (Left) -->
+      <polygon points="0,230 85,165 112,218 65,248 0,260" fill="url(#mtn-snow-lit)"/>
+      <!-- Peak 2 -->
+      <polygon points="180,215 295,135 318,205 275,235 235,218" fill="url(#mtn-snow-lit)"/>
+      <!-- Peak 3 (Left of Moon) -->
+      <polygon points="430,220 515,105 542,195 495,242 465,218" fill="url(#mtn-snow-lit)"/>
+      <!-- Peak 4 (Under Moon) -->
+      <polygon points="645,225 760,155 785,220 725,250 680,230" fill="url(#mtn-snow-lit)" opacity="0.88"/>
+      <!-- Peak 5 (Right of Moon) -->
+      <polygon points="880,225 995,98 1030,192 975,245 925,220" fill="url(#mtn-snow-lit)"/>
+      <!-- Peak 6 (Far Right Tallest Alpine Peak) -->
+      <polygon points="1135,210 1245,76 1285,182 1225,240 1175,215" fill="url(#mtn-snow-lit)"/>
+      <!-- Jagged Crag Highlights -->
+      <path d="M295,135 L282,168 L302,182 L292,212 M515,105 L502,144 L522,165 L508,205 M995,98 L978,142 L1004,168 L988,210 M1245,76 L1228,125 L1254,152 L1235,198" fill="none" stroke="#ffffff" stroke-width="1.8" opacity="0.75"/>
+
+      <!-- Soft Misty Valley Fog Between Mountains & Forest -->
+      <rect x="0" y="195" width="1440" height="165" fill="url(#valley-mist)"/>
+    </svg>
+
+    <!-- Dense Foreground Black Pine Forest Treeline Silhouette -->
+    <svg class="alpine-forest-svg" viewBox="0 0 1440 190" preserveAspectRatio="none">
+      <defs>
+        <!-- Tall Feathered Spruce Tree Silhouette Symbol -->
+        <g id="spruce-tree">
+          <path d="M0,0 L-10,22 L-4,20 L-16,44 L-7,41 L-22,68 L-10,64 L-28,94 L-12,89 L-34,122 L34,122 L12,89 L28,94 L10,64 L22,68 L7,41 L16,44 L4,20 L10,22 Z"/>
+        </g>
+      </defs>
+      <!-- Distant Mist Treeline Layer -->
+      <g fill="#081421" opacity="0.85">
+        <use href="#spruce-tree" x="35" y="55" transform="scale(0.9, 1.1)"/>
+        <use href="#spruce-tree" x="145" y="48" transform="scale(1.1, 1.2)"/>
+        <use href="#spruce-tree" x="310" y="62" transform="scale(0.95, 1.1)"/>
+        <use href="#spruce-tree" x="520" y="58" transform="scale(1, 1.15)"/>
+        <use href="#spruce-tree" x="740" y="64" transform="scale(0.9, 1.1)"/>
+        <use href="#spruce-tree" x="920" y="52" transform="scale(1.05, 1.2)"/>
+        <use href="#spruce-tree" x="1140" y="58" transform="scale(0.95, 1.15)"/>
+        <use href="#spruce-tree" x="1350" y="50" transform="scale(1.05, 1.2)"/>
+      </g>
+      <!-- Foreground Pitch-Black Alpine Spruce Forest -->
+      <rect x="0" y="142" width="1440" height="55" fill="#03070c"/>
+      <g fill="#03070c">
+        <use href="#spruce-tree" x="18" y="68"/>
+        <use href="#spruce-tree" x="64" y="82"/>
+        <use href="#spruce-tree" x="112" y="52"/>
+        <use href="#spruce-tree" x="168" y="75"/>
+        <use href="#spruce-tree" x="215" y="34"/>
+        <use href="#spruce-tree" x="268" y="68"/>
+        <use href="#spruce-tree" x="322" y="46"/>
+        <use href="#spruce-tree" x="378" y="84"/>
+        <use href="#spruce-tree" x="432" y="38"/>
+        <use href="#spruce-tree" x="488" y="76"/>
+        <use href="#spruce-tree" x="545" y="88"/>
+        <use href="#spruce-tree" x="605" y="62"/>
+        <use href="#spruce-tree" x="665" y="85"/>
+        <use href="#spruce-tree" x="722" y="44"/>
+        <use href="#spruce-tree" x="778" y="78"/>
+        <use href="#spruce-tree" x="838" y="66"/>
+        <use href="#spruce-tree" x="895" y="28"/>
+        <use href="#spruce-tree" x="955" y="74"/>
+        <use href="#spruce-tree" x="1012" y="54"/>
+        <use href="#spruce-tree" x="1068" y="82"/>
+        <use href="#spruce-tree" x="1128" y="42"/>
+        <use href="#spruce-tree" x="1188" y="76"/>
+        <use href="#spruce-tree" x="1248" y="58"/>
+        <use href="#spruce-tree" x="1308" y="40"/>
+        <use href="#spruce-tree" x="1368" y="72"/>
+        <use href="#spruce-tree" x="1422" y="56"/>
+      </g>
+    </svg>
+  </div>
+
   <main>
     <section class="welcome-screen active" id="scene-opening" aria-labelledby="welcome-title">
       <div class="welcome-content">
-        <svg class="welcome-flower" viewBox="0 0 100 100" role="img" aria-label="Bunga kecil">
-          <g class="flower-petals">
-            <ellipse cx="50" cy="24" rx="11" ry="22"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(45 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(90 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(135 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(180 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(225 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(270 50 50)"/>
-            <ellipse cx="50" cy="24" rx="11" ry="22" transform="rotate(315 50 50)"/>
+        <svg class="welcome-snowflake" viewBox="0 0 120 120" role="img" aria-label="Kepingan Salju Kristal">
+          <defs>
+            <radialGradient id="welcome-snow-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+              <stop offset="55%" stop-color="#cce8ff" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#cce8ff" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="60" cy="60" r="46" fill="url(#welcome-snow-glow)"/>
+          <g class="snowflake-branches" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <!-- 6 Feathery Dendrite Arms -->
+            <g id="dendrite-arm">
+              <path d="M60 60 L60 12" stroke-width="1.8"/>
+              <path d="M60 22 C56 19 53 16 52 13 M60 22 C64 19 67 16 68 13" stroke-width="1.3"/>
+              <path d="M60 33 C54 29 49 25 47 20 M60 33 C66 29 71 25 73 20" stroke-width="1.4"/>
+              <path d="M60 44 C55 41 51 38 49 34 M60 44 C65 41 69 38 71 34" stroke-width="1.2"/>
+              <path d="M60 12 L57 16 L60 19 L63 16 Z" fill="currentColor" stroke="none" opacity="0.85"/>
+            </g>
+            <use href="#dendrite-arm" transform="rotate(60 60 60)"/>
+            <use href="#dendrite-arm" transform="rotate(120 60 60)"/>
+            <use href="#dendrite-arm" transform="rotate(180 60 60)"/>
+            <use href="#dendrite-arm" transform="rotate(240 60 60)"/>
+            <use href="#dendrite-arm" transform="rotate(300 60 60)"/>
+            <!-- Delicate Inner Hexagonal Crystal Filigree -->
+            <polygon points="60,46 72,53 72,67 60,74 48,67 48,53" stroke-width="1.1" opacity="0.65" fill="rgba(255,255,255,0.12)"/>
           </g>
-          <circle class="flower-center" cx="50" cy="50" r="10"/>
+          <circle class="snowflake-core" cx="60" cy="60" r="3.5" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="60" cy="9" r="1.8" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="104.2" cy="34.5" r="1.8" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="104.2" cy="85.5" r="1.8" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="60" cy="111" r="1.8" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="15.8" cy="85.5" r="1.8" fill="#ffffff"/>
+          <circle class="snowflake-dot" cx="15.8" cy="34.5" r="1.8" fill="#ffffff"/>
         </svg>
 
-        <p class="welcome-kicker">sedikit cerita untukmu</p>
+        <p class="welcome-kicker">sedikit kehangatan untukmu</p>
         <h1 class="welcome-title" id="welcome-title">Untuk Jessica</h1>
-        <p class="welcome-note">Kehadiranmu membuat hari-hari biasa terasa lebih baik.</p>
+        <p class="welcome-note">Menjelang akhir tahun, semoga hatimu selalu dipenuhi damai.</p>
 
         <div class="pin-dots" id="pin-dots" role="status" aria-label="Empat angka belum dimasukkan" aria-live="polite">
           <span class="pin-dot"></span>
@@ -186,7 +367,7 @@
       </div>
     </section>
 
-    <section class="memory-site" id="scene-main" hidden aria-label="Hadiah ulang tahun untuk Jessica">
+    <section class="memory-site" id="scene-main" hidden aria-label="Malam Natal untuk Jessica">
       <header class="site-header">
         <a class="site-mark" href="#hero-section" aria-label="Kembali ke awal">j<span>&</span>a</a>
         <nav class="site-nav" id="site-nav" aria-label="Navigasi utama">
@@ -209,7 +390,63 @@
         <p class="section-kicker" id="hero-eyebrow"></p>
         <h1 class="hero-title" id="hero-title"></h1>
         <p class="hero-subtitle" id="hero-subtitle"></p>
-        <div class="countdown" id="birthday-timer" aria-label="Hitung mundur ulang tahun">
+
+        <!-- Interactive Full Moon + Santa Sleigh Centerpiece (Replaces the Tree, Matches Dribbble Reference) -->
+        <button class="cake-gate moon-santa-gate" id="cake-gate" type="button" aria-label="Sentuh Santa Claus di depan bulan purnama untuk terbang menuju galeri kenangan" aria-describedby="cake-hint" aria-pressed="false">
+          <div class="moon-santa-stage" id="cake-art">
+            <div class="alpine-moon-halo"></div>
+            <!-- Giant Cratered Full Moon -->
+            <svg class="hero-full-moon-svg" viewBox="0 0 260 260" aria-hidden="true">
+              <defs>
+                <radialGradient id="full-moon-surface" cx="42%" cy="38%" r="58%">
+                  <stop offset="0%" stop-color="#fffdf7"/>
+                  <stop offset="52%" stop-color="#f5ead6"/>
+                  <stop offset="82%" stop-color="#decbb0"/>
+                  <stop offset="100%" stop-color="#bfa688"/>
+                </radialGradient>
+                <radialGradient id="moon-crater-dark" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#9e876b" stop-opacity="0.42"/>
+                  <stop offset="70%" stop-color="#b59d80" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#decbb0" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="bauble-red" cx="35%" cy="30%" r="65%">
+                  <stop offset="0%" stop-color="#ff9aa2"/>
+                  <stop offset="45%" stop-color="#e62e40"/>
+                  <stop offset="100%" stop-color="#800f1b"/>
+                </radialGradient>
+                <radialGradient id="bauble-gold" cx="35%" cy="30%" r="65%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="40%" stop-color="#ffd25a"/>
+                  <stop offset="100%" stop-color="#9e6b10"/>
+                </radialGradient>
+              </defs>
+              <circle cx="130" cy="130" r="118" fill="url(#full-moon-surface)"/>
+              <g fill="url(#moon-crater-dark)">
+                <ellipse cx="92" cy="86" rx="34" ry="26" transform="rotate(-18 92 86)"/>
+                <ellipse cx="152" cy="78" rx="28" ry="20" transform="rotate(14 152 78)"/>
+                <ellipse cx="172" cy="128" rx="38" ry="28" transform="rotate(25 172 128)"/>
+                <ellipse cx="115" cy="145" rx="44" ry="30" transform="rotate(-10 115 145)"/>
+                <ellipse cx="74" cy="158" rx="24" ry="18" transform="rotate(12 74 158)"/>
+                <ellipse cx="154" cy="188" rx="30" ry="19" transform="rotate(-15 154 188)"/>
+                <circle cx="102" cy="202" r="16"/>
+                <circle cx="195" cy="95" r="14"/>
+                <circle cx="62" cy="115" r="15"/>
+              </g>
+              <circle cx="104" cy="198" r="9" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
+              <circle cx="84" cy="76" r="12" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+            </svg>
+
+            <!-- Hero Santa Claus & 3 Galloping Reindeer Aligned Across the Full Moon -->
+            <div class="hero-santa-flight-wrap" id="tree-star">
+              <svg class="hero-santa-svg" viewBox="15 10 970 256" aria-hidden="true">
+                <use href="#santa-squadron"/>
+              </svg>
+            </div>
+          </div>
+          <span class="cake-hint" id="cake-hint" aria-live="polite">Sentuh Santa Claus untuk kejutan</span>
+        </button>
+
+        <div class="countdown" id="birthday-timer" aria-label="Hitung mundur malam Natal">
           <p class="countdown-caption" id="countdown-caption"></p>
           <div class="countdown-values">
             <span><strong id="cd-days">0</strong><small>hari</small></span>
@@ -218,31 +455,68 @@
             <span><strong id="cd-seconds">00</strong><small>detik</small></span>
           </div>
         </div>
-        <button class="cake-gate" id="cake-gate" type="button" aria-label="Sentuh kue untuk menyalakan lilin dan membuka galeri" aria-describedby="cake-hint" aria-pressed="false">
-          <svg class="cake-art" id="cake-art" viewBox="0 0 360 220" aria-hidden="true">
-            <ellipse cx="180" cy="190" rx="145" ry="15" fill="#d8b7a5" opacity=".32" />
-            <ellipse cx="180" cy="181" rx="143" ry="17" fill="#f4e5d9" stroke="#d9b8a7" stroke-width="2" />
-            <rect x="56" y="99" width="248" height="82" rx="20" fill="#efc8bd" stroke="#d7a69b" stroke-width="2" />
-            <path d="M57 111 Q75 95 94 108 T132 106 T170 108 T208 106 T246 108 T284 106 T303 111 L303 126 Q294 136 284 126 Q274 116 264 128 Q253 140 242 128 Q232 117 222 129 Q211 141 200 128 Q190 117 180 129 Q169 141 158 128 Q148 117 138 129 Q127 141 116 128 Q106 117 96 129 Q85 141 74 128 Q65 119 57 126 Z" fill="#fff4df" stroke="#e0b5a7" stroke-width="2" />
-            <path d="M75 151 H285" stroke="#d99c91" stroke-width="3" stroke-linecap="round" opacity=".48" />
-            <circle cx="91" cy="157" r="4" fill="#d98d88" /><circle cx="270" cy="157" r="4" fill="#d98d88" />
-            <g class="cake-candles" stroke-linecap="round">
-              <rect x="116" y="59" width="13" height="43" rx="4" fill="#dba7be" />
-              <path d="M117 71 H128 M117 87 H128" stroke="#fff5e6" stroke-width="4" />
-              <path d="M122 58 C105 46 121 33 123 25 C137 40 138 49 122 58Z" class="cake-flame" />
-              <rect x="174" y="50" width="13" height="52" rx="4" fill="#dfb365" />
-              <path d="M175 64 H186 M175 82 H186" stroke="#fff5e6" stroke-width="4" />
-              <path d="M180 49 C163 36 179 23 181 15 C195 30 196 40 180 49Z" class="cake-flame" />
-              <rect x="232" y="59" width="13" height="43" rx="4" fill="#9eb8a2" />
-              <path d="M233 71 H244 M233 87 H244" stroke="#fff5e6" stroke-width="4" />
-              <path d="M238 58 C221 46 237 33 239 25 C253 40 254 49 238 58Z" class="cake-flame" />
-            </g>
-          </svg>
-          <span class="cake-hint" id="cake-hint" aria-live="polite">Sentuh kuenya untuk menyalakan lilin</span>
-        </button>
       </section>
 
       <section class="story-scene content-section content-width" id="gallery-section" data-scene="gallery" aria-label="Galeri kenangan" hidden inert>
+        <!-- Festive Slinger Natal (Pine Garland, Tinsel, Ribbon Bows & Twinkling Lights) -->
+        <div class="gallery-slinger" aria-hidden="true">
+          <svg class="gallery-slinger-svg" viewBox="0 0 800 95" preserveAspectRatio="xMidYMin meet">
+            <defs>
+              <linearGradient id="slinger-pine" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#2f7355"/>
+                <stop offset="60%" stop-color="#1b4935"/>
+                <stop offset="100%" stop-color="#0f2b1f"/>
+              </linearGradient>
+              <linearGradient id="slinger-gold-foil" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#d49a2a"/>
+                <stop offset="50%" stop-color="#fff0a6"/>
+                <stop offset="100%" stop-color="#d49a2a"/>
+              </linearGradient>
+            </defs>
+            <!-- Thick Fluffy Pine & Tinsel Swags (3 Festoons) -->
+            <path d="M10,12 Q140,78 270,16 Q400,82 530,16 Q660,78 790,12" fill="none" stroke="#113022" stroke-width="22" stroke-linecap="round" stroke-dasharray="6 4"/>
+            <path d="M10,12 Q140,78 270,16 Q400,82 530,16 Q660,78 790,12" fill="none" stroke="url(#slinger-pine)" stroke-width="16" stroke-linecap="round" stroke-dasharray="4 5"/>
+            <path d="M10,12 Q140,78 270,16 Q400,82 530,16 Q660,78 790,12" fill="none" stroke="#459671" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 7"/>
+            <!-- Golden Tinsel Ribbon Wrapping the Slinger -->
+            <path class="slinger-gold-thread" d="M12,14 Q140,82 270,18 Q400,86 530,18 Q660,82 788,14" fill="none" stroke="url(#slinger-gold-foil)" stroke-width="3" stroke-dasharray="5 8" stroke-linecap="round"/>
+
+            <!-- Dangling Ornaments from Swag Valleys -->
+            <g class="slinger-dangles">
+              <line x1="140" y1="46" x2="140" y2="68" stroke="#f5ce70" stroke-width="1.2"/>
+              <circle cx="140" cy="73" r="6" fill="url(#bauble-red)"/>
+              <line x1="400" y1="49" x2="400" y2="73" stroke="#f5ce70" stroke-width="1.2"/>
+              <circle cx="400" cy="79" r="7" fill="url(#bauble-gold)"/>
+              <line x1="660" y1="46" x2="660" y2="68" stroke="#f5ce70" stroke-width="1.2"/>
+              <circle cx="660" cy="73" r="6" fill="url(#bauble-red)"/>
+            </g>
+
+            <!-- Crimson Velvet Bows & Holly Berries at Swag Peaks -->
+            <g class="slinger-bow" transform="translate(270, 18)">
+              <path d="M-4,2 L-12,24 L-5,21 L-1,26 L2,4 Z M4,2 L12,24 L5,21 L1,26 L-2,4 Z" fill="#b81d2c"/>
+              <path d="M0,0 C-16,-12 -22,6 -2,4 C-22,6 -16,-12 0,0 Z M0,0 C16,-12 22,6 2,4 C22,6 16,-12 0,0 Z" fill="#e63946" stroke="#8c1420" stroke-width="1"/>
+              <circle cx="0" cy="1" r="4.5" fill="#ffd25a"/>
+            </g>
+            <g class="slinger-bow" transform="translate(530, 18)">
+              <path d="M-4,2 L-12,24 L-5,21 L-1,26 L2,4 Z M4,2 L12,24 L5,21 L1,26 L-2,4 Z" fill="#b81d2c"/>
+              <path d="M0,0 C-16,-12 -22,6 -2,4 C-22,6 -16,-12 0,0 Z M0,0 C16,-12 22,6 2,4 C22,6 16,-12 0,0 Z" fill="#e63946" stroke="#8c1420" stroke-width="1"/>
+              <circle cx="0" cy="1" r="4.5" fill="#ffd25a"/>
+            </g>
+
+            <!-- Twinkling Fairy Bulbs Woven into Slinger -->
+            <g class="slinger-lights">
+              <circle class="slinger-bulb bulb-1" cx="65" cy="34" r="4" fill="#ffe066"/>
+              <circle class="slinger-bulb bulb-2" cx="140" cy="45" r="4.2" fill="#ff5c6c"/>
+              <circle class="slinger-bulb bulb-3" cx="210" cy="34" r="4" fill="#90e0ef"/>
+              <circle class="slinger-bulb bulb-4" cx="335" cy="36" r="4" fill="#ffe066"/>
+              <circle class="slinger-bulb bulb-5" cx="400" cy="48" r="4.5" fill="#ffffff"/>
+              <circle class="slinger-bulb bulb-6" cx="465" cy="36" r="4" fill="#ff5c6c"/>
+              <circle class="slinger-bulb bulb-7" cx="595" cy="34" r="4" fill="#90e0ef"/>
+              <circle class="slinger-bulb bulb-8" cx="660" cy="45" r="4.2" fill="#ffe066"/>
+              <circle class="slinger-bulb bulb-9" cx="735" cy="34" r="4" fill="#ff5c6c"/>
+            </g>
+          </svg>
+        </div>
+
         <header class="section-intro">
           <p class="section-kicker" id="gallery-eyebrow"></p>
           <h2 class="section-title" id="gallery-heading"></h2>
@@ -254,10 +528,10 @@
             <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
           </div>
         </div>
-        <button class="flower-next" id="gallery-flower-next" type="button" aria-label="Lanjut ke cerita">
-          <svg class="flower-next-icon" viewBox="0 0 64 64" aria-hidden="true">
-            <g fill="#d88996"><ellipse cx="32" cy="17" rx="8" ry="13" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(72 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(144 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(216 32 32)" /><ellipse cx="32" cy="17" rx="8" ry="13" transform="rotate(288 32 32)" /></g>
-            <circle cx="32" cy="32" r="7" fill="#f4d78d" />
+        <button class="flower-next star-next" id="gallery-flower-next" type="button" aria-label="Lanjut ke cerita">
+          <svg class="flower-next-icon star-next-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <polygon points="32,8 37.5,23 53,23.5 40.5,33 45,48 32,39 19,48 23.5,33 11,23.5 26.5,23" fill="#e8c374" stroke="#c49a42" stroke-width="1.8"/>
+            <circle cx="32" cy="28" r="4" fill="#fff5d1"/>
           </svg>
           <span class="flower-next-caption" aria-hidden="true">lanjut ke cerita</span>
         </button>
@@ -270,10 +544,60 @@
           <p class="section-description">Beberapa hal mungkin terlihat biasa, tapi selalu punya tempat tersendiri.</p>
         </header>
         <div class="lantern-entry">
-          <button class="lantern-pull" id="lantern-pull" type="button" aria-label="Tarik kabel lentera untuk membuka surat" aria-controls="letter-section">
-            <span class="lantern" aria-hidden="true"><span class="lantern-glass"></span><span class="lantern-cap"></span></span>
-            <span class="lantern-cord" aria-hidden="true"><span class="lantern-tassel"></span></span>
-            <span class="lantern-hint">tarik talinya untuk membuka surat</span>
+          <button class="lantern-pull star-lamp-pull" id="lantern-pull" type="button" aria-label="Tarik lampu bintang Natal untuk membuka surat" aria-controls="letter-section">
+            <span class="christmas-star-lamp" aria-hidden="true">
+              <svg class="star-lamp-svg" viewBox="0 0 120 120">
+                <defs>
+                  <radialGradient id="star-lamp-aura" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fffbe0" stop-opacity="0.95"/>
+                    <stop offset="45%" stop-color="#ffd452" stop-opacity="0.55"/>
+                    <stop offset="100%" stop-color="#ffae00" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="star-facet-bright" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="50%" stop-color="#ffe484"/>
+                    <stop offset="100%" stop-color="#f2b729"/>
+                  </linearGradient>
+                  <linearGradient id="star-facet-warm" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffd04d"/>
+                    <stop offset="100%" stop-color="#c98614"/>
+                  </linearGradient>
+                </defs>
+                <!-- Top Hanging Ring -->
+                <circle cx="60" cy="8" r="4" fill="none" stroke="#f5ce70" stroke-width="2"/>
+                <!-- Pulsing Warm Aura Halo -->
+                <circle class="star-lamp-halo" cx="60" cy="60" r="52" fill="url(#star-lamp-aura)"/>
+                <!-- Twinkling Cross Light Rays -->
+                <g class="star-lamp-rays" stroke="#fff6cc" stroke-linecap="round">
+                  <line x1="60" y1="4" x2="60" y2="116" stroke-width="1.6" opacity="0.75"/>
+                  <line x1="4" y1="60" x2="116" y2="60" stroke-width="1.6" opacity="0.75"/>
+                  <line x1="22" y1="22" x2="98" y2="98" stroke-width="1.1" opacity="0.55"/>
+                  <line x1="98" y1="22" x2="22" y2="98" stroke-width="1.1" opacity="0.55"/>
+                </g>
+                <!-- 8-Pointed 3D Beveled Bethlehem Star Lamp -->
+                <!-- Diagonal Secondary Points -->
+                <polygon class="star-lamp-subpoints" points="60,24 71,49 96,60 71,71 60,96 49,71 24,60 49,49" fill="url(#star-facet-warm)" stroke="#fff0b3" stroke-width="0.9" transform="rotate(45 60 60)"/>
+                <!-- Main Cardinal Points -->
+                <polygon class="star-lamp-mainpoints" points="60,12 72,48 108,60 72,72 60,108 48,72 12,60 48,48" fill="url(#star-facet-bright)" stroke="#ffffff" stroke-width="1.2"/>
+                <!-- Inner 3D Bevel Lines -->
+                <path d="M60,12 L60,108 M12,60 L108,60 M48,48 L72,72 M72,48 L48,72" stroke="#d9971a" stroke-width="0.9" opacity="0.65"/>
+                <!-- Glowing Core Filament -->
+                <circle class="star-lamp-core" cx="60" cy="60" r="11" fill="#ffffff"/>
+                <!-- Surrounding Twinkling Mini Sparkles -->
+                <g class="star-lamp-sparkles" fill="#fff9d6">
+                  <polygon class="sparkle-bit s-bit-1" points="22,26 24,31 29,33 24,35 22,40 20,35 15,33 20,31"/>
+                  <polygon class="sparkle-bit s-bit-2" points="98,24 100,28 104,30 100,32 98,36 96,32 92,30 96,28"/>
+                  <polygon class="sparkle-bit s-bit-3" points="20,86 22,90 26,92 22,94 20,98 18,94 14,92 18,90"/>
+                  <polygon class="sparkle-bit s-bit-4" points="96,84 98,89 103,91 98,93 96,98 94,93 89,91 94,89"/>
+                </g>
+              </svg>
+            </span>
+            <span class="lantern-cord star-lamp-cord" aria-hidden="true">
+              <span class="cord-bulb cord-bulb-1"></span>
+              <span class="cord-bulb cord-bulb-2"></span>
+              <span class="lantern-tassel star-lamp-tassel"></span>
+            </span>
+            <span class="lantern-hint">tarik lampu bintangnya untuk membuka surat</span>
           </button>
         </div>
         <ol class="journey-list" id="roadmap-items"></ol>
@@ -290,7 +614,13 @@
                 <span class="envelope-sheet"></span>
                 <span class="envelope-flap"></span>
                 <span class="envelope-front"></span>
-                <span class="envelope-seal">♡</span>
+                <span class="envelope-seal wax-seal">
+                  <svg viewBox="0 0 40 40" class="wax-seal-svg" aria-hidden="true">
+                    <circle cx="20" cy="20" r="18" fill="#a42838" stroke="#771926" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="14" fill="none" stroke="#d48a94" stroke-width="1.2" stroke-dasharray="3 2"/>
+                    <path d="M20 9 L21.5 15 L27 12 L23 17 L29 19 L23 21 L27 26 L21.5 23 L20 29 L18.5 23 L13 26 L17 21 L11 19 L17 17 L13 12 L18.5 15 Z" fill="#f4d27a"/>
+                  </svg>
+                </span>
               </span>
               <span class="envelope-hint" id="letter-toggle-label">sentuh amplop untuk membuka</span>
             </button>
@@ -309,10 +639,21 @@
         <button class="scene-back" type="button" data-previous-scene="roadmap">← Kembali ke cerita</button>
 
         <footer class="site-footer">
-          <span aria-hidden="true">♡</span>
+          <svg class="footer-holly" viewBox="0 0 60 40" width="38" height="26" aria-hidden="true">
+            <!-- Holly leaves -->
+            <path d="M30 20 C22 14 14 18 10 14 C15 22 18 30 30 20 Z" fill="#295c46"/>
+            <path d="M30 20 C38 14 46 18 50 14 C45 22 42 30 30 20 Z" fill="#295c46"/>
+            <!-- Berries -->
+            <circle cx="28" cy="18" r="3.5" fill="#c02f3f"/>
+            <circle cx="34" cy="19" r="3.2" fill="#d93b4c"/>
+            <circle cx="30" cy="23" r="3" fill="#a42231"/>
+          </svg>
           <p>disiapkan sepenuh hati, untuk <span id="footer-recipient"></span></p>
           <button class="notification-footer-btn" id="notification-status-btn" type="button" aria-label="Notifikasi pembaruan">
-            <span aria-hidden="true">🔔</span>
+            <svg class="notif-bell-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
             <span id="notification-status-text">Kirim kabar jika ada update</span>
           </button>
         </footer>
@@ -322,7 +663,10 @@
 
   <aside class="notification-toast" id="notification-prompt" hidden aria-label="Pemberitahuan cerita baru">
     <div class="notification-toast-content">
-      <span class="notification-toast-icon" aria-hidden="true">🔔</span>
+      <svg class="toast-bell-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
       <span class="notification-toast-text">Ingin dikabari jika ada kenangan baru?</span>
     </div>
     <div class="notification-toast-actions">

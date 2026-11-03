@@ -34,47 +34,45 @@
     musicButton.setAttribute('aria-label', isPlaying ? 'Matikan musik' : 'Putar musik');
   }
 
-  const flowerPalette = [
-    ['#d96b82', '#f6b8c3'],
-    ['#e4a34e', '#f8d58e'],
-    ['#e99eae', '#ffdce2'],
-    ['#70a887', '#b4d5a7'],
-    ['#9371b2', '#cdb4dc'],
-    ['#6cacc1', '#b2dfe0'],
-    ['#fff7e9', '#fffdf6'],
-  ];
-
   let flowerSvgInstance = 0;
+  // Organic dendrite snowflake: every flake gets its own branch lengths,
+  // angles and tip shapes so no two look identical or rigid.
   function flowerSvg(index) {
-    const [tone, light] = flowerPalette[index % flowerPalette.length];
-    const id = `flower-${index}-${flowerSvgInstance}`;
     flowerSvgInstance += 1;
-    // Overlapping, slightly uneven petals and soft shading give the blooms
-    // more depth than the previous flat, identical daisy silhouettes.
-    const petal = 'M50 57 C44 52 25 38 28 24 C30 14 39 8 46 15 C49 18 50 23 50 29 C51 20 56 12 64 15 C75 20 72 34 66 43 C61 50 55 55 50 57Z';
-    const layers = [
-      { count: 10, scale: 1, opacity: .82, offset: 0 },
-      { count: 8, scale: .77, opacity: .82, offset: 22.5 },
-      { count: 6, scale: .53, opacity: .95, offset: 8 },
+    const seedBase = index * 12.9898 + flowerSvgInstance * 78.233;
+    const rand = (n) => {
+      const x = Math.sin(seedBase + n * 37.719) * 43758.5453;
+      return x - Math.floor(x);
+    };
+    const arm = 34 + rand(1) * 8;
+    const branchSets = [
+      { at: 0.3 + rand(2) * 0.08, len: 7 + rand(3) * 7, spread: 0.55 + rand(4) * 0.25 },
+      { at: 0.55 + rand(5) * 0.08, len: 6 + rand(6) * 6, spread: 0.5 + rand(7) * 0.3 },
+      { at: 0.78 + rand(8) * 0.06, len: 3 + rand(9) * 4, spread: 0.6 + rand(10) * 0.2 },
     ];
-    const petals = layers.map(({ count, scale, opacity, offset }) =>
-      `<g opacity="${opacity}" transform="translate(50 50) scale(${scale}) translate(-50 -50)">` +
-      Array.from({ length: count }, (_, i) => {
-        const angle = i * 360 / count + offset + (i % 2 ? 2 : -2);
-        return `<path d="${petal}" fill="url(#${id}-petal)" stroke="${light}" stroke-opacity=".34" stroke-width=".8" transform="rotate(${angle} 50 50)"/>`;
-      }).join('') + `</g>`
-    ).join('');
-    const folds = Array.from({ length: 12 }, (_, i) =>
-      `<path d="M50 54 Q${44 + (i % 3) * 4} 40 50 22" transform="rotate(${i * 30} 50 50)"/>`
-    ).join('');
-    const pollen = Array.from({ length: 22 }, (_, i) => {
-      const angle = i * 2.399;
-      const radius = 2 + (i % 4) * 1.35;
-      const x = 50 + Math.cos(angle) * radius;
-      const y = 50 + Math.sin(angle) * radius;
-      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i % 3 ? 1 : 1.35}"/>`;
+    const tipStyle = rand(11);
+    let armPath = `M50 50 L50 ${(50 - arm).toFixed(1)}`;
+    branchSets.forEach(({ at, len, spread }) => {
+      const y = 50 - arm * at;
+      const dx = len * Math.sin(spread);
+      const dy = len * Math.cos(spread);
+      armPath += ` M50 ${y.toFixed(1)} Q${(50 - dx * 0.45).toFixed(1)} ${(y - dy * 0.35).toFixed(1)} ${(50 - dx).toFixed(1)} ${(y - dy).toFixed(1)}`;
+      armPath += ` M50 ${y.toFixed(1)} Q${(50 + dx * 0.45).toFixed(1)} ${(y - dy * 0.35).toFixed(1)} ${(50 + dx).toFixed(1)} ${(y - dy).toFixed(1)}`;
+    });
+    const tipY = 50 - arm;
+    const tip = tipStyle > 0.5
+      ? `<circle cx="50" cy="${tipY.toFixed(1)}" r="1.6"/>`
+      : `<path d="M50 ${(tipY - 3).toFixed(1)} L52 ${tipY.toFixed(1)} L50 ${(tipY + 3).toFixed(1)} L48 ${tipY.toFixed(1)} Z"/>`;
+    const arms = Array.from({ length: 6 }, (_, i) => {
+      const jitter = (rand(20 + i) - 0.5) * 4;
+      return `<g transform="rotate(${i * 60 + jitter} 50 50)"><path d="${armPath}"/>${tip}</g>`;
     }).join('');
-    return `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="${id}-petal" cx="38%" cy="28%" r="78%"><stop stop-color="${light}"/><stop offset=".48" stop-color="${tone}"/><stop offset="1" stop-color="${tone}" stop-opacity=".78"/></radialGradient><radialGradient id="${id}-heart"><stop stop-color="#f9df8b"/><stop offset=".65" stop-color="#d2a75c"/><stop offset="1" stop-color="#81503e"/></radialGradient></defs><g>${petals}</g><g fill="none" stroke="${light}" stroke-opacity=".2" stroke-width=".7">${folds}</g><circle cx="50" cy="50" r="8" fill="url(#${id}-heart)"/><g fill="#fff1bd" opacity=".9">${pollen}</g><circle cx="47" cy="47" r="2" fill="#fff" opacity=".28"/></svg>`;
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="rgba(190,225,255,0.35)" stroke-width="4.2" stroke-linecap="round">${arms.replace(/<circle[^>]*\/>|<path d="M50 [\d.]+ L52[^>]*\/>/g, '')}</g>
+      <g fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${arms}</g>
+      <circle cx="50" cy="50" r="4.2" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+      <circle cx="50" cy="50" r="1.8" fill="#eaf6ff"/>
+    </svg>`;
   }
 
   function addFlowerTrail(x, y, progress) {
@@ -133,15 +131,20 @@
         + Math.random() * (reducedMotion ? 35 : 150)
         + (layered ? Math.random() * (reducedMotion ? 20 : 320) : 0);
       const duration = reducedMotion ? 260 + Math.random() * 80 : 1150 + Math.random() * 480;
-      const size = cellSize * (1.08 + Math.random() * 0.42);
+      const isPuff = index % 3 === 1;
+      const size = isPuff
+        ? cellSize * (0.45 + Math.random() * 0.45)
+        : cellSize * (0.95 + Math.random() * 0.48);
       const middleScale = 1.04 + Math.random() * 0.15;
-      const finalScale = 0.75 + Math.random() * 0.34;
+      const finalScale = 0.72 + Math.random() * 0.36;
       const startRotation = (Math.random() - 0.5) * 90;
-      const middleRotation = startRotation + (Math.random() - 0.5) * 250;
-      const endRotation = middleRotation + (Math.random() - 0.5) * 80;
+      const middleRotation = startRotation + (Math.random() - 0.5) * 240;
+      const endRotation = middleRotation + (Math.random() - 0.5) * 90;
 
-      element.className = 'flower-piece';
-      element.innerHTML = flowerSvg(index + 2);
+      element.className = isPuff ? 'flower-piece snow-puff' : 'flower-piece';
+      if (!isPuff) {
+        element.innerHTML = flowerSvg(index + 2);
+      }
       element.style.setProperty('--bloom-x', `${landX}px`);
       element.style.setProperty('--bloom-y', `${landY}px`);
       element.style.setProperty('--flower-size', `${size}px`);
@@ -441,18 +444,31 @@
   function startPetalRain() {
     if (reducedMotion) return;
     const petalRain = document.getElementById('hero-petal-rain');
+    let crystalCounter = 1;
+    // Generates continuous, organic snowfall with varied crystal dendrites & soft snow puffs
     window.setInterval(() => {
-      if (activeScene !== 'hero' || petalRain.childElementCount >= 8 || Math.random() > 0.72) return;
-      const petal = document.createElement('span');
-      const duration = 6200 + Math.random() * 4200;
-      petal.className = 'warm-petal';
-      petal.style.left = `${4 + Math.random() * 92}%`;
-      petal.style.setProperty('--petal-drift', `${(Math.random() - 0.5) * 150}px`);
-      petal.style.setProperty('--petal-rotation', `${Math.random() * 360}deg`);
-      petal.style.setProperty('--petal-duration', `${duration}ms`);
-      petalRain.appendChild(petal);
-      window.setTimeout(() => petal.remove(), duration + 100);
-    }, 900);
+      if (activeScene !== 'hero' || petalRain.childElementCount >= 22 || Math.random() > 0.84) return;
+      const snowflake = document.createElement('span');
+      const duration = 7000 + Math.random() * 5800;
+      const isCrystal = Math.random() > 0.42;
+      const size = isCrystal ? 14 + Math.random() * 14 : 4 + Math.random() * 5.5;
+      const sway = (22 + Math.random() * 38) * (Math.random() > 0.5 ? 1 : -1);
+
+      snowflake.className = isCrystal ? 'warm-petal snow-crystal' : 'warm-petal snow-flake';
+      if (isCrystal) {
+        snowflake.innerHTML = flowerSvg(crystalCounter);
+        crystalCounter += 1;
+      }
+      snowflake.style.left = `${2 + Math.random() * 96}%`;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      snowflake.style.setProperty('--petal-sway', `${sway}px`);
+      snowflake.style.setProperty('--petal-drift', `${(Math.random() - 0.5) * 150}px`);
+      snowflake.style.setProperty('--petal-rotation', `${Math.random() * 360}deg`);
+      snowflake.style.setProperty('--petal-duration', `${duration}ms`);
+      petalRain.appendChild(snowflake);
+      window.setTimeout(() => snowflake.remove(), duration + 120);
+    }, 420);
   }
 
   document.querySelectorAll('[data-next-scene]').forEach((button) => {
@@ -472,37 +488,135 @@
     cakeOpening = true;
     cakeGate.classList.add('is-lit');
     cakeGate.setAttribute('aria-pressed', 'true');
-    cakeHint.textContent = 'Lilin sudah menyala! Membuka galeri…';
+    cakeHint.textContent = 'Santa melesat membawa kejutan…';
     if (reducedMotion) {
-      window.setTimeout(() => goToScene('gallery'), 180);
+      window.setTimeout(() => {
+        goToScene('gallery');
+        cakeGate.classList.remove('is-lit');
+        cakeGate.setAttribute('aria-pressed', 'false');
+        cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan';
+        cakeOpening = false;
+      }, 180);
       return;
     }
 
-    const bounds = cakeGate.getBoundingClientRect();
-    cakeBurnTransition.style.setProperty('--burn-x', `${((bounds.left + bounds.width / 2) / window.innerWidth) * 100}%`);
-    cakeBurnTransition.style.setProperty('--burn-y', `${((bounds.top + bounds.height / 2) / window.innerHeight) * 100}%`);
+    const heroSection = document.getElementById('hero-section');
+    const santaWrap = document.getElementById('tree-star');
+    const stage = cakeBurnTransition;
+    stage.replaceChildren();
+    stage.classList.remove('is-flooding', 'is-fading');
+    stage.hidden = false;
+
+    // 60fps Continuous Curved Trajectory: Santa Soars Away Into the Starry Night Sky ("Terbang Menjauh")
+    const flightDuration = 1650;
+    const startTime = performance.now();
+    const maxDx = Math.min(window.innerWidth * 0.42, 420);
+    const maxDy = Math.min(window.innerHeight * 0.34, 240);
+    let lastTrailTime = 0;
+    let vanishSpawned = false;
+
+    function animateSantaFlyAway(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / flightDuration);
+      // Smooth continuous acceleration (ease-in-out quad/cubic blend)
+      const ease = t < 0.5 ? 1.8 * t * t : 1 - Math.pow(-2 * t + 2, 2.2) / 2;
+
+      // Graceful upward curve: slight initial dip, then sweeping arc up into the deep starry sky
+      const dx = Math.pow(t, 1.35) * maxDx;
+      const dy = Math.sin(t * Math.PI) * 10 - Math.pow(t, 1.85) * maxDy;
+
+      // Instantaneous tangent angle so Santa & reindeer naturally pitch upward along the arc
+      const pitchDeg = -22 * Math.sin(t * Math.PI * 0.85);
+
+      // Perspective depth: smoothly shrinks as Santa flies farther and farther away into the distance
+      const scale = Math.max(0.03, Math.pow(1 - t * 0.92, 1.65));
+      const opacity = t < 0.82 ? 1 : Math.max(0, (1 - t) / 0.18);
+
+      if (santaWrap) {
+        santaWrap.style.transform = `translate3d(calc(-50% + ${dx.toFixed(1)}px), calc(-50% + ${dy.toFixed(1)}px), 0) scale(${scale.toFixed(3)}) rotate(${pitchDeg.toFixed(2)}deg)`;
+        santaWrap.style.opacity = opacity.toFixed(3);
+        // As Santa leaves the bright Moon disc into the dark starry sky, add a moonlit silver rim-glow
+        if (t > 0.16) {
+          const glowAlpha = Math.min(0.95, (t - 0.16) * 2.2) * opacity;
+          santaWrap.style.filter = `drop-shadow(0 0 8px rgba(255, 248, 224, ${glowAlpha.toFixed(2)})) drop-shadow(0 0 18px rgba(185, 222, 255, ${(glowAlpha * 0.8).toFixed(2)}))`;
+        }
+      }
+
+      // Spawn delicate twinkling stardust motes along Santa's wake
+      if (santaWrap && t > 0.08 && t < 0.88 && now - lastTrailTime > 55) {
+        lastTrailTime = now;
+        const rect = santaWrap.getBoundingClientRect();
+        const trail = document.createElement('span');
+        trail.className = 'santa-trail-star';
+        trail.style.left = `${rect.left + rect.width * 0.25 + (Math.random() - 0.5) * 8}px`;
+        trail.style.top = `${rect.top + rect.height * 0.55 + (Math.random() - 0.5) * 8}px`;
+        stage.appendChild(trail);
+      }
+
+      // Distant starlight twinkle right where Santa vanishes into the night sky
+      if (santaWrap && t >= 0.88 && !vanishSpawned) {
+        vanishSpawned = true;
+        const rect = santaWrap.getBoundingClientRect();
+        const star = document.createElement('span');
+        star.className = 'santa-vanish-star';
+        star.style.left = `${rect.left + rect.width * 0.5}px`;
+        star.style.top = `${rect.top + rect.height * 0.5}px`;
+        stage.appendChild(star);
+      }
+
+      if (t < 1 && cakeOpening) {
+        window.requestAnimationFrame(animateSantaFlyAway);
+      }
+    }
+    window.requestAnimationFrame(animateSantaFlyAway);
+
+    // Spawn a soft breeze of real SVG dendrite snowflakes as the scene transitions
+    const flakeCount = window.innerWidth < 600 ? 16 : 24;
+    for (let i = 0; i < flakeCount; i += 1) {
+      const flake = document.createElement('span');
+      flake.className = 'winter-gust-flake';
+      flake.style.setProperty('--fx', `${15 + Math.random() * 70}%`);
+      flake.style.setProperty('--fy', `${20 + Math.random() * 60}%`);
+      flake.style.setProperty('--fsize', `${16 + Math.random() * 22}px`);
+      flake.style.setProperty('--fdx', `${(Math.random() - 0.25) * 240}px`);
+      flake.style.setProperty('--fdy', `${-60 + (Math.random() - 0.5) * 150}px`);
+      flake.style.setProperty('--frot', `${(Math.random() > 0.5 ? 1 : -1) * (110 + Math.random() * 140)}deg`);
+      flake.style.setProperty('--fdur', `${950 + Math.random() * 500}ms`);
+      flake.style.setProperty('--fdelay', `${1100 + Math.random() * 350}ms`);
+      flake.innerHTML = flowerSvg(i);
+      stage.appendChild(flake);
+    }
+
+    // As Santa vanishes into the distant stars, gently cross-fade into the snowy night sky
     window.setTimeout(() => {
-      cakeBurnTransition.hidden = false;
-      cakeBurnTransition.classList.remove('is-burning', 'is-fading');
-      void cakeBurnTransition.offsetWidth;
-      cakeBurnTransition.classList.add('is-burning');
+      if (heroSection) heroSection.classList.add('is-zooming-out');
+      stage.classList.add('is-flooding');
+    }, 1250);
+
+    // Smoothly reveal the Gallery scene and reset Santa's inline styles
+    window.setTimeout(() => {
+      goToScene('gallery');
+      if (heroSection) heroSection.classList.remove('is-zooming-out');
+      if (santaWrap) {
+        santaWrap.style.transform = '';
+        santaWrap.style.opacity = '';
+        santaWrap.style.filter = '';
+      }
+      cakeGate.classList.remove('is-lit');
+      cakeGate.setAttribute('aria-pressed', 'false');
+      cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan';
+      cakeOpening = false;
+      stage.classList.add('is-fading');
       window.setTimeout(() => {
-        goToScene('gallery');
-        cakeBurnTransition.classList.add('is-fading');
-        window.setTimeout(() => {
-          cakeBurnTransition.hidden = true;
-          cakeBurnTransition.classList.remove('is-burning', 'is-fading');
-          cakeBurnTransition.style.removeProperty('--burn-x');
-          cakeBurnTransition.style.removeProperty('--burn-y');
-        }, 540);
-      }, 920);
-    }, 300);
+        stage.hidden = true;
+        stage.classList.remove('is-flooding', 'is-fading');
+        stage.replaceChildren();
+      }, 850);
+    }, 1880);
   }
   cakeGate.addEventListener('click', lightCake);
 
   const galleryFlowerNext = document.getElementById('gallery-flower-next');
-  const galleryFlowerIcon = galleryFlowerNext.querySelector('.flower-next-icon');
-  galleryFlowerIcon.outerHTML = flowerSvg(2).replace('<svg ', '<svg class="flower-next-icon" ');
   let flowerTransitioning = false;
   galleryFlowerNext.addEventListener('click', () => {
     if (flowerTransitioning) return;
@@ -836,7 +950,7 @@
 
     const isToday = now.getMonth() === nextBirthday.getMonth() && now.getDate() === nextBirthday.getDate();
     if (isToday) {
-      if (captionEl) captionEl.textContent = 'Hari ini adalah hari istimewamu! 🎉';
+      if (captionEl) captionEl.textContent = 'Selamat Hari Natal, Jessica!';
       document.getElementById('cd-days').textContent = '0';
       document.getElementById('cd-hours').textContent = '00';
       document.getElementById('cd-minutes').textContent = '00';

@@ -15,13 +15,13 @@ window.SITE_DATA = {
 
   // ---------------- SCENE 2: MAIN SCENE ----------------
   main: {
-    heroEyebrow: "18 Oktober · hari tentang kamu",
-    heroTitle: "Selamat ulang tahun, Jessica",
-    heroSubtitle: "Selamat ulang tahun ke-19, Jessica. Semoga hari-harimu dipenuhi hal baik—dan selalu ada alasan untuk tersenyum. ❤️",
+    heroEyebrow: "25 Desember · hangatnya malam Natal",
+    heroTitle: "Selamat Natal, Jessica",
+    heroSubtitle: "Semoga damai dan kehangatan Natal selalu menyertaimu, dan semoga akhir tahun ini membawa banyak hal baik untuk langkahmu ke depan.",
 
     // Format: YYYY-MM-DDTHH:mm:ss (waktu lokal)
-    nextBirthday: "2027-10-18T00:00:00",
-    countdownLabel: "menghitung hari menuju hari istimewamu",
+    nextBirthday: "2026-12-25T00:00:00",
+    countdownLabel: "menghitung hari menuju malam Natal",
 
     gallery: {
       eyebrow: "beberapa momen favoritku",
@@ -54,14 +54,14 @@ window.SITE_DATA = {
     },
 
     roadmap: {
-      eyebrow: "catatan kecil",
+      eyebrow: "catatan akhir tahun",
       heading: "Momen sederhana, arti yang tinggal",
       items: [
         { src: "assets/gallery/Student Lobby.jpg", caption: "Student Lobby, tempat kita pertama kali bertemu—saat aku tidak sengaja menginjak kakimu.", photoSize: "landscape" },
         { src: "assets/gallery/Pic6.jpeg", caption: "First Nongkrong bersama (Batak Pride)", photoSize: "portrait" },
         { src: "assets/gallery/Pic2.jpeg", caption: "Momen kecil yang ingin kusimpan lebih lama.", photoSize: "wide" },
         { src: "assets/gallery/pic24.jpeg", caption: "Bandrek with Sate", photoSize: "tall" },
-        { caption: "Semoga masih banyak hari baik yang bisa kita rayakan bersama, dan semoga cerita kita terus bertambah di sini." }
+        { caption: "Semoga masih banyak hari baik dan cerita hangat yang bisa kita lewati bersama ke depan." }
       ]
     },
 
@@ -70,11 +70,11 @@ window.SITE_DATA = {
       envelopeLabel: "untuk Jessica",
       hint: "klik amplopnya",
       paragraphs: [
-        "Hai Jessica, senang sekali bisa kenal kamu. Tepat hari ini, 18 Oktober, genap lima minggu sejak kita mulai saling mengenal. Walaupun kita baru mulai ngobrol sejak PKKMB, pertemuan pertama kita sebenarnya terjadi tanpa sengaja—waktu aku menginjak kakimu. Hehe, maaf ya. Kalau diingat lagi, lucu juga.",
-        "Surat ini memang sederhana, tapi ada doa yang ingin kusampaikan. Semoga di usia barumu ini, satu per satu impianmu bisa terwujud.",
-        "Semoga kamu selalu sehat dan bahagia, dan semoga setiap langkahmu dimudahkan. Aku berharap tahun ini membawa banyak hal baik untukmu."
+        "Hai Jessica, selamat merayakan hari Natal.",
+        "Menjelang penutupan tahun ini, aku ingin menyampaikan rasa syukur karena tahun ini ada kamu di dalamnya. Dari awal pertemuan kita yang tanpa sengaja di Student Lobby, sampai semua obrolan dan waktu santai yang kita lewati—semuanya jadi kenangan yang sangat berharga.",
+        "Semoga di musim Natal ini kamu selalu diliputi kesehatan, damai sejahtera, dan kebahagiaan yang tulus. Semoga tahun yang baru nanti membawa kelancaran untuk setiap impian dan langkahmu."
       ],
-      closingLine: "Semoga hari ini terasa sehangat dirimu.",
+      closingLine: "Semoga suasana Natal ini membawa damai dan kehangatan untukmu.",
       signature: "~Andrian"
     }
   },
