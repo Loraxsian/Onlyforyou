@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=christmas-20261103">
+  <link rel="stylesheet" href="style.css?v=christmas-20261103-v2">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -449,12 +449,18 @@
 
         <div class="countdown" id="birthday-timer" aria-label="Hitung mundur malam Natal">
           <p class="countdown-caption" id="countdown-caption"></p>
-          <div class="countdown-values">
+          <div class="countdown-values" id="countdown-values">
             <span><strong id="cd-days">0</strong><small>hari</small></span>
             <span><strong id="cd-hours">00</strong><small>jam</small></span>
             <span><strong id="cd-minutes">00</strong><small>menit</small></span>
             <span><strong id="cd-seconds">00</strong><small>detik</small></span>
           </div>
+          <button class="christmas-day-trigger" id="reopen-christmas-gift" type="button" hidden>
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+              <path d="M20 12v10H4V12M2 7h20v5H2V7zm10-5v20m0-15H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zm0 0h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Buka Kado Spesial 25 Desember</span>
+          </button>
         </div>
       </section>
 
@@ -871,6 +877,122 @@
         </footer>
       </section>
     </section>
+
+    <!-- Special Christmas Day (25 December) Surprise Modal: Opsi 2 -->
+    <div class="christmas-surprise-modal" id="christmas-surprise-modal" hidden role="dialog" aria-modal="true" aria-labelledby="surprise-santa-title">
+      <div class="christmas-surprise-backdrop" id="christmas-surprise-backdrop"></div>
+      <div class="christmas-surprise-particles" id="christmas-surprise-particles" aria-hidden="true"></div>
+
+      <div class="christmas-surprise-dialog">
+        <button class="christmas-surprise-close" id="christmas-surprise-close" type="button" aria-label="Tutup kejutan">×</button>
+
+        <!-- Stage 1: 3D Santa Claus Handing the Crimson & Gold Gift Box -->
+        <div class="santa-offer-stage" id="santa-offer-stage">
+          <p class="section-kicker surprise-kicker" id="surprise-kicker">kejutan khusus 25 desember</p>
+          <h2 class="surprise-title" id="surprise-santa-title">Ho Ho Ho! Selamat Hari Natal, Jessica</h2>
+          <p class="surprise-subtitle" id="surprise-santa-subtitle"></p>
+
+          <button class="santa-offer-btn" id="santa-offer-btn" type="button" aria-label="Sentuh kotak kado di tangan Santa untuk membuka hadiah">
+            <div class="santa-figure-wrap">
+              <div class="santa-moon-aura" aria-hidden="true"></div>
+              <img class="santa-figure-img" src="assets/bg/santa-gift.png" alt="Santa Claus memberikan kotak hadiah Natal" decoding="async">
+              <!-- Interactive Glowing Hotspot Aligned Over the Gift Box in Santa's Hand -->
+              <span class="santa-box-hotspot" aria-hidden="true">
+                <span class="hotspot-ring hotspot-ring-1"></span>
+                <span class="hotspot-ring hotspot-ring-2"></span>
+                <svg class="hotspot-sparkle" viewBox="0 0 36 36">
+                  <polygon points="18,2 21,15 34,18 21,21 18,34 15,21 2,18 15,15" fill="#fff6cc"/>
+                </svg>
+              </span>
+            </div>
+            <span class="santa-offer-hint" id="surprise-box-hint">sentuh kotak kado untuk membuka</span>
+          </button>
+        </div>
+
+        <!-- Stage 2: Zoomed-In 3D Gift Box Unbox & Special Gift Card Reveal -->
+        <div class="gift-unbox-stage" id="gift-unbox-stage" hidden>
+          <div class="unbox-light-rays" aria-hidden="true"></div>
+
+          <!-- 3D SVG Crimson & Gold Gift Box (Animates Lid & Ribbon Opening) -->
+          <div class="unbox-3d-box" id="unbox-3d-box" aria-hidden="true">
+            <!-- Box Lid + Golden Bow -->
+            <div class="unbox-box-lid">
+              <svg viewBox="0 0 240 110" class="unbox-lid-svg">
+                <defs>
+                  <linearGradient id="gift-lid-red" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c91e32"/>
+                    <stop offset="50%" stop-color="#961021"/>
+                    <stop offset="100%" stop-color="#5e0712"/>
+                  </linearGradient>
+                  <linearGradient id="gift-gold-ribbon" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#b88420"/>
+                    <stop offset="35%" stop-color="#ffe894"/>
+                    <stop offset="55%" stop-color="#fff8d6"/>
+                    <stop offset="80%" stop-color="#d9a132"/>
+                    <stop offset="100%" stop-color="#8c5e0c"/>
+                  </linearGradient>
+                </defs>
+                <!-- 3D Multi-Loop Golden Bow on Top -->
+                <g class="unbox-golden-bow">
+                  <path d="M120 48 C92 14, 58 22, 68 48 C76 62, 104 54, 120 48 Z" fill="url(#gift-gold-ribbon)" stroke="#7a5008" stroke-width="1"/>
+                  <path d="M120 48 C148 14, 182 22, 172 48 C164 62, 136 54, 120 48 Z" fill="url(#gift-gold-ribbon)" stroke="#7a5008" stroke-width="1"/>
+                  <path d="M120 48 C100 8, 76 10, 84 36 C90 48, 108 48, 120 48 Z" fill="url(#gift-gold-ribbon)" stroke="#fff2b8" stroke-width="0.8"/>
+                  <path d="M120 48 C140 8, 164 10, 156 36 C150 48, 132 48, 120 48 Z" fill="url(#gift-gold-ribbon)" stroke="#fff2b8" stroke-width="0.8"/>
+                  <ellipse cx="120" cy="46" rx="13" ry="10" fill="url(#gift-gold-ribbon)" stroke="#7a5008" stroke-width="1"/>
+                </g>
+                <!-- Crimson Velvet Box Lid -->
+                <rect x="20" y="48" width="200" height="46" rx="7" fill="url(#gift-lid-red)" stroke="#f7d279" stroke-width="1.2" stroke-opacity="0.55"/>
+                <rect x="104" y="48" width="32" height="46" fill="url(#gift-gold-ribbon)"/>
+                <line x1="24" y1="53" x2="216" y2="53" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/>
+              </svg>
+            </div>
+
+            <!-- Box Base -->
+            <div class="unbox-box-base">
+              <svg viewBox="0 0 240 130" class="unbox-base-svg">
+                <defs>
+                  <linearGradient id="gift-base-red" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a81427"/>
+                    <stop offset="55%" stop-color="#750a18"/>
+                    <stop offset="100%" stop-color="#45040c"/>
+                  </linearGradient>
+                </defs>
+                <!-- Inner Golden Glow from Open Box -->
+                <ellipse cx="120" cy="12" rx="84" ry="12" fill="#ffe694" opacity="0.85"/>
+                <rect x="30" y="8" width="180" height="114" rx="8" fill="url(#gift-base-red)" stroke="#f7d279" stroke-width="1.2" stroke-opacity="0.45"/>
+                <rect x="105" y="8" width="30" height="114" fill="url(#gift-gold-ribbon)"/>
+                <rect x="30" y="54" width="180" height="24" fill="url(#gift-gold-ribbon)" opacity="0.92"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Luxury Christmas Gift Card Revealed From Inside the Box -->
+          <article class="christmas-gift-card" id="christmas-gift-card">
+            <div class="gift-card-filigree">
+              <span class="gift-card-badge" id="surprise-gift-badge">Kado Spesial 25 Desember</span>
+              <div class="gift-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="46" height="46">
+                  <polygon points="32,6 37,25 56,32 37,39 32,58 27,39 8,32 27,25" fill="#ffd966" stroke="#ffffff" stroke-width="1.2"/>
+                  <circle cx="32" cy="32" r="5" fill="#ffffff"/>
+                </svg>
+              </div>
+              <h3 class="gift-card-title" id="surprise-gift-title">Satu Hadiah Kecil Untukmu</h3>
+              <p class="gift-card-message" id="surprise-gift-message"></p>
+              <div class="gift-card-divider" aria-hidden="true">
+                <span></span>
+                <svg viewBox="0 0 24 24" width="14" height="14"><polygon points="12,2 14.8,9.2 22,12 14.8,14.8 12,22 9.2,14.8 2,12 9.2,9.2" fill="#d49b27"/></svg>
+                <span></span>
+              </div>
+              <p class="gift-card-note" id="surprise-gift-note"></p>
+            </div>
+          </article>
+
+          <button class="christmas-surprise-continue" id="christmas-surprise-continue" type="button">
+            <span id="surprise-continue-label">Lanjut ke Momen Kenangan →</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </main>
 
   <aside class="notification-toast" id="notification-prompt" hidden aria-label="Pemberitahuan cerita baru">
@@ -895,7 +1017,7 @@
     </figure>
   </div>
 
-  <script src="data.js?v=gallery-crop-20261016-6"></script>
-  <script src="script.js"></script>
+  <script src="data.js?v=christmas-20261103-v2"></script>
+  <script src="script.js?v=christmas-20261103-v2"></script>
 </body>
 </html>

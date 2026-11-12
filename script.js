@@ -475,19 +475,72 @@
   const cakeBurnTransition = document.getElementById('cake-burn-transition');
   let cakeOpening = false;
 
+  function isChristmasDay() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('natal') === '1' || params.get('christmas') === '1' || window.location.hash === '#natal') {
+      return true;
+    }
+    const nextChristmas = new Date(DATA.main.nextBirthday);
+    const now = new Date();
+    return now.getMonth() === nextChristmas.getMonth() && now.getDate() === nextChristmas.getDate();
+  }
+
+  function fallingGiftSvg() {
+    return `<svg viewBox="0 0 80 90" aria-hidden="true">
+      <defs>
+        <radialGradient id="drop-gift-aura" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fffbe0" stop-opacity="0.95"/>
+          <stop offset="50%" stop-color="#ffd452" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#ffae00" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="drop-box-red" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#d41e36"/>
+          <stop offset="100%" stop-color="#6e0816"/>
+        </linearGradient>
+        <linearGradient id="drop-box-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b88420"/>
+          <stop offset="50%" stop-color="#fff4bd"/>
+          <stop offset="100%" stop-color="#9c6b10"/>
+        </linearGradient>
+      </defs>
+      <circle cx="40" cy="48" r="36" fill="url(#drop-gift-aura)"/>
+      <!-- Starlight Parachute Lines -->
+      <path d="M40 8 L26 34 M40 8 L54 34 M40 8 L40 32" stroke="#ffe894" stroke-width="1.2" stroke-opacity="0.8"/>
+      <polygon points="40,1 42.5,6.5 48,9 42.5,11.5 40,17 37.5,11.5 32,9 37.5,6.5" fill="#ffffff"/>
+      <!-- 3D Gift Box -->
+      <g transform="translate(0, 6)">
+        <path d="M40 28 C30 16, 20 20, 24 29 C28 33, 36 30, 40 28 Z" fill="url(#drop-box-gold)"/>
+        <path d="M40 28 C50 16, 60 20, 56 29 C52 33, 44 30, 40 28 Z" fill="url(#drop-box-gold)"/>
+        <rect x="20" y="34" width="40" height="34" rx="4" fill="url(#drop-box-red)" stroke="#ffe484" stroke-width="1"/>
+        <rect x="17" y="28" width="46" height="10" rx="3" fill="url(#drop-box-red)" stroke="#ffe484" stroke-width="1"/>
+        <rect x="36" y="28" width="8" height="40" fill="url(#drop-box-gold)"/>
+        <rect x="20" y="47" width="40" height="7" fill="url(#drop-box-gold)"/>
+      </g>
+    </svg>`;
+  }
+
   function lightCake() {
     if (cakeOpening) return;
     cakeOpening = true;
+    const specialDay = isChristmasDay();
     cakeGate.classList.add('is-lit');
     cakeGate.setAttribute('aria-pressed', 'true');
-    cakeHint.textContent = 'Santa melesat membawa kejutan…';
+    cakeHint.textContent = specialDay
+      ? 'Santa menjatuhkan kado spesial dari bulan…'
+      : 'Santa melesat membawa kejutan…';
     if (reducedMotion) {
       window.setTimeout(() => {
-        goToScene('gallery');
         cakeGate.classList.remove('is-lit');
         cakeGate.setAttribute('aria-pressed', 'false');
-        cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan';
+        cakeHint.textContent = specialDay
+          ? 'Sentuh Santa Claus untuk kejutan spesial 25 Desember'
+          : 'Sentuh Santa Claus untuk kejutan';
         cakeOpening = false;
+        if (specialDay) {
+          openChristmasSurpriseModal(true);
+        } else {
+          goToScene('gallery');
+        }
       }, 180);
       return;
     }
@@ -506,12 +559,14 @@
     const maxDy = Math.min(window.innerHeight * 0.34, 240);
     let lastTrailTime = 0;
     let vanishSpawned = false;
+    let droppedGiftEl = null;
+    let giftDropStartX = window.innerWidth * 0.5;
+    let giftDropStartY = window.innerHeight * 0.45;
+    let lastGiftTrailTime = 0;
 
     function animateSantaFlyAway(now) {
       const elapsed = now - startTime;
       const t = Math.min(1, elapsed / flightDuration);
-      // Smooth continuous acceleration (ease-in-out quad/cubic blend)
-      const ease = t < 0.5 ? 1.8 * t * t : 1 - Math.pow(-2 * t + 2, 2.2) / 2;
 
       // Graceful upward curve: slight initial dip, then sweeping arc up into the deep starry sky
       const dx = Math.pow(t, 1.35) * maxDx;
@@ -531,6 +586,39 @@
         if (t > 0.16) {
           const glowAlpha = Math.min(0.95, (t - 0.16) * 2.2) * opacity;
           santaWrap.style.filter = `drop-shadow(0 0 8px rgba(255, 248, 224, ${glowAlpha.toFixed(2)})) drop-shadow(0 0 18px rgba(185, 222, 255, ${(glowAlpha * 0.8).toFixed(2)}))`;
+        }
+      }
+
+      // Opsi 2 (25 Desember): Right as Santa crosses the center of the Full Moon, drop the glowing Gift Box!
+      if (specialDay && t >= 0.22) {
+        if (!droppedGiftEl && santaWrap) {
+          const sRect = santaWrap.getBoundingClientRect();
+          giftDropStartX = sRect.left + sRect.width * 0.32;
+          giftDropStartY = sRect.top + sRect.height * 0.58;
+          droppedGiftEl = document.createElement('div');
+          droppedGiftEl.className = 'falling-moon-gift';
+          droppedGiftEl.innerHTML = fallingGiftSvg();
+          stage.appendChild(droppedGiftEl);
+        }
+        if (droppedGiftEl) {
+          const gt = Math.min(1, (t - 0.22) / 0.78);
+          const targetX = window.innerWidth * 0.5;
+          const targetY = window.innerHeight * 0.54;
+          const swayX = Math.sin(gt * Math.PI * 2.2) * 22 * (1 - gt * 0.4);
+          const curX = giftDropStartX + (targetX - giftDropStartX) * gt + swayX;
+          const curY = giftDropStartY + (targetY - giftDropStartY) * Math.pow(gt, 1.18);
+          const gScale = 0.34 + Math.pow(gt, 1.25) * 1.35;
+          const gRot = Math.sin(gt * Math.PI * 2.2) * 14;
+          droppedGiftEl.style.transform = `translate3d(${(curX - 29).toFixed(1)}px, ${(curY - 29).toFixed(1)}px, 0) scale(${gScale.toFixed(3)}) rotate(${gRot.toFixed(1)}deg)`;
+
+          if (now - lastGiftTrailTime > 50 && gt < 0.95) {
+            lastGiftTrailTime = now;
+            const gTrail = document.createElement('span');
+            gTrail.className = 'santa-trail-star';
+            gTrail.style.left = `${curX + (Math.random() - 0.5) * 14}px`;
+            gTrail.style.top = `${curY - 10 + (Math.random() - 0.5) * 10}px`;
+            stage.appendChild(gTrail);
+          }
         }
       }
 
@@ -581,13 +669,12 @@
 
     // As Santa vanishes into the distant stars, gently cross-fade into the snowy night sky
     window.setTimeout(() => {
-      if (heroSection) heroSection.classList.add('is-zooming-out');
+      if (heroSection && !specialDay) heroSection.classList.add('is-zooming-out');
       stage.classList.add('is-flooding');
     }, 1250);
 
-    // Smoothly reveal the Gallery scene and reset Santa's inline styles
+    // Smoothly reveal the Christmas Surprise Stage (on Dec 25) or the Gallery scene (normal days)
     window.setTimeout(() => {
-      goToScene('gallery');
       if (heroSection) heroSection.classList.remove('is-zooming-out');
       if (santaWrap) {
         santaWrap.style.transform = '';
@@ -596,15 +683,24 @@
       }
       cakeGate.classList.remove('is-lit');
       cakeGate.setAttribute('aria-pressed', 'false');
-      cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan';
+      cakeHint.textContent = specialDay
+        ? 'Sentuh Santa Claus untuk kejutan spesial 25 Desember'
+        : 'Sentuh Santa Claus untuk kejutan';
       cakeOpening = false;
+
+      if (specialDay) {
+        openChristmasSurpriseModal(true);
+      } else {
+        goToScene('gallery');
+      }
+
       stage.classList.add('is-fading');
       window.setTimeout(() => {
         stage.hidden = true;
         stage.classList.remove('is-flooding', 'is-fading');
         stage.replaceChildren();
       }, 850);
-    }, 1880);
+    }, 1820);
   }
   cakeGate.addEventListener('click', lightCake);
 
@@ -995,21 +1091,163 @@
   });
   letterClose.addEventListener('click', closeLetter);
 
+  // ============================================================
+  // Special Christmas Day (25 December) Surprise Modal: Opsi 2
+  // ============================================================
+  const surpriseModal = document.getElementById('christmas-surprise-modal');
+  const surpriseParticles = document.getElementById('christmas-surprise-particles');
+  const santaOfferStage = document.getElementById('santa-offer-stage');
+  const giftUnboxStage = document.getElementById('gift-unbox-stage');
+  const santaOfferBtn = document.getElementById('santa-offer-btn');
+  const unbox3dBox = document.getElementById('unbox-3d-box');
+  const surpriseCloseBtn = document.getElementById('christmas-surprise-close');
+  const surpriseContinueBtn = document.getElementById('christmas-surprise-continue');
+  const reopenChristmasGiftBtn = document.getElementById('reopen-christmas-gift');
+  let surpriseFromSantaFlight = false;
+  let unboxAnimating = false;
+
+  if (DATA.main.christmasSurprise) {
+    const cs = DATA.main.christmasSurprise;
+    const kickerEl = document.getElementById('surprise-kicker');
+    const titleEl = document.getElementById('surprise-santa-title');
+    const subEl = document.getElementById('surprise-santa-subtitle');
+    const hintEl = document.getElementById('surprise-box-hint');
+    const badgeEl = document.getElementById('surprise-gift-badge');
+    const gTitleEl = document.getElementById('surprise-gift-title');
+    const gMsgEl = document.getElementById('surprise-gift-message');
+    const gNoteEl = document.getElementById('surprise-gift-note');
+    const contEl = document.getElementById('surprise-continue-label');
+    if (kickerEl && cs.kicker) kickerEl.textContent = cs.kicker;
+    if (titleEl && cs.santaTitle) titleEl.textContent = cs.santaTitle;
+    if (subEl && cs.santaSubtitle) subEl.textContent = cs.santaSubtitle;
+    if (hintEl && cs.boxHint) hintEl.textContent = cs.boxHint;
+    if (badgeEl && cs.giftBadge) badgeEl.textContent = cs.giftBadge;
+    if (gTitleEl && cs.giftTitle) gTitleEl.textContent = cs.giftTitle;
+    if (gMsgEl && cs.giftMessage) gMsgEl.textContent = cs.giftMessage;
+    if (gNoteEl && cs.giftNote) gNoteEl.textContent = cs.giftNote;
+    if (contEl && cs.continueLabel) contEl.textContent = cs.continueLabel;
+  }
+
+  function spawnSurpriseParticles(count = 26) {
+    if (!surpriseParticles || reducedMotion) return;
+    surpriseParticles.replaceChildren();
+    for (let i = 0; i < count; i += 1) {
+      const star = document.createElement('span');
+      star.className = 'starfall-burst-particle';
+      const startX = 6 + Math.random() * 88;
+      const startY = -6 + Math.random() * 24;
+      const dx = (Math.random() - 0.5) * 160;
+      const dy = (55 + Math.random() * 42) + 'vh';
+      const size = 12 + Math.random() * 16;
+      const dur = 1100 + Math.random() * 750;
+      const delay = i * 35 + Math.random() * 220;
+      star.style.setProperty('--sb-x', `${startX.toFixed(1)}%`);
+      star.style.setProperty('--sb-y', `${startY.toFixed(1)}%`);
+      star.style.setProperty('--sb-dx', `${dx.toFixed(1)}px`);
+      star.style.setProperty('--sb-dy', dy);
+      star.style.setProperty('--sb-size', `${size.toFixed(1)}px`);
+      star.style.setProperty('--sb-dur', `${dur.toFixed(0)}ms`);
+      star.style.setProperty('--sb-delay', `${delay.toFixed(0)}ms`);
+      star.style.setProperty('--sb-tilt', `${(-dx * 0.14).toFixed(1)}deg`);
+      star.style.setProperty('--sb-rot', `${(Math.random() > 0.5 ? 1 : -1) * 190}deg`);
+      star.innerHTML = goldenStarSvg();
+      surpriseParticles.appendChild(star);
+    }
+  }
+
+  function openChristmasSurpriseModal(fromFlight = false) {
+    if (!surpriseModal) return;
+    surpriseFromSantaFlight = fromFlight;
+    unboxAnimating = false;
+    santaOfferStage.hidden = false;
+    santaOfferStage.classList.remove('is-zooming-box');
+    giftUnboxStage.hidden = true;
+    giftUnboxStage.classList.remove('is-card-visible');
+    unbox3dBox.classList.remove('is-shaking', 'is-opened');
+    surpriseModal.hidden = false;
+    spawnSurpriseParticles(22);
+    window.setTimeout(() => {
+      if (santaOfferBtn) santaOfferBtn.focus({ preventScroll: true });
+    }, 120);
+  }
+
+  function closeChristmasSurpriseModal(navigateToGallery = false) {
+    if (!surpriseModal) return;
+    surpriseModal.hidden = true;
+    if (surpriseParticles) surpriseParticles.replaceChildren();
+    if (navigateToGallery) {
+      goToScene('gallery');
+    }
+  }
+
+  function triggerGiftUnbox() {
+    if (unboxAnimating) return;
+    unboxAnimating = true;
+    santaOfferStage.classList.add('is-zooming-box');
+
+    window.setTimeout(() => {
+      santaOfferStage.hidden = true;
+      santaOfferStage.classList.remove('is-zooming-box');
+      giftUnboxStage.hidden = false;
+      unbox3dBox.classList.add('is-shaking');
+
+      window.setTimeout(() => {
+        unbox3dBox.classList.remove('is-shaking');
+        unbox3dBox.classList.add('is-opened');
+        spawnSurpriseParticles(32);
+
+        window.setTimeout(() => {
+          giftUnboxStage.classList.add('is-card-visible');
+          if (surpriseContinueBtn) surpriseContinueBtn.focus({ preventScroll: true });
+        }, 280);
+      }, 480);
+    }, 560);
+  }
+
+  if (santaOfferBtn) santaOfferBtn.addEventListener('click', triggerGiftUnbox);
+  if (surpriseCloseBtn) {
+    surpriseCloseBtn.addEventListener('click', () => {
+      closeChristmasSurpriseModal(surpriseFromSantaFlight);
+    });
+  }
+  if (surpriseContinueBtn) {
+    surpriseContinueBtn.addEventListener('click', () => {
+      closeChristmasSurpriseModal(true);
+    });
+  }
+  if (reopenChristmasGiftBtn) {
+    reopenChristmasGiftBtn.addEventListener('click', () => {
+      openChristmasSurpriseModal(false);
+    });
+  }
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && surpriseModal && !surpriseModal.hidden) {
+      closeChristmasSurpriseModal(surpriseFromSantaFlight);
+    }
+  });
+
   function updateCountdown() {
     const nextBirthday = new Date(DATA.main.nextBirthday);
     const now = new Date();
     const captionEl = document.getElementById('countdown-caption');
+    const valuesEl = document.getElementById('countdown-values');
+    const isToday = isChristmasDay();
 
-    const isToday = now.getMonth() === nextBirthday.getMonth() && now.getDate() === nextBirthday.getDate();
     if (isToday) {
       if (captionEl) captionEl.textContent = 'Selamat Hari Natal, Jessica!';
       document.getElementById('cd-days').textContent = '0';
       document.getElementById('cd-hours').textContent = '00';
       document.getElementById('cd-minutes').textContent = '00';
       document.getElementById('cd-seconds').textContent = '00';
+      if (reopenChristmasGiftBtn) reopenChristmasGiftBtn.hidden = false;
+      if (!cakeOpening && cakeHint) {
+        cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan spesial 25 Desember';
+      }
       return;
     }
 
+    if (reopenChristmasGiftBtn) reopenChristmasGiftBtn.hidden = true;
+    if (valuesEl) valuesEl.hidden = false;
     if (captionEl) captionEl.textContent = DATA.main.countdownLabel;
     let target = new Date(now.getFullYear(), nextBirthday.getMonth(), nextBirthday.getDate());
     if (target <= now) {

@@ -77,6 +77,18 @@ window.SITE_DATA = {
       ],
       closingLine: "Selamat Natal dan selamat menyambut tahun baru, Jessica. Tuhan memberkati.",
       signature: "~Andrian"
+    },
+
+    christmasSurprise: {
+      kicker: "kejutan khusus 25 desember",
+      santaTitle: "Ho Ho Ho! Selamat Hari Natal, Jessica",
+      santaSubtitle: "Tadi saat melintas di depan bulan, Santa sengaja menjatuhkan kotak kado ini khusus untukmu. Sentuh kotak kadonya untuk membuka isinya.",
+      boxHint: "sentuh kotak kado untuk membuka",
+      giftBadge: "Kado Spesial 25 Desember",
+      giftTitle: "Satu Hadiah Kecil Untukmu",
+      giftMessage: "Selamat Hari Natal ya, Jessica! Khusus di tanggal 25 Desember ini, ada traktiran atau hadiah kecil dariku buat merayakan hari Natalmu. Screenshot kartu ini ya, nanti tinggal klaim langsung ke aku kapan pun kamu luang!",
+      giftNote: " Spesial Hari Natal · Dari Andrian untuk Jessica ",
+      continueLabel: "Lanjut ke Momen Kenangan →"
     }
   },
 

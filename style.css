@@ -2782,6 +2782,520 @@ body.site-open { overflow: hidden; }
   }
 }
 
+/* ============================================================
+   Special Christmas Day (25 December) Surprise: Opsi 2
+   ============================================================ */
+.christmas-day-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto 0;
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 222, 115, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(145, 18, 36, 0.88) 0%, rgba(92, 10, 22, 0.94) 100%);
+  color: #fff6d6;
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 18px rgba(255, 206, 72, 0.32);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  animation: gift-trigger-pulse 2.2s ease-in-out infinite alternate;
+}
+
+.christmas-day-trigger[hidden] {
+  display: none !important;
+}
+
+.christmas-day-trigger:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: #ffe894;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65), 0 0 26px rgba(255, 217, 102, 0.55);
+}
+
+@keyframes gift-trigger-pulse {
+  0% { box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 14px rgba(255, 206, 72, 0.25); }
+  100% { box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 26px rgba(255, 217, 102, 0.55); }
+}
+
+/* Falling Gift Box Dropped by Santa's Sleigh Across the Full Moon */
+.falling-moon-gift {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 58px;
+  height: 58px;
+  pointer-events: none;
+  z-index: 30;
+  will-change: transform, opacity, filter;
+  filter: drop-shadow(0 0 14px rgba(255, 232, 148, 0.95)) drop-shadow(0 0 32px rgba(255, 184, 46, 0.75));
+}
+
+.falling-moon-gift svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Full-Screen Christmas Surprise Modal Stage */
+.christmas-surprise-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 20px 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.christmas-surprise-modal[hidden] {
+  display: none !important;
+}
+
+.christmas-surprise-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 38%, rgba(22, 42, 68, 0.88) 0%, rgba(4, 10, 20, 0.96) 75%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: surprise-fade-in 520ms ease both;
+}
+
+.christmas-surprise-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.christmas-surprise-dialog {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 620px);
+  margin: auto;
+  text-align: center;
+}
+
+.christmas-surprise-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(10, 22, 36, 0.75);
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.christmas-surprise-close:hover {
+  background: rgba(24, 46, 70, 0.95);
+  border-color: var(--gold);
+  transform: scale(1.06);
+}
+
+/* Stage 1: 3D Santa Handing the Gift Box */
+.santa-offer-stage {
+  display: grid;
+  justify-items: center;
+  animation: santa-stage-rise 680ms cubic-bezier(0.22, 0.75, 0.25, 1) both;
+}
+
+.santa-offer-stage[hidden] {
+  display: none !important;
+}
+
+.santa-offer-stage.is-zooming-box {
+  animation: santa-zoom-into-box 640ms cubic-bezier(0.32, 0.08, 0.24, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes santa-stage-rise {
+  0% { opacity: 0; transform: translateY(32px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes santa-zoom-into-box {
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  100% { opacity: 0; transform: translate3d(-18%, 4%, 0) scale(1.85); filter: blur(4px); }
+}
+
+.surprise-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.surprise-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--script);
+  font-size: clamp(38px, 7vw, 60px);
+  font-weight: 400;
+  line-height: 1.08;
+  text-shadow: 0 0 24px rgba(255, 232, 160, 0.45), 0 6px 20px rgba(0, 0, 0, 0.85);
+}
+
+.surprise-subtitle {
+  max-width: 480px;
+  margin: 8px auto 12px;
+  color: rgba(235, 244, 252, 0.9);
+  font-family: var(--serif);
+  font-size: clamp(13.5px, 1.8vw, 15.5px);
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+.santa-offer-btn {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.santa-offer-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 8px;
+  border-radius: 24px;
+}
+
+.santa-figure-wrap {
+  position: relative;
+  width: clamp(270px, 68vw, 390px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  animation: santa-gentle-breathe 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes santa-gentle-breathe {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-6px) scale(1.018); }
+}
+
+.santa-moon-aura {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 232, 156, 0.34) 0%, rgba(185, 222, 255, 0.16) 48%, rgba(255, 255, 255, 0) 72%);
+  filter: blur(12px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.santa-figure-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.82)) drop-shadow(0 0 24px rgba(255, 220, 128, 0.25));
+  transition: transform 280ms cubic-bezier(0.22, 0.75, 0.25, 1), filter 280ms ease;
+}
+
+.santa-offer-btn:hover .santa-figure-img {
+  transform: scale(1.03);
+  filter: drop-shadow(0 22px 42px rgba(0, 0, 0, 0.88)) drop-shadow(0 0 32px rgba(255, 225, 130, 0.45));
+}
+
+/* Interactive Pulsing Hotspot Aligned Directly on the Gift Box in Santa's Hand */
+.santa-box-hotspot {
+  position: absolute;
+  left: 73%;
+  top: 47%;
+  z-index: 3;
+  width: 84px;
+  height: 84px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.hotspot-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 238, 170, 0.85);
+  box-shadow: 0 0 18px rgba(255, 212, 82, 0.75), inset 0 0 14px rgba(255, 212, 82, 0.45);
+  animation: hotspot-ripple 1.9s cubic-bezier(0.2, 0.65, 0.35, 1) infinite;
+}
+
+.hotspot-ring-2 {
+  animation-delay: -0.95s;
+}
+
+@keyframes hotspot-ripple {
+  0% { opacity: 0.95; transform: scale(0.45); }
+  100% { opacity: 0; transform: scale(1.45); }
+}
+
+.hotspot-sparkle {
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 16px #ffd452);
+  animation: hotspot-star-spin 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes hotspot-star-spin {
+  0% { transform: scale(0.85) rotate(-12deg); }
+  100% { transform: scale(1.22) rotate(12deg); }
+}
+
+.santa-offer-hint {
+  margin-top: 8px;
+  padding: 7px 18px;
+  border: 1px solid rgba(255, 224, 130, 0.42);
+  border-radius: 999px;
+  background: rgba(14, 28, 44, 0.82);
+  color: #ffe89e;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 212, 82, 0.22);
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.santa-offer-btn:hover .santa-offer-hint {
+  background: rgba(24, 46, 70, 0.95);
+  transform: translateY(-2px);
+}
+
+/* Stage 2: Zoomed-In 3D Gift Box Unbox & Gift Card Reveal */
+.gift-unbox-stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 10px 0;
+  animation: unbox-stage-enter 480ms cubic-bezier(0.22, 0.75, 0.25, 1) both;
+}
+
+.gift-unbox-stage[hidden] {
+  display: none !important;
+}
+
+@keyframes unbox-stage-enter {
+  0% { opacity: 0; transform: scale(0.78); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.unbox-light-rays {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: 380px;
+  height: 380px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 244, 196, 0.65) 0%, rgba(255, 204, 77, 0.28) 42%, rgba(255, 180, 34, 0) 72%);
+  pointer-events: none;
+  z-index: 0;
+  animation: unbox-aura-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes unbox-aura-pulse {
+  0% { opacity: 0.65; transform: translate(-50%, -50%) scale(0.92); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+}
+
+.unbox-3d-box {
+  position: relative;
+  z-index: 2;
+  width: 210px;
+  margin: 0 auto -22px;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.75));
+  transition: transform 520ms cubic-bezier(0.22, 0.75, 0.25, 1), opacity 420ms ease;
+}
+
+.unbox-3d-box.is-shaking {
+  animation: gift-box-shake 520ms ease-in-out;
+}
+
+@keyframes gift-box-shake {
+  0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
+  20% { transform: translateX(-8px) rotate(-5deg) scale(1.05); }
+  40% { transform: translateX(8px) rotate(5deg) scale(1.07); }
+  60% { transform: translateX(-6px) rotate(-4deg) scale(1.08); }
+  80% { transform: translateX(6px) rotate(4deg) scale(1.06); }
+}
+
+.unbox-box-lid {
+  position: relative;
+  z-index: 3;
+  margin-bottom: -14px;
+  transform-origin: 50% 85%;
+  transition: transform 680ms cubic-bezier(0.22, 0.8, 0.25, 1), opacity 580ms ease;
+}
+
+.unbox-3d-box.is-opened .unbox-box-lid {
+  transform: translate3d(26px, -88px, 0) rotate(24deg) scale(0.88);
+  opacity: 0;
+}
+
+.unbox-3d-box.is-opened {
+  transform: translateY(16px) scale(0.82);
+}
+
+.unbox-lid-svg,
+.unbox-base-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Luxury Christmas Gift Card (Revealed from Inside the Box) */
+.christmas-gift-card {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 470px);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px;
+  background: linear-gradient(155deg, #fffdf9 0%, #f9f0e1 55%, #f0dfc8 100%);
+  border: 1.5px solid #e6c26e;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.82), 0 0 38px rgba(255, 217, 102, 0.35), inset 0 1px 0 #ffffff;
+  opacity: 0;
+  transform: translateY(42px) scale(0.84);
+  pointer-events: none;
+  transition: opacity 620ms cubic-bezier(0.22, 0.75, 0.25, 1), transform 680ms cubic-bezier(0.22, 0.82, 0.25, 1);
+}
+
+.gift-unbox-stage.is-card-visible .christmas-gift-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.gift-card-filigree {
+  padding: 26px 24px 24px;
+  border: 1.5px dashed rgba(184, 134, 32, 0.55);
+  border-radius: 14px;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 236, 179, 0.35) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.gift-card-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #9c1426 0%, #6e0a17 100%);
+  border: 1px solid #f0c96b;
+  color: #fff8de;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(138, 16, 32, 0.35);
+}
+
+.gift-card-icon {
+  margin: 12px auto 6px;
+  filter: drop-shadow(0 2px 8px rgba(212, 155, 39, 0.45));
+}
+
+.gift-card-title {
+  margin: 0;
+  color: #5e0c18;
+  font-family: var(--script);
+  font-size: clamp(32px, 6vw, 44px);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.gift-card-message {
+  margin: 12px 0 0;
+  color: #3b2621;
+  font-family: var(--serif);
+  font-size: clamp(14px, 1.8vw, 15.5px);
+  line-height: 1.72;
+}
+
+.gift-card-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px auto 12px;
+}
+
+.gift-card-divider span {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 134, 32, 0.65), transparent);
+}
+
+.gift-card-note {
+  margin: 0;
+  color: #8c5e14;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.christmas-surprise-continue {
+  position: relative;
+  z-index: 4;
+  margin-top: 18px;
+  padding: 12px 26px;
+  border: 1px solid #ffe484;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #b0182b 0%, #750a18 100%);
+  color: #fff9e6;
+  font-family: var(--serif);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 212, 82, 0.35);
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 480ms ease 180ms, transform 480ms ease 180ms, box-shadow 200ms ease;
+}
+
+.gift-unbox-stage.is-card-visible .christmas-surprise-continue {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.christmas-surprise-continue:hover {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.78), 0 0 28px rgba(255, 224, 115, 0.6);
+  transform: translateY(-2px);
+}
+
+@keyframes surprise-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

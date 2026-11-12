@@ -4,18 +4,26 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 const webpush = require('web-push');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, '.env.example') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const SUBSCRIPTIONS_FILE = path.join(__dirname, 'subscriptions.json');
 
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8293629800:AAH0C-FZNIwGJ1iGDa4rENVW2xoYFAyHpr4';
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6555824079';
+const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY || 'BNjNxN5eSBXcTLFZxC55Oy9U-44P38TWLHu3jGGWvgS4jU6FUKPurLAGxDhj0JOazPXl854WYxk5N76TPZW52Oc';
+const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || 'EVWdCyowi4gYZ25oronb6Ii6PkYv1PAoHolTssFtz0Q';
+const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:andrian@onlyforjessica.my.id';
+const ADMIN_SECRET = process.env.ADMIN_SECRET || 'jessica-surprise-update-2026';
+
 // Validasi & Konfigurasi Web Push VAPID
-if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+if (VAPID_PUBLIC_KEY && VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
-    process.env.VAPID_SUBJECT || 'mailto:admin@onlyforjessica.my.id',
-    process.env.VAPID_PUBLIC_KEY,
-    process.env.VAPID_PRIVATE_KEY
+    VAPID_SUBJECT,
+    VAPID_PUBLIC_KEY,
+    VAPID_PRIVATE_KEY
   );
 } else {
   console.warn('[WARN] VAPID keys belum diatur dengan benar di .env');
@@ -52,8 +60,8 @@ app.use(express.json());
 
 // Helper: Kirim Pesan ke Telegram
 async function sendTelegramAlert(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const token = TELEGRAM_BOT_TOKEN;
+  const chatId = TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
     console.warn('[Telegram] Token atau Chat ID belum diset.');
@@ -187,7 +195,7 @@ app.post('/api/broadcast', async (req, res) => {
   try {
     const { secret, title, body, url } = req.body;
 
-    if (secret !== process.env.ADMIN_SECRET) {
+    if (secret !== ADMIN_SECRET) {
       return res.status(403).json({ ok: false, error: 'Akses ditolak: ADMIN_SECRET salah.' });
     }
 
@@ -223,7 +231,7 @@ app.post('/api/github-webhook', async (req, res) => {
       console.log(`[GitHub Webhook] Push terdeteksi dari ${pusherName}: "${commitMsg}"`);
 
       // 1. Auto Git Pull di VM agar file di VM selalu sinkron otomatis tanpa SSH manual
-      exec('git pull', { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
+      exec('git pull && pm2 restart jessica-api --update-env', { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
         if (error) {
           console.error('[Auto Git Pull Error]', error.message);
         } else {
@@ -268,6 +276,6 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`=========================================`);
   console.log(`🚀 Jessica Surprise Server berjalan!`);
   console.log(`📡 Port: ${PORT}`);
-  console.log(`🤖 Telegram Bot Alert: AKTIF (Chat ID: ${process.env.TELEGRAM_CHAT_ID})`);
+  console.log(`🤖 Telegram Bot Alert: AKTIF (Chat ID: ${TELEGRAM_CHAT_ID})`);
   console.log(`=========================================`);
 });
