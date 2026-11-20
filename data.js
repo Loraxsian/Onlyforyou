@@ -22,6 +22,11 @@ window.SITE_DATA = {
     // Format: YYYY-MM-DDTHH:mm:ss (waktu lokal)
     nextBirthday: "2026-12-25T00:00:00",
     countdownLabel: "menghitung hari menuju malam Natal",
+    countdownEvents: [
+      { month: 12, day: 25, label: "menghitung hari menuju malam Natal", todayLabel: "Selamat Hari Natal, Jessica!" },
+      { month: 1, day: 1, label: "menghitung hari menuju Tahun Baru", todayLabel: "Selamat Tahun Baru, Jessica!" },
+      { month: 10, day: 18, label: "menghitung hari menuju ulang tahunmu", todayLabel: "Selamat Ulang Tahun, Jessica!" }
+    ],
 
     gallery: {
       eyebrow: "beberapa momen favoritku",
@@ -90,19 +95,19 @@ window.SITE_DATA = {
     },
 
     christmasSurprise: {
-      kicker: "kejutan khusus 25 desember",
+      kicker: "25 desember",
       santaTitle: "Ho Ho Ho! Selamat Hari Natal, Jessica",
-      santaSubtitle: "Tadi saat melintas di depan bulan, Santa sengaja menjatuhkan kotak kado ini khusus untukmu. Sentuh kotak kadonya untuk membuka isinya.",
+      santaSubtitle: "Ada titipan kecil dari Santa buat kamu hari ini. Sentuh kotaknya buat lihat isinya.",
       boxHint: "sentuh kotak kado untuk membuka",
-      giftBadge: "Kado Spesial 25 Desember",
-      giftTitle: "Pilih Satu Hadiah Untukmu",
-      giftMessage: "Selamat Hari Natal ya, Jessica! Khusus di tanggal 25 Desember ini, pilih salah satu voucher di bawah—pilihanmu bakal langsung masuk ke aku buat ditraktir pas ketemu nanti!",
+      giftBadge: "Kado 25 Desember",
+      giftTitle: "Pilih satu ya",
+      giftMessage: "Selamat Natal, Jessica. Khusus hari ini, pilih salah satu dari tiga pilihan di bawah. Nanti tinggal kita jadwalkan pas sama-sama luang.",
       vouchers: [
-        { id: "matcha", title: "Matcha / Coffee Date", desc: "Cari minuman favorit sambil ngobrol santai" },
-        { id: "movie", title: "Nonton Bareng", desc: "Bebas pilih film apa aja yang lagi kamu pengen" },
-        { id: "food", title: "Traktir Makan Favorit", desc: "Pilih menu apa pun yang lagi kamu mau" }
+        { id: "matcha", title: "Matcha / Coffee Date", desc: "Ngopi atau beli minuman favoritmu" },
+        { id: "movie", title: "Nonton Bareng", desc: "Kamu yang pilih filmnya" },
+        { id: "food", title: "Makan Bareng", desc: "Bebas pilih makanan yang lagi kamu mau" }
       ],
-      giftNote: "Spesial Hari Natal · Dari Andrian untuk Jessica",
+      giftNote: "Dari Andrian untuk Jessica",
       continueLabel: "Lanjut ke Momen Kenangan →"
     }
   },

@@ -851,37 +851,76 @@
       lanternOpening = false;
       lanternPull.classList.remove('is-lit', 'is-pulled');
       lanternPull.style.removeProperty('--pull-distance');
+      lanternPull.style.removeProperty('--pull-angle');
     }, reducedMotion ? 40 : 880);
   }
+
+  let lanternPointerX = null;
+  let lanternDraggedShort = false;
+
   lanternPull.addEventListener('pointerdown', (event) => {
+    lanternPointerX = event.clientX;
     lanternPointerY = event.clientY;
+    lanternDraggedShort = false;
     lanternPull.style.setProperty('--pull-distance', '0px');
+    lanternPull.style.setProperty('--pull-angle', '0deg');
     lanternPull.setPointerCapture(event.pointerId);
   });
+
   lanternPull.addEventListener('pointermove', (event) => {
-    if (lanternPointerY === null) return;
-    const distance = Math.max(0, Math.min(52, event.clientY - lanternPointerY));
-    lanternPull.style.setProperty('--pull-distance', `${distance}px`);
-    lanternPull.classList.toggle('is-pulling', distance > 2);
+    if (lanternPointerY === null || lanternPointerX === null) return;
+    const rawDx = event.clientX - lanternPointerX;
+    const rawDy = Math.max(-14, event.clientY - lanternPointerY);
+    const rawDist = Math.hypot(rawDx, rawDy);
+    // Batas tarikan elastis (kenyal, maksimal ~62px ke segala arah)
+    const maxElasticDist = 62;
+    const elasticDist = maxElasticDist * (1 - Math.exp(-rawDist / 56));
+    const scale = rawDist > 0 ? elasticDist / rawDist : 0;
+    const dx = rawDx * scale;
+    const dy = rawDy * scale;
+
+    const stretch = Math.max(0, Math.min(58, Math.hypot(dx, Math.max(0, dy)) * 0.92));
+    // Sudut tali berayun mengikuti tarikan kiri/kanan (dibatasi +/- 44 deg)
+    const angleRad = Math.atan2(-dx, 36 + stretch);
+    const angleDeg = Math.max(-44, Math.min(44, (angleRad * 180) / Math.PI));
+
+    lanternPull.style.setProperty('--pull-distance', `${stretch.toFixed(1)}px`);
+    lanternPull.style.setProperty('--pull-angle', `${angleDeg.toFixed(1)}deg`);
+    lanternPull.classList.toggle('is-pulling', rawDist > 3);
   });
-  lanternPull.addEventListener('pointerup', (event) => {
-    if (lanternPointerY === null) return;
-    const pullDistance = event.clientY - lanternPointerY;
-    lanternPointerY = null;
-    lanternPull.classList.remove('is-pulling');
-    if (pullDistance > 18) {
-      lanternPull.classList.add('is-pulled');
-      lightLantern();
-    } else {
-      lanternPull.style.removeProperty('--pull-distance');
-    }
-  });
-  lanternPull.addEventListener('pointercancel', () => {
+
+  function resetLanternElastic() {
+    lanternPointerX = null;
     lanternPointerY = null;
     lanternPull.classList.remove('is-pulling');
     lanternPull.style.removeProperty('--pull-distance');
+    lanternPull.style.removeProperty('--pull-angle');
+  }
+
+  lanternPull.addEventListener('pointerup', (event) => {
+    if (lanternPointerY === null || lanternPointerX === null) return;
+    const rawDx = event.clientX - lanternPointerX;
+    const rawDy = event.clientY - lanternPointerY;
+    const pullDistance = Math.hypot(rawDx, Math.max(0, rawDy));
+    resetLanternElastic();
+    if (pullDistance > 26) {
+      lanternPull.classList.add('is-pulled');
+      lightLantern();
+    } else if (pullDistance >= 6) {
+      // Tarikan tanggung dilepas: tali memantul balik tanpa langsung membuka surat
+      lanternDraggedShort = true;
+    }
   });
-  lanternPull.addEventListener('click', lightLantern);
+
+  lanternPull.addEventListener('pointercancel', resetLanternElastic);
+
+  lanternPull.addEventListener('click', () => {
+    if (lanternDraggedShort) {
+      lanternDraggedShort = false;
+      return;
+    }
+    lightLantern();
+  });
 
   siteNav.addEventListener('click', (event) => {
     if (event.target.closest('a')) setNavOpen(false);
@@ -1399,7 +1438,6 @@
   const unbox3dBox = document.getElementById('unbox-3d-box');
   const surpriseCloseBtn = document.getElementById('christmas-surprise-close');
   const surpriseContinueBtn = document.getElementById('christmas-surprise-continue');
-  const reopenChristmasGiftBtn = document.getElementById('reopen-christmas-gift');
   let surpriseFromSantaFlight = false;
   let unboxAnimating = false;
 
@@ -1425,40 +1463,86 @@
     if (contEl && cs.continueLabel) contEl.textContent = cs.continueLabel;
 
     const voucherListEl = document.getElementById('gift-voucher-list');
+    const voucherConfirmBtn = document.getElementById('gift-voucher-confirm');
     const voucherStatusEl = document.getElementById('gift-voucher-status');
-    const savedVoucherId = localStorage.getItem('jessica_christmas_voucher_2026');
+    const VOUCHER_STORAGE_KEY = 'jessica_christmas_voucher_2026';
+    const savedVoucherId = localStorage.getItem(VOUCHER_STORAGE_KEY);
+    let pendingVoucher = null;
+    let voucherClaimed = Boolean(savedVoucherId);
+
+    function voucherIconSvg(id) {
+      if (id === 'matcha') {
+        return `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`;
+      }
+      if (id === 'movie') {
+        return `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9.5h5M17 9.5h5M2 14.5h5M17 14.5h5"/></svg>`;
+      }
+      return `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>`;
+    }
+
+    function applyVoucherLockState(selectedId) {
+      if (!voucherListEl) return;
+      voucherListEl.querySelectorAll('.gift-voucher-btn').forEach((item) => {
+        const isChosen = item.dataset.voucherId === selectedId;
+        item.classList.toggle('is-selected', isChosen);
+        item.classList.toggle('is-dimmed', voucherClaimed && !isChosen);
+        item.disabled = voucherClaimed;
+      });
+    }
 
     if (voucherListEl && Array.isArray(cs.vouchers)) {
       cs.vouchers.forEach((voucher) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'gift-voucher-btn';
-        if (savedVoucherId === voucher.id) btn.classList.add('is-selected');
-        btn.innerHTML = `<strong>${voucher.title}</strong><small>${voucher.desc}</small>`;
-        btn.addEventListener('click', async () => {
-          voucherListEl.querySelectorAll('.gift-voucher-btn').forEach((item) => {
-            item.classList.remove('is-selected');
-          });
-          btn.classList.add('is-selected');
-          localStorage.setItem('jessica_christmas_voucher_2026', voucher.id);
-          playChime('gift');
-          if (voucherStatusEl) {
-            voucherStatusEl.textContent = `Voucher "${voucher.title}" dipilih & langsung diteruskan ke Andrian!`;
-            voucherStatusEl.hidden = false;
+        btn.dataset.voucherId = voucher.id;
+        btn.innerHTML = `
+          <span class="gift-voucher-icon" aria-hidden="true">${voucherIconSvg(voucher.id)}</span>
+          <span class="gift-voucher-copy">
+            <strong>${voucher.title}</strong>
+            <small>${voucher.desc}</small>
+          </span>
+          <span class="gift-voucher-check" aria-hidden="true">✓</span>
+        `;
+        btn.addEventListener('click', () => {
+          if (voucherClaimed) return;
+          pendingVoucher = voucher;
+          applyVoucherLockState(voucher.id);
+          if (voucherConfirmBtn) {
+            voucherConfirmBtn.textContent = `Konfirmasi Pilihan: ${voucher.title}`;
+            voucherConfirmBtn.hidden = false;
           }
-          await sendFeedbackToTelegram({
-            type: 'gift_claim',
-            choice: voucher.title,
-            message: voucher.desc
-          });
         });
         voucherListEl.appendChild(btn);
       });
 
-      if (savedVoucherId && voucherStatusEl) {
+      if (voucherConfirmBtn) {
+        voucherConfirmBtn.addEventListener('click', async () => {
+          if (!pendingVoucher || voucherClaimed) return;
+          voucherClaimed = true;
+          voucherConfirmBtn.disabled = true;
+          voucherConfirmBtn.textContent = 'Mengirim pilihanmu…';
+          localStorage.setItem(VOUCHER_STORAGE_KEY, pendingVoucher.id);
+          applyVoucherLockState(pendingVoucher.id);
+          playChime('gift');
+          await sendFeedbackToTelegram({
+            type: 'gift_claim',
+            choice: pendingVoucher.title,
+            message: pendingVoucher.desc
+          });
+          voucherConfirmBtn.hidden = true;
+          if (voucherStatusEl) {
+            voucherStatusEl.textContent = `Voucher "${pendingVoucher.title}" sudah diklaim & diteruskan ke Andrian ✓`;
+            voucherStatusEl.hidden = false;
+          }
+        });
+      }
+
+      if (savedVoucherId) {
+        applyVoucherLockState(savedVoucherId);
         const matched = cs.vouchers.find((v) => v.id === savedVoucherId);
-        if (matched) {
-          voucherStatusEl.textContent = `Voucher pilihanmu: "${matched.title}"`;
+        if (matched && voucherStatusEl) {
+          voucherStatusEl.textContent = `Voucher pilihanmu: "${matched.title}" ✓`;
           voucherStatusEl.hidden = false;
         }
       }
@@ -1500,7 +1584,8 @@
     santaOfferStage.classList.remove('is-zooming-box');
     giftUnboxStage.hidden = true;
     giftUnboxStage.classList.remove('is-card-visible');
-    unbox3dBox.classList.remove('is-shaking', 'is-opened');
+    unbox3dBox.classList.remove('is-untying', 'is-opened');
+    unbox3dBox.disabled = false;
     surpriseModal.hidden = false;
     spawnSurpriseParticles(22);
     window.setTimeout(() => {
@@ -1517,32 +1602,64 @@
     }
   }
 
-  function triggerGiftUnbox() {
+  let boxPullStartY = null;
+  let boxOpenedYet = false;
+
+  function moveToGiftBoxStage() {
     if (unboxAnimating) return;
     unboxAnimating = true;
+    boxOpenedYet = false;
     santaOfferStage.classList.add('is-zooming-box');
 
     window.setTimeout(() => {
       santaOfferStage.hidden = true;
       santaOfferStage.classList.remove('is-zooming-box');
       giftUnboxStage.hidden = false;
-      unbox3dBox.classList.add('is-shaking');
-
-      window.setTimeout(() => {
-        unbox3dBox.classList.remove('is-shaking');
-        unbox3dBox.classList.add('is-opened');
-        playChime('gift');
-        spawnSurpriseParticles(32);
-
-        window.setTimeout(() => {
-          giftUnboxStage.classList.add('is-card-visible');
-          if (surpriseContinueBtn) surpriseContinueBtn.focus({ preventScroll: true });
-        }, 280);
-      }, 480);
-    }, 560);
+      unboxAnimating = false;
+      if (unbox3dBox) unbox3dBox.focus({ preventScroll: true });
+    }, 340);
   }
 
-  if (santaOfferBtn) santaOfferBtn.addEventListener('click', triggerGiftUnbox);
+  function openGiftBox() {
+    if (boxOpenedYet || unboxAnimating) return;
+    boxOpenedYet = true;
+    unboxAnimating = true;
+    unbox3dBox.disabled = true;
+    unbox3dBox.classList.add('is-untying');
+    playChime('sparkle');
+
+    window.setTimeout(() => {
+      unbox3dBox.classList.remove('is-untying');
+      unbox3dBox.classList.add('is-opened');
+      playChime('gift');
+      spawnSurpriseParticles(32);
+
+      window.setTimeout(() => {
+        giftUnboxStage.classList.add('is-card-visible');
+        unboxAnimating = false;
+        if (surpriseContinueBtn) surpriseContinueBtn.focus({ preventScroll: true });
+      }, 360);
+    }, 480);
+  }
+
+  if (santaOfferBtn) santaOfferBtn.addEventListener('click', moveToGiftBoxStage);
+  if (unbox3dBox) {
+    unbox3dBox.addEventListener('pointerdown', (event) => {
+      boxPullStartY = event.clientY;
+    });
+    unbox3dBox.addEventListener('pointerup', (event) => {
+      if (boxPullStartY === null) return;
+      const deltaY = event.clientY - boxPullStartY;
+      boxPullStartY = null;
+      if (deltaY < -20) {
+        openGiftBox();
+      }
+    });
+    unbox3dBox.addEventListener('pointercancel', () => {
+      boxPullStartY = null;
+    });
+    unbox3dBox.addEventListener('click', openGiftBox);
+  }
   if (surpriseCloseBtn) {
     surpriseCloseBtn.addEventListener('click', () => {
       closeChristmasSurpriseModal(surpriseFromSantaFlight);
@@ -1553,11 +1670,6 @@
       closeChristmasSurpriseModal(true);
     });
   }
-  if (reopenChristmasGiftBtn) {
-    reopenChristmasGiftBtn.addEventListener('click', () => {
-      openChristmasSurpriseModal(false);
-    });
-  }
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && surpriseModal && !surpriseModal.hidden) {
       closeChristmasSurpriseModal(surpriseFromSantaFlight);
@@ -1565,34 +1677,48 @@
   });
 
   function updateCountdown() {
-    const nextBirthday = new Date(DATA.main.nextBirthday);
     const now = new Date();
     const captionEl = document.getElementById('countdown-caption');
     const valuesEl = document.getElementById('countdown-values');
-    const isToday = isChristmasDay();
+    const events = Array.isArray(DATA.main.countdownEvents) && DATA.main.countdownEvents.length
+      ? DATA.main.countdownEvents
+      : [{ month: 12, day: 25, label: DATA.main.countdownLabel, todayLabel: 'Selamat Hari Natal, Jessica!' }];
 
-    if (isToday) {
-      if (captionEl) captionEl.textContent = 'Selamat Hari Natal, Jessica!';
+    const christmasToday = isChristmasDay();
+    const todayEvent = christmasToday
+      ? events.find((ev) => ev.month === 12 && ev.day === 25) || events[0]
+      : events.find((ev) => now.getMonth() + 1 === ev.month && now.getDate() === ev.day);
+
+    if (todayEvent) {
+      if (captionEl) captionEl.textContent = todayEvent.todayLabel;
       document.getElementById('cd-days').textContent = '0';
       document.getElementById('cd-hours').textContent = '00';
       document.getElementById('cd-minutes').textContent = '00';
       document.getElementById('cd-seconds').textContent = '00';
-      if (reopenChristmasGiftBtn) reopenChristmasGiftBtn.hidden = false;
-      if (!cakeOpening && cakeHint) {
+      if (christmasToday && !cakeOpening && cakeHint) {
         cakeHint.textContent = 'Sentuh Santa Claus untuk kejutan spesial 25 Desember';
       }
       return;
     }
 
-    if (reopenChristmasGiftBtn) reopenChristmasGiftBtn.hidden = true;
     if (valuesEl) valuesEl.hidden = false;
-    if (captionEl) captionEl.textContent = DATA.main.countdownLabel;
-    let target = new Date(now.getFullYear(), nextBirthday.getMonth(), nextBirthday.getDate());
-    if (target <= now) {
-      target = new Date(now.getFullYear() + 1, nextBirthday.getMonth(), nextBirthday.getDate());
+
+    // Cari event terdekat berikutnya dalam siklus tahunan: Natal -> Tahun Baru -> Ulang Tahun -> Natal
+    let nextEvent = null;
+    let nextTarget = null;
+    for (const ev of events) {
+      let candidate = new Date(now.getFullYear(), ev.month - 1, ev.day, 0, 0, 0, 0);
+      if (candidate <= now) {
+        candidate = new Date(now.getFullYear() + 1, ev.month - 1, ev.day, 0, 0, 0, 0);
+      }
+      if (!nextTarget || candidate < nextTarget) {
+        nextTarget = candidate;
+        nextEvent = ev;
+      }
     }
 
-    let remaining = target.getTime() - now.getTime();
+    if (captionEl && nextEvent) captionEl.textContent = nextEvent.label;
+    let remaining = nextTarget.getTime() - now.getTime();
     const days = Math.floor(remaining / 86400000);
     remaining %= 86400000;
     const hours = Math.floor(remaining / 3600000);
