@@ -100,7 +100,7 @@ if (window.self !== window.top) {
   const SETTINGS = {
     height:6.15,
     baseRadius:2.54,
-    needleCount:30000,
+    needleCount:window.innerWidth < 700 ? 11000 : 17000,
     baubleCount:68,
     snowCount:295,
     starsCount:290,
