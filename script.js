@@ -28,10 +28,56 @@
     );
   }
 
+  const musicNowPlaying = document.getElementById('music-now-playing');
+  let musicLabelTimer = 0;
+  let chimeAudioCtx = null;
+
+  function showMusicLabel() {
+    if (!musicNowPlaying || !DATA.audio || !DATA.audio.label) return;
+    musicNowPlaying.textContent = `♪ ${DATA.audio.label}`;
+    musicNowPlaying.hidden = false;
+    window.clearTimeout(musicLabelTimer);
+    musicLabelTimer = window.setTimeout(() => {
+      musicNowPlaying.hidden = true;
+    }, 4500);
+  }
+
+  function playChime(kind = 'sparkle') {
+    if (audio.paused) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    try {
+      chimeAudioCtx ||= new AudioCtx();
+      if (chimeAudioCtx.state === 'suspended') chimeAudioCtx.resume();
+      const notes = kind === 'gift' ? [523.25, 659.25, 783.99, 1046.5] : [659.25, 880, 1174.66];
+      const now = chimeAudioCtx.currentTime;
+      notes.forEach((freq, idx) => {
+        const osc = chimeAudioCtx.createOscillator();
+        const gain = chimeAudioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.0001, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.055, now + idx * 0.08 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.55);
+        osc.connect(gain);
+        gain.connect(chimeAudioCtx.destination);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.6);
+      });
+    } catch (e) {
+      // Abaikan jika browser memblokir AudioContext
+    }
+  }
+
   function setMusicState(isPlaying) {
     musicButton.classList.toggle('is-playing', isPlaying);
     musicButton.setAttribute('aria-pressed', String(isPlaying));
     musicButton.setAttribute('aria-label', isPlaying ? 'Matikan musik' : 'Putar musik');
+    if (isPlaying) {
+      showMusicLabel();
+    } else if (musicNowPlaying) {
+      musicNowPlaying.hidden = true;
+    }
   }
 
   let flowerSvgInstance = 0;
@@ -866,16 +912,112 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-img');
   const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  const lightboxLikeBtn = document.getElementById('lightbox-like');
+  const lightboxPrevBtn = document.getElementById('lightbox-prev');
+  const lightboxNextBtn = document.getElementById('lightbox-next');
+  const lightboxHeartBurst = document.getElementById('lightbox-heart-burst');
   let lastFocusedPhoto = null;
   let currentPhotoIndex = 0;
+  let lightboxIndex = 0;
   let swipeStartX = null;
   let lastSwipeAt = 0;
+  let lightboxSwipeStartX = null;
+  let lightboxLastTapAt = 0;
   const galleryPhotos = DATA.main.gallery.photos;
+
+  const FAVORITES_KEY = 'jessica_favorite_photos_2026';
+  let favoritePhotos = [];
+  try {
+    const parsed = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    if (Array.isArray(parsed)) favoritePhotos = parsed;
+  } catch (e) {
+    favoritePhotos = [];
+  }
+  const notifiedLikes = new Set(favoritePhotos);
+
+  function saveFavorites() {
+    try {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoritePhotos));
+    } catch (e) {
+      // Abaikan jika storage penuh atau private mode
+    }
+  }
+
+  function triggerHeartBurst(burstEl) {
+    if (!burstEl) return;
+    burstEl.classList.remove('is-bursting');
+    void burstEl.offsetWidth;
+    burstEl.classList.add('is-bursting');
+  }
+
+  function syncLikeButtons() {
+    document.querySelectorAll('.gallery-card').forEach((card, idx) => {
+      const liked = favoritePhotos.includes(idx);
+      const btn = card.querySelector('.photo-like-btn');
+      if (btn) {
+        btn.classList.toggle('is-liked', liked);
+        btn.setAttribute('aria-pressed', String(liked));
+      }
+    });
+    if (lightboxLikeBtn && !lightbox.hidden) {
+      const liked = favoritePhotos.includes(lightboxIndex);
+      lightboxLikeBtn.classList.toggle('is-liked', liked);
+      lightboxLikeBtn.setAttribute('aria-pressed', String(liked));
+    }
+  }
+
+  function setPhotoFavorite(index, shouldLike, burstEl = null) {
+    const exists = favoritePhotos.includes(index);
+    if (shouldLike && !exists) {
+      favoritePhotos.push(index);
+      saveFavorites();
+      playChime('sparkle');
+      if (burstEl) triggerHeartBurst(burstEl);
+      if (!notifiedLikes.has(index)) {
+        notifiedLikes.add(index);
+        const photo = galleryPhotos[index];
+        sendFeedbackToTelegram({
+          type: 'photo_like',
+          choice: `Foto #${index + 1}`,
+          message: (photo && photo.caption) || `Foto kenangan ke-${index + 1}`
+        });
+      }
+    } else if (!shouldLike && exists) {
+      favoritePhotos = favoritePhotos.filter((item) => item !== index);
+      saveFavorites();
+    } else if (shouldLike && exists && burstEl) {
+      playChime('sparkle');
+      triggerHeartBurst(burstEl);
+    }
+    syncLikeButtons();
+  }
+
+  function openLightboxAt(index) {
+    const length = galleryPhotos.length;
+    lightboxIndex = (index + length) % length;
+    const photo = galleryPhotos[lightboxIndex];
+    const photoDescription = photo.caption || `Foto kenangan ke-${lightboxIndex + 1}`;
+    lightboxImage.src = photo.src;
+    lightboxImage.alt = photoDescription;
+    lightboxCaption.textContent = photo.caption || `Foto kenangan ke-${lightboxIndex + 1}`;
+    if (lightboxCounter) {
+      lightboxCounter.textContent = `${String(lightboxIndex + 1).padStart(2, '0')} / ${String(length).padStart(2, '0')}`;
+    }
+    lightbox.hidden = false;
+    showPhoto(lightboxIndex);
+    syncLikeButtons();
+  }
 
   function closeLightbox() {
     lightbox.hidden = true;
     lightboxImage.removeAttribute('src');
-    if (lastFocusedPhoto && !lastFocusedPhoto.closest('.gallery-card').hidden) lastFocusedPhoto.focus();
+    const currentCardBtn = document.querySelectorAll('.gallery-card .photo-button')[currentPhotoIndex];
+    if (currentCardBtn) {
+      currentCardBtn.focus({ preventScroll: true });
+    } else if (lastFocusedPhoto && !lastFocusedPhoto.closest('.gallery-card').hidden) {
+      lastFocusedPhoto.focus();
+    }
   }
 
   function showPhoto(index) {
@@ -895,6 +1037,7 @@
       card.classList.add(position);
       card.setAttribute('aria-hidden', String(distance !== 0));
       const button = card.querySelector('.photo-button');
+      const likeBtn = card.querySelector('.photo-like-btn');
       const image = button.querySelector('img');
       const shouldKeepLoaded = distance <= 2 || distance === length - 1;
       if (shouldKeepLoaded) {
@@ -903,6 +1046,12 @@
         if (image.hasAttribute('src')) image.removeAttribute('src');
       }
       button.tabIndex = distance === 0 ? 0 : -1;
+      if (likeBtn) {
+        likeBtn.tabIndex = distance === 0 ? 0 : -1;
+        if (distance !== 0 && document.activeElement === likeBtn) {
+          likeBtn.blur();
+        }
+      }
     });
   }
 
@@ -927,28 +1076,61 @@
     image.loading = 'eager';
     image.decoding = 'async';
     image.draggable = false;
-    button.appendChild(image);
+
+    const heartBurst = document.createElement('span');
+    heartBurst.className = 'photo-heart-burst';
+    heartBurst.setAttribute('aria-hidden', 'true');
+    heartBurst.textContent = '♥';
+    button.append(image, heartBurst);
+
+    const likeBtn = document.createElement('button');
+    likeBtn.type = 'button';
+    likeBtn.className = 'photo-like-btn';
+    likeBtn.setAttribute('aria-label', `Sukai ${photoDescription}`);
+    likeBtn.setAttribute('aria-pressed', String(favoritePhotos.includes(index)));
+    if (favoritePhotos.includes(index)) likeBtn.classList.add('is-liked');
+    likeBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+    likeBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const willLike = !favoritePhotos.includes(index);
+      setPhotoFavorite(index, willLike, willLike ? heartBurst : null);
+    });
 
     const caption = document.createElement('figcaption');
     caption.textContent = photo.caption;
     caption.hidden = !photo.caption;
+
+    let lastTapAt = 0;
+    let singleTapTimer = 0;
     button.addEventListener('click', () => {
       if (Date.now() - lastSwipeAt < 450) return;
-      lastFocusedPhoto = button;
-      lightboxImage.src = photo.src;
-      lightboxImage.alt = photoDescription;
-      lightboxCaption.textContent = photo.caption || `Foto kenangan ke-${index + 1}`;
-      lightbox.hidden = false;
-      document.getElementById('lightbox-close').focus();
+      const now = Date.now();
+      if (now - lastTapAt < 270) {
+        window.clearTimeout(singleTapTimer);
+        lastTapAt = 0;
+        setPhotoFavorite(index, true, heartBurst);
+        return;
+      }
+      lastTapAt = now;
+      singleTapTimer = window.setTimeout(() => {
+        lastFocusedPhoto = button;
+        openLightboxAt(index);
+        document.getElementById('lightbox-close').focus();
+      }, 270);
     });
 
-    card.append(button, caption);
+    card.append(button, likeBtn, caption);
     galleryGrid.appendChild(card);
   });
 
   function changePhoto(direction) {
     showPhoto(currentPhotoIndex + direction);
   }
+
+  const galleryPrevBtn = document.getElementById('gallery-prev');
+  const galleryNextBtn = document.getElementById('gallery-next');
+  if (galleryPrevBtn) galleryPrevBtn.addEventListener('click', () => changePhoto(-1));
+  if (galleryNextBtn) galleryNextBtn.addEventListener('click', () => changePhoto(1));
 
   galleryGrid.addEventListener('pointerdown', (event) => {
     swipeStartX = event.clientX;
@@ -976,11 +1158,45 @@
   showPhoto(0);
 
   document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', () => openLightboxAt(lightboxIndex - 1));
+  if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', () => openLightboxAt(lightboxIndex + 1));
+  if (lightboxLikeBtn) {
+    lightboxLikeBtn.addEventListener('click', () => {
+      const willLike = !favoritePhotos.includes(lightboxIndex);
+      setPhotoFavorite(lightboxIndex, willLike, willLike ? lightboxHeartBurst : null);
+    });
+  }
+  lightboxImage.addEventListener('click', () => {
+    const now = Date.now();
+    if (now - lightboxLastTapAt < 280) {
+      lightboxLastTapAt = 0;
+      setPhotoFavorite(lightboxIndex, true, lightboxHeartBurst);
+    } else {
+      lightboxLastTapAt = now;
+    }
+  });
+  lightbox.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button')) return;
+    lightboxSwipeStartX = event.clientX;
+  });
+  lightbox.addEventListener('pointerup', (event) => {
+    if (lightboxSwipeStartX === null) return;
+    const delta = event.clientX - lightboxSwipeStartX;
+    lightboxSwipeStartX = null;
+    if (Math.abs(delta) < 45) return;
+    openLightboxAt(lightboxIndex + (delta < 0 ? 1 : -1));
+  });
+  lightbox.addEventListener('pointercancel', () => {
+    lightboxSwipeStartX = null;
+  });
   lightbox.addEventListener('click', (event) => {
     if (event.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    if (lightbox.hidden) return;
+    if (event.key === 'Escape') closeLightbox();
+    else if (event.key === 'ArrowLeft') openLightboxAt(lightboxIndex - 1);
+    else if (event.key === 'ArrowRight') openLightboxAt(lightboxIndex + 1);
   });
 
   const journeyList = document.getElementById('roadmap-items');
@@ -1043,6 +1259,7 @@
     letterPaper.setAttribute('aria-hidden', 'true');
     letterPaper.inert = true;
     letterToggleLabel.textContent = 'membuka amplop…';
+    playChime('sparkle');
 
     letterMotionTimer = window.setTimeout(() => {
       letterCard.classList.remove('is-opening');
@@ -1091,6 +1308,86 @@
   });
   letterClose.addEventListener('click', closeLetter);
 
+  async function sendFeedbackToTelegram(payload) {
+    if (!DATA.api || !DATA.api.endpoint) return false;
+    try {
+      const res = await fetch(`${DATA.api.endpoint}/api/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...payload,
+          time: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
+        })
+      });
+      return res.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Letter Quick Reactions & Short Reply Form -> Telegram
+  const replyPromptEl = document.getElementById('letter-reply-prompt');
+  const replyChipsEl = document.getElementById('letter-reply-chips');
+  const replyFormEl = document.getElementById('letter-reply-form');
+  const replyInputEl = document.getElementById('letter-reply-input');
+  const replySendBtn = document.getElementById('letter-reply-send');
+  const replyStatusEl = document.getElementById('letter-reply-status');
+  let selectedQuickReply = '';
+
+  if (DATA.main.letter && DATA.main.letter.reply && replyChipsEl) {
+    const replyCfg = DATA.main.letter.reply;
+    if (replyPromptEl && replyCfg.prompt) replyPromptEl.textContent = replyCfg.prompt;
+    if (replyInputEl && replyCfg.placeholder) replyInputEl.placeholder = replyCfg.placeholder;
+    if (replySendBtn && replyCfg.sendLabel) replySendBtn.textContent = replyCfg.sendLabel;
+
+    (replyCfg.quickChoices || []).forEach((label) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'letter-reply-chip';
+      chip.textContent = label;
+      chip.addEventListener('click', () => {
+        selectedQuickReply = selectedQuickReply === label ? '' : label;
+        replyChipsEl.querySelectorAll('.letter-reply-chip').forEach((btn) => {
+          btn.classList.toggle('is-selected', btn.textContent === selectedQuickReply);
+        });
+      });
+      replyChipsEl.appendChild(chip);
+    });
+
+    if (replyFormEl) {
+      replyFormEl.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const customMessage = replyInputEl ? replyInputEl.value.trim() : '';
+        if (!selectedQuickReply && !customMessage) {
+          if (replyStatusEl) {
+            replyStatusEl.textContent = 'Pilih salah satu reaksi atau tulis pesan singkat dulu ya.';
+            replyStatusEl.hidden = false;
+          }
+          return;
+        }
+        if (replySendBtn) {
+          replySendBtn.disabled = true;
+          replySendBtn.textContent = 'Mengirim…';
+        }
+        await sendFeedbackToTelegram({
+          type: 'letter_reply',
+          choice: selectedQuickReply,
+          message: customMessage
+        });
+        playChime('sparkle');
+        if (replyStatusEl) {
+          replyStatusEl.textContent = replyCfg.sentNotice || 'Pesanmu sudah terkirim ke Andrian!';
+          replyStatusEl.hidden = false;
+        }
+        if (replyInputEl) replyInputEl.value = '';
+        if (replySendBtn) {
+          replySendBtn.disabled = false;
+          replySendBtn.textContent = replyCfg.sendLabel || 'Kirim ke Andrian';
+        }
+      });
+    }
+  }
+
   // ============================================================
   // Special Christmas Day (25 December) Surprise Modal: Opsi 2
   // ============================================================
@@ -1126,6 +1423,46 @@
     if (gMsgEl && cs.giftMessage) gMsgEl.textContent = cs.giftMessage;
     if (gNoteEl && cs.giftNote) gNoteEl.textContent = cs.giftNote;
     if (contEl && cs.continueLabel) contEl.textContent = cs.continueLabel;
+
+    const voucherListEl = document.getElementById('gift-voucher-list');
+    const voucherStatusEl = document.getElementById('gift-voucher-status');
+    const savedVoucherId = localStorage.getItem('jessica_christmas_voucher_2026');
+
+    if (voucherListEl && Array.isArray(cs.vouchers)) {
+      cs.vouchers.forEach((voucher) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'gift-voucher-btn';
+        if (savedVoucherId === voucher.id) btn.classList.add('is-selected');
+        btn.innerHTML = `<strong>${voucher.title}</strong><small>${voucher.desc}</small>`;
+        btn.addEventListener('click', async () => {
+          voucherListEl.querySelectorAll('.gift-voucher-btn').forEach((item) => {
+            item.classList.remove('is-selected');
+          });
+          btn.classList.add('is-selected');
+          localStorage.setItem('jessica_christmas_voucher_2026', voucher.id);
+          playChime('gift');
+          if (voucherStatusEl) {
+            voucherStatusEl.textContent = `Voucher "${voucher.title}" dipilih & langsung diteruskan ke Andrian!`;
+            voucherStatusEl.hidden = false;
+          }
+          await sendFeedbackToTelegram({
+            type: 'gift_claim',
+            choice: voucher.title,
+            message: voucher.desc
+          });
+        });
+        voucherListEl.appendChild(btn);
+      });
+
+      if (savedVoucherId && voucherStatusEl) {
+        const matched = cs.vouchers.find((v) => v.id === savedVoucherId);
+        if (matched) {
+          voucherStatusEl.textContent = `Voucher pilihanmu: "${matched.title}"`;
+          voucherStatusEl.hidden = false;
+        }
+      }
+    }
   }
 
   function spawnSurpriseParticles(count = 26) {
@@ -1194,6 +1531,7 @@
       window.setTimeout(() => {
         unbox3dBox.classList.remove('is-shaking');
         unbox3dBox.classList.add('is-opened');
+        playChime('gift');
         spawnSurpriseParticles(32);
 
         window.setTimeout(() => {
@@ -1360,6 +1698,61 @@
       console.warn('Inisialisasi Service Worker dilewati:', e);
     }
   }
+
+  // ============================================================
+  // Fullscreen ASCII Showcase Modal (3D Christmas Tree & Lilies)
+  // ============================================================
+  const asciiModal = document.getElementById('ascii-showcase-modal');
+  const asciiFrame = document.getElementById('ascii-showcase-frame');
+  const asciiCloseBtn = document.getElementById('ascii-showcase-close');
+  const openAsciiTreeBtn = document.getElementById('open-ascii-tree-btn');
+  const openBouquetLetterBtn = document.getElementById('open-bouquet-from-letter');
+  const openBouquetGiftBtn = document.getElementById('open-bouquet-from-gift');
+  let asciiReturnFocusEl = null;
+
+  function openAsciiShowcase(url, title, triggerEl = null) {
+    if (!asciiModal || !asciiFrame) return;
+    asciiReturnFocusEl = triggerEl;
+    asciiFrame.title = title;
+    asciiFrame.src = url;
+    asciiModal.hidden = false;
+    playChime('sparkle');
+    if (asciiCloseBtn) asciiCloseBtn.focus({ preventScroll: true });
+  }
+
+  function closeAsciiShowcase() {
+    if (!asciiModal || asciiModal.hidden) return;
+    asciiModal.hidden = true;
+    if (asciiFrame) asciiFrame.src = 'about:blank';
+    if (asciiReturnFocusEl) {
+      asciiReturnFocusEl.focus({ preventScroll: true });
+      asciiReturnFocusEl = null;
+    }
+  }
+
+  if (openAsciiTreeBtn) {
+    openAsciiTreeBtn.addEventListener('click', () => {
+      openAsciiShowcase('ascii_christmas_starlight.html', 'Pohon Natal 3D ASCII', openAsciiTreeBtn);
+    });
+  }
+  if (openBouquetLetterBtn) {
+    openBouquetLetterBtn.addEventListener('click', () => {
+      openAsciiShowcase('index1.html', 'Buket Lily Untuk Jessica', openBouquetLetterBtn);
+    });
+  }
+  if (openBouquetGiftBtn) {
+    openBouquetGiftBtn.addEventListener('click', () => {
+      openAsciiShowcase('index1.html', 'Buket Lily Spesial', openBouquetGiftBtn);
+    });
+  }
+  if (asciiCloseBtn) {
+    asciiCloseBtn.addEventListener('click', closeAsciiShowcase);
+  }
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && asciiModal && !asciiModal.hidden) {
+      closeAsciiShowcase();
+    }
+  });
 
   updateCountdown();
   window.setInterval(updateCountdown, 1000);

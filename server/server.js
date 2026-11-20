@@ -154,6 +154,39 @@ app.post('/api/subscribe', (req, res) => {
   }
 });
 
+// 2b. ENDPOINT: Terima Balasan Surat & Pilihan Voucher Kado dari Jessica -> Telegram
+app.post('/api/feedback', async (req, res) => {
+  try {
+    const { type, choice, message, time } = req.body || {};
+    const formattedTime = time || new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+    const escapeHtml = (str) => String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    let header = '💌 <b>Balasan Baru dari Jessica!</b>';
+    if (type === 'gift_claim') {
+      header = '🎁 <b>Jessica Memilih Kado 25 Desember!</b>';
+    } else if (type === 'photo_like') {
+      header = '❤️ <b>Jessica Menyukai Foto Kenangan!</b>';
+    }
+
+    const lines = [header, '━━━━━━━━━━━━━━━━━━'];
+    if (choice) lines.push(`Pilihan: <b>${escapeHtml(choice)}</b>`);
+    if (message && String(message).trim()) {
+      lines.push(`Pesan: <i>"${escapeHtml(String(message).trim().slice(0, 500))}"</i>`);
+    }
+    lines.push(`Waktu: <b>${escapeHtml(formattedTime)} WIB</b>`);
+    lines.push('━━━━━━━━━━━━━━━━━━');
+
+    await sendTelegramAlert(lines.join('\n'));
+    res.json({ ok: true, status: 'sent' });
+  } catch (error) {
+    console.error('Error in /api/feedback:', error);
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 // Helper: Kirim Web Push ke Semua Perangkat Terdaftar
 async function sendPushToAll(title, body, url) {
   const subscriptions = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE, 'utf-8'));

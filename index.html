@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=christmas-20261103-v2">
+  <link rel="stylesheet" href="style.css?v=christmas-20261120-v5">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -381,9 +381,12 @@
           <span></span>
           <span></span>
         </button>
-        <button class="music-button" id="music-button" type="button" aria-label="Putar musik" aria-pressed="false">
-          <span aria-hidden="true">♫</span>
-        </button>
+        <div class="music-control">
+          <span class="music-now-playing" id="music-now-playing" hidden aria-live="polite"></span>
+          <button class="music-button" id="music-button" type="button" aria-label="Putar musik" aria-pressed="false">
+            <span aria-hidden="true">♫</span>
+          </button>
+        </div>
       </header>
 
       <section class="story-scene hero-section content-width is-active" id="hero-section" data-scene="hero" aria-label="Ucapan Natal">
@@ -460,6 +463,12 @@
               <path d="M20 12v10H4V12M2 7h20v5H2V7zm10-5v20m0-15H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zm0 0h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Buka Kado Spesial 25 Desember</span>
+          </button>
+          <button class="ascii-tree-trigger" id="open-ascii-tree-btn" type="button">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path d="M12 2l4 6h-2.5l3.5 5h-2.5l3.5 5H6l3.5-5H7l3.5-5H8l4-6zm-1 16h2v4h-2v-4z" fill="currentColor"/>
+            </svg>
+            <span>Lihat Pohon Natal 3D</span>
           </button>
         </div>
       </section>
@@ -626,8 +635,10 @@
         </header>
         <div class="gallery-stage" id="gallery-stage" aria-label="Galeri kenangan">
           <div class="gallery-grid" id="gallery-grid" role="group" tabindex="0" aria-label="Foto kenangan, geser untuk berpindah" aria-live="polite"></div>
-          <div class="gallery-controls" aria-label="Posisi foto">
+          <div class="gallery-controls" aria-label="Navigasi foto">
+            <button class="gallery-nav gallery-nav--prev" id="gallery-prev" type="button" aria-label="Foto sebelumnya">‹</button>
             <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+            <button class="gallery-nav gallery-nav--next" id="gallery-next" type="button" aria-label="Foto berikutnya">›</button>
           </div>
         </div>
         <button class="flower-next star-next" id="gallery-flower-next" type="button" aria-label="Lanjut ke cerita">
@@ -847,6 +858,26 @@
                 <div class="letter-body" id="letter-body"></div>
                 <p class="letter-closing" id="letter-closing"></p>
                 <p class="letter-signature" id="letter-signature"></p>
+
+                <div class="bouquet-trigger-wrap">
+                  <button class="bouquet-trigger-btn" id="open-bouquet-from-letter" type="button">
+                    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+                      <path d="M12 3c2 2.5 3 4.5 3 6.5a3 3 0 0 1-6 0C9 7.5 10 5.5 12 3zm-6 7c2.5.5 4.5 2 5 4a3 3 0 0 1-5-3c0-.3 0-.7 0-1zm12 0c-2.5.5-4.5 2-5 4a3 3 0 0 0 5-3c0-.3 0-.7 0-1zm-6 3v8m-3-3c1.5 0 3 .8 3 2m3-2c-1.5 0-3 .8-3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Lihat Buket Bunga Untukmu</span>
+                  </button>
+                </div>
+
+                <div class="letter-reply-box" id="letter-reply-box">
+                  <p class="letter-reply-prompt" id="letter-reply-prompt">Ada yang mau disampaikan balik?</p>
+                  <div class="letter-reply-chips" id="letter-reply-chips"></div>
+                  <form class="letter-reply-form" id="letter-reply-form">
+                    <input class="letter-reply-input" id="letter-reply-input" type="text" maxlength="320" placeholder="Tulis pesan singkat buat Andrian (opsional)..." aria-label="Pesan balasan untuk Andrian">
+                    <button class="letter-reply-send" id="letter-reply-send" type="submit">Kirim ke Andrian</button>
+                  </form>
+                  <p class="letter-reply-status" id="letter-reply-status" hidden aria-live="polite"></p>
+                </div>
+
                 <button class="letter-close" id="letter-close" type="button" aria-label="Tutup surat">
                   <span aria-hidden="true">↟</span> Tutup surat
                 </button>
@@ -895,7 +926,7 @@
           <button class="santa-offer-btn" id="santa-offer-btn" type="button" aria-label="Sentuh kotak kado di tangan Santa untuk membuka hadiah">
             <div class="santa-figure-wrap">
               <div class="santa-moon-aura" aria-hidden="true"></div>
-              <img class="santa-figure-img" src="assets/bg/santa-gift.png" alt="Santa Claus memberikan kotak hadiah Natal" decoding="async">
+              <img class="santa-figure-img" src="assets/bg/santa-gift.webp" alt="Santa Claus memberikan kotak hadiah Natal" decoding="async">
               <!-- Interactive Glowing Hotspot Aligned Over the Gift Box in Santa's Hand -->
               <span class="santa-box-hotspot" aria-hidden="true">
                 <span class="hotspot-ring hotspot-ring-1"></span>
@@ -976,8 +1007,16 @@
                   <circle cx="32" cy="32" r="5" fill="#ffffff"/>
                 </svg>
               </div>
-              <h3 class="gift-card-title" id="surprise-gift-title">Satu Hadiah Kecil Untukmu</h3>
+              <h3 class="gift-card-title" id="surprise-gift-title">Pilih Satu Hadiah Untukmu</h3>
               <p class="gift-card-message" id="surprise-gift-message"></p>
+              <div class="gift-voucher-list" id="gift-voucher-list" role="radiogroup" aria-label="Pilih hadiah spesial 25 Desember"></div>
+              <p class="gift-voucher-status" id="gift-voucher-status" hidden aria-live="polite"></p>
+              <button class="bouquet-trigger-btn bouquet-trigger-btn--gift" id="open-bouquet-from-gift" type="button">
+                <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+                  <path d="M12 3c2 2.5 3 4.5 3 6.5a3 3 0 0 1-6 0C9 7.5 10 5.5 12 3zm-6 7c2.5.5 4.5 2 5 4a3 3 0 0 1-5-3c0-.3 0-.7 0-1zm12 0c-2.5.5-4.5 2-5 4a3 3 0 0 0 5-3c0-.3 0-.7 0-1zm-6 3v8m-3-3c1.5 0 3 .8 3 2m3-2c-1.5 0-3 .8-3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Buka Buket Bunga Spesial</span>
+              </button>
               <div class="gift-card-divider" aria-hidden="true">
                 <span></span>
                 <svg viewBox="0 0 24 24" width="14" height="14"><polygon points="12,2 14.8,9.2 22,12 14.8,14.8 12,22 9.2,14.8 2,12 9.2,9.2" fill="#d49b27"/></svg>
@@ -992,6 +1031,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <!-- Fullscreen ASCII Art Showcase Modal (3D Christmas Tree & Blooming Lily Bouquet) -->
+    <div class="ascii-showcase-modal" id="ascii-showcase-modal" hidden role="dialog" aria-modal="true" aria-label="Pertunjukan Animasi Natal">
+      <button class="ascii-showcase-close" id="ascii-showcase-close" type="button" aria-label="Tutup pertunjukan animasi">← Kembali</button>
+      <iframe class="ascii-showcase-frame" id="ascii-showcase-frame" src="about:blank" title="Pertunjukan Animasi Natal"></iframe>
     </div>
   </main>
 
@@ -1010,14 +1054,29 @@
   </aside>
 
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto kenangan">
-    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Tutup foto">×</button>
-    <figure class="lightbox-figure">
-      <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-topbar">
+      <span class="lightbox-counter" id="lightbox-counter">01 / 23</span>
+      <div class="lightbox-actions">
+        <button class="lightbox-like" id="lightbox-like" type="button" aria-label="Sukai foto ini" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+        <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Tutup foto">×</button>
+      </div>
+    </div>
+    <button class="lightbox-nav lightbox-nav--prev" id="lightbox-prev" type="button" aria-label="Foto sebelumnya">‹</button>
+    <figure class="lightbox-figure" id="lightbox-figure">
+      <div class="lightbox-media-wrap">
+        <img id="lightbox-img" src="" alt="" draggable="false">
+        <span class="photo-heart-burst" id="lightbox-heart-burst" aria-hidden="true">♥</span>
+      </div>
       <figcaption id="lightbox-caption"></figcaption>
     </figure>
+    <button class="lightbox-nav lightbox-nav--next" id="lightbox-next" type="button" aria-label="Foto berikutnya">›</button>
   </div>
 
-  <script src="data.js?v=christmas-20261103-v2"></script>
-  <script src="script.js?v=christmas-20261103-v2"></script>
+  <script src="data.js?v=christmas-20261120-v5"></script>
+  <script src="script.js?v=christmas-20261120-v5"></script>
 </body>
 </html>

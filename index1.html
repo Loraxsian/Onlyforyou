@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buket Lily Untuk Jessica</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; font-family: Georgia, "Times New Roman", serif; }
+  canvas { display: block; width: 100vw; height: 100vh; cursor: pointer; }
+  .bouquet-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .bouquet-caption {
+    margin: 0;
+    color: #f7e7c9;
+    font-size: clamp(14px, 2.2vw, 18px);
+    letter-spacing: 0.08em;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 20px rgba(244, 196, 48, 0.35);
+  }
+  .bouquet-hint {
+    margin: 0;
+    color: rgba(215, 228, 240, 0.72);
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .bouquet-palette-btn {
+    pointer-events: auto;
+    margin-top: 2px;
+    padding: 6px 14px;
+    border: 1px solid rgba(244, 196, 48, 0.42);
+    border-radius: 999px;
+    background: rgba(12, 22, 34, 0.78);
+    color: #ffe89e;
+    font-family: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: transform 180ms ease, border-color 180ms ease;
+  }
+  .bouquet-palette-btn:hover { border-color: #ffe89e; transform: translateY(-1px); }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<div class="bouquet-overlay">
+  <p class="bouquet-caption">Buket Lily Kecil Untuk Jessica</p>
+  <p class="bouquet-hint">sentuh bunga untuk mengulang mekarnya</p>
+  <button class="bouquet-palette-btn" id="bouquet-palette-btn" type="button">Ganti Warna Bunga</button>
+</div>
+<script src="bouquet.js"></script>
+<script>
+  document.getElementById('bouquet-palette-btn').addEventListener('click', function () {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'p' }));
+  });
+</script>
+</body>
+</html>

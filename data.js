@@ -29,26 +29,26 @@ window.SITE_DATA = {
       photos: [
         { src: "assets/gallery/Pic1.jpeg", caption: "Malam Ceria, Semuanya Peaceful" },
         { src: "assets/gallery/Pic2.jpeg", caption: "Gak pakai wacana, Sung ketawa", objectPosition: "60% center" },
-        { src: "assets/gallery/Pic3.png", caption: "Dibawah cahaya lampu malam, yang satu kaku, yang satu manyun" },
+        { src: "assets/gallery/Pic3.webp", caption: "Dibawah cahaya lampu malam, yang satu kaku, yang satu manyun" },
         { src: "assets/gallery/Pic4.jpeg", caption: "Ketangkep" },
         { src: "assets/gallery/Pic5.jpeg", caption: "Makan bareng bersama Batak Pride", objectPosition: "44% center" },
         { src: "assets/gallery/Pic6.jpeg", caption: "First Nongki Batak Pride after PKKMB" },
-        { src: "assets/gallery/Pic7.jpeg", caption: "Senyum santai yang diam-diam jadi favorit." },
+        { src: "assets/gallery/Pic7.jpeg", caption: "Senyum santai tapi paling gampang bikin kepikiran." },
         { src: "assets/gallery/Pic8.jpeg", caption: "Senyum Manis, ini boleh diklaim gak sih?" },
-        { src: "assets/gallery/Pic9.jpeg", caption: "Gaya beda, senyum yang tetap khas." },
-        { src: "assets/gallery/Pic10.jpeg", caption: "Senyum kecil yang bikin foto ini terasa hangat.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic9.jpeg", caption: "Gaya boleh beda, tapi senyumnya tetap andalan." },
+        { src: "assets/gallery/Pic10.jpeg", caption: "Senyum kalem yang bikin foto ini kelihatan hangat.", objectPosition: "center 40%" },
         { src: "assets/gallery/Pic11.jpeg", caption: "Peace sign dan ekspresi jahil" },
         { src: "assets/gallery/Pic12.jpeg", caption: "Jelas, Yang kek gini gak boleh hilang", objectPosition: "center 40%" },
         { src: "assets/gallery/Pic13.jpeg", caption: "Manyun banget ini mah.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic14.jpeg", caption: "Peace di bawah lampu malam.", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic15.jpeg", caption: "Pose manis sambil menikmati suasana malam.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic14.jpeg", caption: "Peace dulu di bawah lampu malam.", objectPosition: "center 40%" },
+        { src: "assets/gallery/Pic15.jpeg", caption: "Pose santai sambil nikmatin suasana malam.", objectPosition: "center 40%" },
         { src: "assets/gallery/Pic16.jpeg", caption: "Senyum Anteng yah kek gini, kalem", objectPosition: "center 40%" },
-        { src: "assets/gallery/Pic17.jpeg", caption: "Tampil anggun dengan kemeja putih." },
-        { src: "assets/gallery/Pic18.jpeg", caption: "Langit biru dan langkah santai di tepi pantai." },
-        { src: "assets/gallery/Pic19.jpeg", caption: "Angin pantai membuat pose sederhana terasa hidup." },
-        { src: "assets/gallery/Pic20.jpeg", caption: "Hari cerah di pesisir dengan senyum yang ikut menyala." },
-        { src: "assets/gallery/Pic21.jpeg", caption: "Potret dekat dengan senyum yang menenangkan." },
-        { src: "assets/gallery/Pic22.jpeg", caption: "Tawa kecil dan gaya rambut yang ikut bergerak." },
+        { src: "assets/gallery/Pic17.jpeg", caption: "Kemeja putih emang gak pernah gagal." },
+        { src: "assets/gallery/Pic18.jpeg", caption: "Jalan santai di pantai, langitnya ikut cerah." },
+        { src: "assets/gallery/Pic19.jpeg", caption: "Kena angin pantai tapi posenya tetap cakep." },
+        { src: "assets/gallery/Pic20.jpeg", caption: "Panas-panasan di pantai, tapi senyumnya tetap adem." },
+        { src: "assets/gallery/Pic21.jpeg", caption: "Dari deket gini malah kelihatan makin manis." },
+        { src: "assets/gallery/Pic22.jpeg", caption: "Ketawa kecil gini nih yang selalu bikin kangen." },
         { src: "assets/gallery/Pic23.jpeg", caption: "Dangerous Woman" }
       ]
     },
@@ -76,7 +76,17 @@ window.SITE_DATA = {
         "Semoga senyum dan hal-hal baik selalu nemenin langkahmu ke depannya."
       ],
       closingLine: "Selamat Natal dan selamat menyambut tahun baru, Jessica. Tuhan memberkati.",
-      signature: "~Andrian"
+      signature: "~Andrian",
+      reply: {
+        prompt: "Ada yang mau disampaikan balik?",
+        quickChoices: [
+          "Senyum sendiri bacanya",
+          "Selamat Natal juga ya!"
+        ],
+        placeholder: "Tulis pesan singkat buat Andrian (opsional)...",
+        sendLabel: "Kirim",
+        sentNotice: "Pesanmu sudah terkirim ke Andrian!"
+      }
     },
 
     christmasSurprise: {
@@ -85,9 +95,14 @@ window.SITE_DATA = {
       santaSubtitle: "Tadi saat melintas di depan bulan, Santa sengaja menjatuhkan kotak kado ini khusus untukmu. Sentuh kotak kadonya untuk membuka isinya.",
       boxHint: "sentuh kotak kado untuk membuka",
       giftBadge: "Kado Spesial 25 Desember",
-      giftTitle: "Satu Hadiah Kecil Untukmu",
-      giftMessage: "Selamat Hari Natal ya, Jessica! Khusus di tanggal 25 Desember ini, ada traktiran atau hadiah kecil dariku buat merayakan hari Natalmu. Screenshot kartu ini ya, nanti tinggal klaim langsung ke aku kapan pun kamu luang!",
-      giftNote: " Spesial Hari Natal · Dari Andrian untuk Jessica ",
+      giftTitle: "Pilih Satu Hadiah Untukmu",
+      giftMessage: "Selamat Hari Natal ya, Jessica! Khusus di tanggal 25 Desember ini, pilih salah satu voucher di bawah—pilihanmu bakal langsung masuk ke aku buat ditraktir pas ketemu nanti!",
+      vouchers: [
+        { id: "matcha", title: "Matcha / Coffee Date", desc: "Cari minuman favorit sambil ngobrol santai" },
+        { id: "movie", title: "Nonton Bareng", desc: "Bebas pilih film apa aja yang lagi kamu pengen" },
+        { id: "food", title: "Traktir Makan Favorit", desc: "Pilih menu apa pun yang lagi kamu mau" }
+      ],
+      giftNote: "Spesial Hari Natal · Dari Andrian untuk Jessica",
       continueLabel: "Lanjut ke Momen Kenangan →"
     }
   },
