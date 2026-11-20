@@ -1441,6 +1441,8 @@
   let surpriseFromSantaFlight = false;
   let unboxAnimating = false;
 
+  let resetVoucherSelection = () => {};
+
   if (DATA.main.christmasSurprise) {
     const cs = DATA.main.christmasSurprise;
     const kickerEl = document.getElementById('surprise-kicker');
@@ -1465,10 +1467,8 @@
     const voucherListEl = document.getElementById('gift-voucher-list');
     const voucherConfirmBtn = document.getElementById('gift-voucher-confirm');
     const voucherStatusEl = document.getElementById('gift-voucher-status');
-    const VOUCHER_STORAGE_KEY = 'jessica_christmas_voucher_2026';
-    const savedVoucherId = localStorage.getItem(VOUCHER_STORAGE_KEY);
     let pendingVoucher = null;
-    let voucherClaimed = Boolean(savedVoucherId);
+    let voucherClaimed = false;
 
     function voucherIconSvg(id) {
       if (id === 'matcha') {
@@ -1489,6 +1489,20 @@
         item.disabled = voucherClaimed;
       });
     }
+
+    resetVoucherSelection = () => {
+      pendingVoucher = null;
+      voucherClaimed = false;
+      applyVoucherLockState('');
+      if (voucherConfirmBtn) {
+        voucherConfirmBtn.hidden = true;
+        voucherConfirmBtn.disabled = false;
+      }
+      if (voucherStatusEl) {
+        voucherStatusEl.hidden = true;
+        voucherStatusEl.textContent = '';
+      }
+    };
 
     if (voucherListEl && Array.isArray(cs.vouchers)) {
       cs.vouchers.forEach((voucher) => {
@@ -1522,7 +1536,6 @@
           voucherClaimed = true;
           voucherConfirmBtn.disabled = true;
           voucherConfirmBtn.textContent = 'Mengirim pilihanmu…';
-          localStorage.setItem(VOUCHER_STORAGE_KEY, pendingVoucher.id);
           applyVoucherLockState(pendingVoucher.id);
           playChime('gift');
           await sendFeedbackToTelegram({
@@ -1536,15 +1549,6 @@
             voucherStatusEl.hidden = false;
           }
         });
-      }
-
-      if (savedVoucherId) {
-        applyVoucherLockState(savedVoucherId);
-        const matched = cs.vouchers.find((v) => v.id === savedVoucherId);
-        if (matched && voucherStatusEl) {
-          voucherStatusEl.textContent = `Voucher pilihanmu: "${matched.title}" ✓`;
-          voucherStatusEl.hidden = false;
-        }
       }
     }
   }
@@ -1578,6 +1582,7 @@
 
   function openChristmasSurpriseModal(fromFlight = false) {
     if (!surpriseModal) return;
+    resetVoucherSelection();
     surpriseFromSantaFlight = fromFlight;
     unboxAnimating = false;
     santaOfferStage.hidden = false;
